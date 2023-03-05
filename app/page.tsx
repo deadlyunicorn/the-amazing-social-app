@@ -1,15 +1,13 @@
-//import { Inter } from 'next/font/google'
 
-import Link from "next/link"
-import { ReactNode } from 'react'
-import FetchButton from "./mongodb/fetchButton"
-import FetchedElement from "./mongodb/fetchedElement"
-import {fetchedString} from './mongodb/start'
+import FetchButton from "./mongodb[old]/fetchButton"
+import FetchedElement from "./mongodb[old]/fetchedData"
+import MongoElement from "./mongodb[old]/getElements";
 
 
 
 
 export default function Home() {
+
   return (
     <>
       <main className="mt-28 flex justify-center">
@@ -30,22 +28,8 @@ export default function Home() {
           <div className="text-center">
             Latest Posts
           </div>
-          <FetchedElement/>
           <br/>
-          <FetchButton>
-            {fetchedString}
-          </FetchButton>
-
-            
-
-          hello world
-          hello world
-          hello world
-          hello world
-          hello world
-          hello world
-          hello world
-
+          <MongoElement/>
         </div>
       </main>
     </>
