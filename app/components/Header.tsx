@@ -1,10 +1,9 @@
 import Link from "next/link"
 import { Neucha } from 'next/font/google'
 import { ReactNode } from "react"
+import Time from "./Header_time"
   const neucha = Neucha({subsets:['latin'],weight:"400"})
 
-const date = new Date()
-const time:string = `${date.getHours()}:${date.getMinutes()}` 
 
 
 const Header = () => (
@@ -38,7 +37,9 @@ const GuestOptions = () => (
 
 
     <div>
-      <Authenticate>{time}</Authenticate>
+      <Authenticate>
+        <Time/>
+      </Authenticate>
     </div>
 
     {/* If not Signed In show the following else show "Profile Button" */}
