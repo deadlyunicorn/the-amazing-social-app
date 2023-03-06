@@ -1,7 +1,5 @@
 
-import FetchButton from "./mongodb[old]/fetchButton"
-import FetchedElement from "./mongodb[old]/fetchedData"
-import MongoElement from "./mongodb[old]/getElements";
+import MongoElement from "./mongodb[old]/MongoGetElements";
 
 
 
@@ -29,7 +27,20 @@ export default function Home() {
             Latest Posts
           </div>
           <br/>
-          <MongoElement/>
+          {/* ignore error.. */}
+          <MongoElement/> 
+          {/*Getting error: 
+                    'MongoElement' cannot be used as a JSX component.
+            Its return type 'Promise<Element>' is not a valid JSX element.
+              Type 'Promise<Element>' is missing the following properties from type 'ReactElement<any, any>': type, props, keyts(2786)
+
+              tried to find a workaround but manage to. Works despite error..
+              omg If only I remembered what the docs said .. 
+          but:https://github.com/acdlite/rfcs/blob/first-class-promises/text/0000-first-class-support-for-promises.md#basic-examples
+          
+          While you can try it out, it is not yet stable. We'll keep these docs updated to reflect the latest developments.
+          */}
+          
         </div>
       </main>
     </>
