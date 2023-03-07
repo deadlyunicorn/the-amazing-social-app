@@ -8,27 +8,26 @@ export default function Home() {
 
   return (
     <>
-      <main className="mt-28 flex justify-center">
-        <div className="border max-w-xs py-5">
 
+      <div className="border py-3 flex items-center">
+        <span className="text-sm">
+          Post Something:&nbsp;
+        </span>
 
-          <div className="border py-3 flex items-center">
-            
-            <span className="text-sm">
-              Post Something:&nbsp;
-            </span>
-            <input 
-              className="w-3/5 
-              rounded-md bg-opacity-20 bg-white 
-              text-slate-200"/>
+        <input 
+          className="w-3/5 
+          rounded-md bg-opacity-20 bg-white 
+          text-slate-200"/>
 
-          </div>
-          <div className="text-center">
-            Latest Posts
-          </div>
-          <br/>
-          {/* ignore error.. */}
-          <MongoElement/> 
+      </div>
+
+      <div className="text-center">
+        Latest Posts
+      </div>
+      
+      <br/>
+      {/* ignore error.. */}
+      <MongoElement/> 
           {/*Getting error: 
                     'MongoElement' cannot be used as a JSX component.
             Its return type 'Promise<Element>' is not a valid JSX element.
@@ -41,8 +40,7 @@ export default function Home() {
           While you can try it out, it is not yet stable. We'll keep these docs updated to reflect the latest developments.
           */}
           
-        </div>
-      </main>
+
     </>
   )
 }
