@@ -33,6 +33,7 @@ export default async function GET(request: Request) {
   }
   finally{
     client.close();
-    return NextResponse.json(fetched);
+    
+    return NextResponse.json({fetched}); //Response.json() currently gives typescript error
   }
 }
