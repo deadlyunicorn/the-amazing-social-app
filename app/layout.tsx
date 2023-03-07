@@ -16,7 +16,13 @@ export default function RootLayout({
     <html lang="en">
       <body className='bg-gradient-to-b from-zinc-700  to-zinc-900 h-screen overflow-auto'>
         <Header/>
-        {children}
+      
+        <main className="flex justify-center mt-28">
+          <div className="border max-w-xs py-5">
+            {children}
+          </div>
+        </main>
+      
         <NavigationBar/>  
       </body>
     </html>
