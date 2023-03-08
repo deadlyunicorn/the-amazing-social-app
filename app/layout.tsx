@@ -14,6 +14,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.svg"/>
+
+      </head>
       <body className='bg-gradient-to-b from-zinc-700  to-zinc-900 h-screen overflow-auto'>
         <Header/>
       
@@ -28,3 +32,5 @@ export default function RootLayout({
     </html>
   )
 }
+
+
