@@ -9,7 +9,6 @@ const RealmPage = async() => {
   const app = new Realm.App({id: 'social_app_mongodb-cyawc'});
   const user: Realm.User = await app.logIn(Realm.Credentials.anonymous());
 
-  const userString=JSON.stringify
 
   return(
     <>
@@ -25,7 +24,8 @@ const RealmPage = async() => {
 
       <div>
         <UserInterface 
-        // user={user} app={app}//
+        id={user.id} 
+        // currentUser={app.currentUser}//
         //Error: Maximum call stack size exceeded
         
         
