@@ -22,7 +22,7 @@ export default function RootLayout({
         <Header/>
       
         <main className="flex justify-center mt-28">
-          <div className="border max-w-xs py-5">
+          <div className="max-w-xs py-5 ">
             {children}
           </div>
         </main>

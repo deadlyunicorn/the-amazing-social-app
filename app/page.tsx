@@ -8,8 +8,9 @@ export default function Home() {
 
   return (
     <>
+    <div className="flex flex-col gap-2 bg-white bg-opacity-5 rounded-xl">
 
-      <div className="border py-3 flex items-center">
+      <div className="px-2 py-3 flex items-center bg-white rounded-lg bg-opacity-30">
         <span className="text-sm">
           Post Something:&nbsp;
         </span>
@@ -40,7 +41,7 @@ export default function Home() {
           While you can try it out, it is not yet stable. We'll keep these docs updated to reflect the latest developments.
           */}
           
-
+    </div>
     </>
   )
 }

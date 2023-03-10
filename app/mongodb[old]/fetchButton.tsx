@@ -37,9 +37,11 @@ const FetchButton = (props:{passDown:(string)[]}) =>{
 
     return (
     <>
-      <div className="text-center">
+      <div className="text-center flex flex-col gap-2">
+
         <input 
-          type='text' 
+          type='text'
+          className="placeholder:text-center rounded-md mx-4"
           placeholder="genres,languages,title"
           onChange={(event)=>{
             setInput(event.target.value)
@@ -49,18 +51,17 @@ const FetchButton = (props:{passDown:(string)[]}) =>{
           onClick={()=>{
             setButton(true);setField(input)
           }}
-          className="border p-1 rounded-md 
+          className=" p-1 rounded-md 
           bg-white bg-opacity-5 hover:bg-opacity-10">
         
             hello world!
         </button>
+
         <div>
-          <div>
-            {/* {hasData} */}
-          </div>
+          {/* {hasData} */}
         </div>
 
-        <div className="border break-all">
+        <div className="break-all">
           {(button&&query!=null)&&query}
         </div>
       
