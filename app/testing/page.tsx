@@ -1,27 +1,35 @@
 'use client'
+
+
+import { motion } from "framer-motion"
+//
+import { useEffect, useState } from "react"
+import "./styles.css"
+import {app} from "./appObject"
+
+//Realm
 import * as Realm from "realm-web"
+
 const {
   BSON: { ObjectId },
 } = Realm;
 
 
+//
 
-import { useEffect, useState } from "react"
-import "./styles.css"
-import {app} from "./appObject"
-import router from "next/router"
 
 const Testing = () => {
 
   const [pageLoad,setPageLoad]=useState(false);
-  setTimeout(()=>{
-    setPageLoad(true);
-  },500)
+
 
   const [user,setUser]=useState<Realm.User | null>(null);
 
   useEffect(()=>{
     setUser(app.currentUser);
+    setTimeout(()=>{
+      setPageLoad(true);
+    },500);
   },[user])
 
   
@@ -32,8 +40,8 @@ const Testing = () => {
             <div className="text-center">Login to my App</div>
             <br/>
             <div
-              data-pageLoad={pageLoad}
-              className="data-[pageLoad=true]:inline animate-hidden hidden">
+              data-pageload={pageLoad}
+              className="data-[pageload=true]:inline animate-hidden hidden">
   
               <UserDetails user={user}/>
               <div className="flex justify-between">
@@ -42,6 +50,8 @@ const Testing = () => {
               </div>
             </div>
         </div>
+
+        { user && <QueryField/>}
       </div>
     </>
   )
@@ -120,4 +130,75 @@ const LogoutButton = (
       </button>
     </>
     )
+}
+
+const QueryField = () =>{
+
+  //We put them here so that we don't get 
+  //"cannot read properties of undefined error"
+  const mongo = app.currentUser!.mongoClient("mongodb-atlas");
+  const collection = mongo.db("deadly_testing").collection("movies");
+
+
+  const [input,setInput]=useState("");
+  const [dbGet,setDbGet]=useState(null);
+
+  const getData = async()=>{
+    await collection.findOne({title:"Titanic"})
+    .then(data=>{setDbGet(data)});
+  }
+
+  return(
+    <motion.div 
+      animate={{opacity:[0,1],transition:{duration:2}}}
+      className="bg-white p-4 rounded-lg w-96 min-h-96 mt-10">
+        
+        <div className="text-3xl">
+          Search something
+        </div>
+
+        <div className="my-6">
+          <form 
+            className="flex justify-around"
+            onSubmit={(event)=>{
+              event.preventDefault();
+              getData();
+            }}
+            >
+
+            <input 
+              placeholder="Hello world" 
+              onChange={(event)=>{setInput(event.target.value)}}
+              className="bg-slate-50 px-2 py-1 rounded-md"/>
+            <button className="border bg-slate-100 hover:bg-slate-200 px-2 py-1 rounded-md">Search</button>
+          </form>
+        </div>
+
+        <div>
+          {/* {input} <br/> */}
+          {(dbGet!=null && (dbGet[input]!=null || input==""))&&
+          <>
+           <div className="break-all text-center">
+              { 
+                (input!="")?
+                [dbGet[input]].toString().replaceAll(",",", "):
+                JSON.stringify(dbGet)
+              }
+            </div>
+            
+            <div className="my-6 text-center">
+              <button 
+                onClick={()=>{setDbGet(null)}}
+                className="border bg-slate-100 hover:bg-slate-200 px-2 py-1 rounded-md">
+                Reset
+              </button>
+            </div>
+          </>
+            
+          }
+        </div>
+
+    
+    </motion.div>
+  )
 }
