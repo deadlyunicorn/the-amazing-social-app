@@ -150,16 +150,20 @@ const QueryField = () =>{
 
   return(
     <motion.div 
-      animate={{opacity:[0,1],transition:{duration:2}}}
+      animate={{
+        opacity:[0,1],
+        x:[-20,0],
+        transition:{duration:2}
+      }}
       className="bg-white p-4 rounded-lg w-96 min-h-96 mt-10">
         
-        <div className="text-3xl">
+        <div className="text-3xl ">
           Search something
         </div>
 
         <div className="my-6">
           <form 
-            className="flex justify-around"
+            className="flex justify-around mb-1"
             onSubmit={(event)=>{
               event.preventDefault();
               getData();
@@ -167,11 +171,13 @@ const QueryField = () =>{
             >
 
             <input 
-              placeholder="Hello world" 
+              placeholder="Press 'Search'" 
               onChange={(event)=>{setInput(event.target.value)}}
               className="bg-slate-50 px-2 py-1 rounded-md"/>
             <button className="border bg-slate-100 hover:bg-slate-200 px-2 py-1 rounded-md">Search</button>
           </form>
+          <p className="text-xs">Try typing &quot;genres&quot;,&quot;languages&quot;</p>
+
         </div>
 
         <div>
@@ -185,7 +191,7 @@ const QueryField = () =>{
                 JSON.stringify(dbGet)
               }
             </div>
-            
+
             <div className="my-6 text-center">
               <button 
                 onClick={()=>{setDbGet(null)}}
