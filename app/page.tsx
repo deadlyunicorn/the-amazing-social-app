@@ -22,7 +22,7 @@ export default function Home() {
 
       </div>
 
-      <div className="text-center">
+      <div className="text-center text-xl text-slate-200 bg-indigo-900 py-1">
         Latest Posts
       </div>
       
