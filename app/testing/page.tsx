@@ -144,15 +144,17 @@ const QueryField = () =>{
   //We put them here so that we don't get 
   //"cannot read properties of undefined error"
   const mongo = app.currentUser!.mongoClient("mongodb-atlas");
-  const collection = mongo.db("deadly_testing").collection("movies");
+  const collection = mongo.db("sample_mflix").collection("movies");
 
 
-  const [input,setInput]=useState("");
+  const [titleInput,setTitleInput]=useState("");
+  const [queryInput,setQueryInput]=useState("");
+
   const [dbGet,setDbGet]=useState(null);
 
   const getData = async()=>{
-    await collection.findOne({title:"Titanic"})
-    .then(data=>{setDbGet(data)});
+    await collection.aggregate([{$match:{title:titleInput}}])
+    .then(data=>{setDbGet(data[0])});
   }
 
   return(
@@ -178,23 +180,42 @@ const QueryField = () =>{
             >
 
             <input 
-              placeholder="Press 'Search'" 
-              onChange={(event)=>{setInput(event.target.value.toLowerCase());}}
+              placeholder="Search Movie" 
+              onChange={(event)=>{setTitleInput(event.target.value);}}
               className="bg-slate-50 px-2 py-1 rounded-md"/>
             <button className="border bg-slate-100 hover:bg-slate-200 px-2 py-1 rounded-md">Search</button>
           </form>
-          <p className="text-xs">Try typing &quot;genres&quot;,&quot;languages&quot;</p>
+          <p className="text-xs">Try typing a movie title &quot;Titanic&quot;,&quot;Spirited Away&quot;.</p>
+
+        </div>
+
+        <div className="my-6">
+          <form 
+            className="flex justify-around mb-1"
+            onSubmit={(event)=>{
+              event.preventDefault();
+              getData();
+            }}
+            >
+
+            <input 
+              placeholder="Search metadata" 
+              onChange={(event)=>{setQueryInput(event.target.value.toLowerCase());}}
+              className="bg-slate-50 px-2 py-1 rounded-md"/>
+            <button className="border bg-slate-100 hover:bg-slate-200 px-2 py-1 rounded-md">Search</button>
+          </form>
+          <p className="text-xs">Try typing &quot;genres&quot;,&quot;languages&quot; or leave empty.</p>
 
         </div>
 
         <div>
           {/* {input} <br/> */}
-          {(dbGet!=null && (dbGet[input]!=null || input==""))&&
+          {(dbGet!=null && (dbGet[queryInput]!=null || queryInput==""))&&
           <>
-           <div className="break-all text-center">
+           <div className="break-words text-center">
               { 
-                (input!="")?
-                [dbGet[input]].toString().replaceAll(",",", "):
+                (queryInput!="")?
+                [dbGet[queryInput]].toString().replaceAll(",",", "):
                 JSON.stringify(dbGet)
               }
             </div>
