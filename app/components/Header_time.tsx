@@ -57,7 +57,7 @@ const LoadingTime = () => (
         }}
         
         transition={{
-          type:"spring",
+          type:"keyframes",
           repeat:8,
           repeatType:"mirror",
           duration:1,
