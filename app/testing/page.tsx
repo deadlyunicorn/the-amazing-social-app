@@ -179,7 +179,7 @@ const QueryField = () =>{
 
             <input 
               placeholder="Press 'Search'" 
-              onChange={(event)=>{setInput(event.target.value)}}
+              onChange={(event)=>{setInput(event.target.value.toLowerCase());}}
               className="bg-slate-50 px-2 py-1 rounded-md"/>
             <button className="border bg-slate-100 hover:bg-slate-200 px-2 py-1 rounded-md">Search</button>
           </form>
