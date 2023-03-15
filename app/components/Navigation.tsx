@@ -7,8 +7,8 @@ const NavigationBar = () => (
 
     <NavItem icon="🏠" link="/"/>
     <NavItem icon="🌊" link="/testing"/>      
-    <NavItem icon="💬" link="/testing"/>      
-    <NavItem icon="🔒" link="/testing"/>      
+    <NavItem icon="💬" link="/user"/>      
+    <NavItem icon="🔒" link="/user"/>      
   </nav>
 )
 
