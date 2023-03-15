@@ -139,6 +139,7 @@ const MovieTitles = (
   },[collection,itemsToFetch,dbEntries])
 
 
+
   if(fetchedTitles){
 
   return(
@@ -148,6 +149,7 @@ const MovieTitles = (
         animate={{opacity:[0,1]}}
         transition={{duration:1}}
         className=" bg-slate-50 px-2 py-1 rounded-md w-3/4 text-center"
+        
         onChange={
           (event)=>{
             setTitleInput(event.target.value);
@@ -174,7 +176,12 @@ const MovieTitles = (
       <br/>
 
       <label htmlFor="movie-menu" className="text-xs">
-        Select a movie from the list {itemsToFetch}/{dbEntries}
+        Select a movie from the list  
+        <motion.span
+          animate={{opacity:[0,1]}}
+          transition={{duration:1}}>
+          &nbsp;{itemsToFetch}/{dbEntries}
+        </motion.span>
       </label>
     
     </div>
@@ -193,7 +200,7 @@ else{
     <br/>
 
     <label htmlFor="movie-menu" className="text-xs">
-      Select a movie from the list {itemsToFetch}
+      Select a movie from the list
     </label>
   
   </div>
