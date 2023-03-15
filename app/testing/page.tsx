@@ -3,8 +3,8 @@
 
 //
 import { useEffect, useState } from "react"
-import "./styles.css"
-import {app} from "./components/appObject"
+import "@/app/testing/styles.css"
+import {app} from "@/app/testing/components/appObject"
 
 //Realm
 import * as Realm from "realm-web"
