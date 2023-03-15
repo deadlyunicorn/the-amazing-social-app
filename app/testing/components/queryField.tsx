@@ -42,25 +42,6 @@ const QueryField = () =>{
           Search something
         </div>
 
-        <div className="my-6">
-          <form 
-            className="flex justify-around mb-1"
-            onSubmit={(event)=>{
-              event.preventDefault();
-              getData();
-            }}
-            >
-
-            <input 
-              placeholder="Search Movie" 
-              className="bg-slate-50 px-2 py-1 rounded-md"/>
-            <button className="border bg-slate-100 hover:bg-slate-200 px-2 py-1 rounded-md">Search</button>
-          </form>
-          <p className="text-xs">Try typing a movie title &quot;Titanic&quot;,&quot;Spirited Away&quot;.</p>
-
-        </div>
-
-
 {/* ///// */}
 {/*  */}
 
@@ -82,7 +63,11 @@ const QueryField = () =>{
               placeholder="Search metadata" 
               onChange={(event)=>{setQueryInput(event.target.value.toLowerCase());}}
               className="bg-slate-50 px-2 py-1 rounded-md"/>
-            <button className="border bg-slate-100 hover:bg-slate-200 px-2 py-1 rounded-md">Search</button>
+            
+            <button 
+              className="border bg-slate-100 hover:bg-slate-200 px-2 py-1 rounded-md">
+                Search
+            </button>
           </form>
           <p className="text-xs">Try typing &quot;genres&quot;,&quot;languages&quot; or leave empty.</p>
 
@@ -125,6 +110,17 @@ const MovieTitles = (
   const [fetchedTitles,setFetchedTitles]=useState<null|[]>(null)
   const [itemsToFetch,setItemsToFetch]=useState(30);
 
+  const [dbEntries,setDbEntries]=useState(0);
+
+  useEffect(()=>{
+    const getEntries=async()=>{
+      await collection
+      .aggregate([{$project:{title:1,_id:0}},{$count:'title'}])
+      .then(data=>setDbEntries(data[0]['title']));
+    }
+    getEntries();
+  },[collection]);
+
 
   useEffect(()=>{
     const fetchTitles = async () =>{
@@ -132,9 +128,15 @@ const MovieTitles = (
       .aggregate([{$project:{title:1,_id:0}},{$sort:{title:1}},{$limit:itemsToFetch}])
       .then(data=>setFetchedTitles(data));
     }
-    fetchTitles();
-
-  },[collection,itemsToFetch])
+    
+      const interval = setInterval(()=>{
+          if(itemsToFetch<dbEntries)setItemsToFetch(itemsToFetch+100); //kinda works? //better for less movies..
+        },10000)
+      
+      fetchTitles();
+      return()=>{clearInterval(interval)};
+      
+  },[collection,itemsToFetch,dbEntries])
 
 
   if(fetchedTitles){
@@ -150,10 +152,11 @@ const MovieTitles = (
           (event)=>{
             setTitleInput(event.target.value);
 
-            const bottom=event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight;
-            if(bottom){
-              setItemsToFetch(itemsToFetch+15)
-            }
+            ///below shouldn't be here on 'On Change'... Maybe if 'onScroll worked'..
+            // const bottom=event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight;
+            // if(bottom){
+            //   setItemsToFetch(itemsToFetch+15)
+            // }
           }
           
         }
@@ -171,7 +174,7 @@ const MovieTitles = (
       <br/>
 
       <label htmlFor="movie-menu" className="text-xs">
-        Select a movie from the list
+        Select a movie from the list {itemsToFetch}/{dbEntries}
       </label>
     
     </div>
@@ -190,7 +193,7 @@ else{
     <br/>
 
     <label htmlFor="movie-menu" className="text-xs">
-      Select a movie from the list
+      Select a movie from the list {itemsToFetch}
     </label>
   
   </div>
