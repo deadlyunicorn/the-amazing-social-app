@@ -107,8 +107,8 @@ const MovieTitles = (
 
   ) =>{
 
-  const [fetchedTitles,setFetchedTitles]=useState<null|[]>(null)
-  const [itemsToFetch,setItemsToFetch]=useState(30);
+  const [fetchedTitles,setFetchedTitles]=useState<null|any[]>(null)
+  const [itemsToSkip,setItemsToSkip]=useState(100);
 
   const [dbEntries,setDbEntries]=useState(0);
 
@@ -123,20 +123,43 @@ const MovieTitles = (
 
 
   useEffect(()=>{
+
+
     const fetchTitles = async () =>{
       await collection
-      .aggregate([{$project:{title:1,_id:0}},{$sort:{title:1}},{$limit:itemsToFetch}])
-      .then(data=>setFetchedTitles(data));
+      .aggregate([
+        {$project:{title:1,_id:0}},
+        {$sort:{title:1}},
+        //Before using skip I simply was increasing the limit by 100
+        //this is more optimized.. both for the user and the db..
+        {$skip:(itemsToSkip-100)}, 
+        {$limit:100}
+      ])
+      .then(data=>{
+        if(fetchedTitles&&data){
+          setFetchedTitles([...fetchedTitles,...data]);
+        }
+        else if(data){
+          setFetchedTitles(data);
+        }
+
+      });
     }
-    
+    if(itemsToSkip<101){ //initial function call
+      fetchTitles();
+    }
+
+      //kinda works? //better for less movies..
       const interval = setInterval(()=>{
-          if(itemsToFetch<dbEntries)setItemsToFetch(itemsToFetch+100); //kinda works? //better for less movies..
+          if(itemsToSkip<dbEntries+100){
+            setItemsToSkip(itemsToSkip+100);
+            fetchTitles();
+          }; 
         },10000)
       
-      fetchTitles();
       return()=>{clearInterval(interval)};
       
-  },[collection,itemsToFetch,dbEntries])
+  },[itemsToSkip,dbEntries])
 
 
 
@@ -157,7 +180,7 @@ const MovieTitles = (
             ///below shouldn't be here on 'On Change'... Maybe if 'onScroll worked'..
             // const bottom=event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight;
             // if(bottom){
-            //   setItemsToFetch(itemsToFetch+15)
+            //   setItemsToSkip(itemsToSkip+15)
             // }
           }
           
@@ -180,7 +203,9 @@ const MovieTitles = (
         <motion.span
           animate={{opacity:[0,1]}}
           transition={{duration:1}}>
-          &nbsp;{itemsToFetch}/{dbEntries}
+
+          &nbsp;{fetchedTitles.length}/{dbEntries}
+        
         </motion.span>
       </label>
     
