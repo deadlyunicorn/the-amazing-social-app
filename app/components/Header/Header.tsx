@@ -44,8 +44,18 @@ const GuestOptions = () => (
 
     {/* If not Signed In show the following else show "Profile Button" */}
     <div>
-      <Authenticate>Log in</Authenticate>
-      <Authenticate>Sign up</Authenticate>
+      <Link href="/login">
+        <Authenticate>
+          Log in
+        </Authenticate>
+      </Link>
+      
+      <Link href="/register">
+        <Authenticate>
+          Sign up
+        </Authenticate>
+      </Link>
+
     </div>
     {/*  */}
 
@@ -57,6 +67,7 @@ const Authenticate = (props:{children:ReactNode}) => (
   className='
     border-b-zinc-400 hover:border-b-zinc-200 border-b 
     border-r-black border-r-2
+    h-8
     py-1 px-2 rounded-md
     text-zinc-400 hover:text-zinc-200'>
     

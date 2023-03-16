@@ -1,0 +1,13 @@
+.animate-hidden[data-pageload="true"]{
+  animation-duration: 2s;
+  animation-name: appear;
+}
+
+@keyframes appear {
+  from{
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
+}
