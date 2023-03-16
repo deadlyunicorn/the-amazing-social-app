@@ -1,6 +1,6 @@
-import Header from './components/Header'
-import NavigationBar from './components/Navigation'
-import './globals.css'
+import Header from '@/app/components/Header/Header'
+import NavigationBar from '@/app/components/Navigation/Navigation'
+import '@/app/components/Styles/globals.css'
 
 export const metadata = {
   title: 'Social App',

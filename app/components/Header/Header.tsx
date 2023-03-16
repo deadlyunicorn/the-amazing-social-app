@@ -44,8 +44,18 @@ const GuestOptions = () => (
 
     {/* If not Signed In show the following else show "Profile Button" */}
     <div>
-      <Authenticate>Log in</Authenticate>
-      <Authenticate>Sign up</Authenticate>
+      <Link href="/login">
+        <Authenticate>
+          Log in
+        </Authenticate>
+      </Link>
+      
+      <Link href="/register">
+        <Authenticate>
+          Sign up
+        </Authenticate>
+      </Link>
+
     </div>
     {/*  */}
 

@@ -1,5 +1,5 @@
 'use client'
-import {app} from "./appObject"
+import {app} from "@/app/components/appObject"
 import { useEffect, useRef, useState } from "react"
 import { motion } from "framer-motion"
 
@@ -36,7 +36,7 @@ const QueryField = () =>{
         x:[-20,0],
         transition:{duration:2}
       }}
-      className="bg-white p-4 rounded-lg w-96 min-h-96 mt-10">
+      className="bg-white py-6 px-4 rounded-lg  mt-10">
         
         <div className="text-3xl ">
           Search something

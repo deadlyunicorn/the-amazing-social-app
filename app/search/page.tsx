@@ -11,7 +11,11 @@ import * as Realm from "realm-web"
 import UserDetails from "@/app/components/userDetails"
 import LoginButton from "@/app/components/Login_Logout/loginButton"
 import LogoutButton from "@/app/components//Login_Logout/logoutButton"
+import QueryField from "@/app/components/queryField"
 
+const {
+  BSON: { ObjectId },
+} = Realm;
 
 
 //
@@ -34,22 +38,8 @@ const Testing = () => {
   
   return (
     <>
-      <div>
-        <div className="bg-white p-4 rounded-lg w-96 h-48">
-            <div className="text-center">Login to my App</div>
-            <br/>
-            <div
-              data-pageload={pageLoad}
-              className="data-[pageload=true]:inline animate-hidden hidden">
-  
-              <UserDetails user={user}/>
-              <div className="flex justify-between">
-                <LoginButton user={user} setUser={setUser}/>
-                {user&&<LogoutButton setUser={setUser}/>}
-              </div>
-            </div>
-        </div>
-
+      <div className="rounded-lg w-96 min-h-96">
+        { user && <QueryField/>}
       </div>
     </>
   )

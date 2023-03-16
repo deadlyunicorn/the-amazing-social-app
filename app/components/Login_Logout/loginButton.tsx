@@ -1,6 +1,6 @@
 'use client'
 
-import {app} from "./appObject"
+import {app} from "../appObject"
 import { useState } from "react"
 import * as Realm from "realm-web"
 
