@@ -29,7 +29,7 @@ const LoginButton = (
       <button
         className="hover:text-blue-400 text-blue-600"
         onClick={()=>{login();}}>
-        Login
+        Anon Login
       </button>
     </>
   )
