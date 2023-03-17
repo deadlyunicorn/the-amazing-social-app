@@ -186,6 +186,7 @@ const MovieTitles = (
           
         }
         id="movie-menu">
+          <option disabled selected>Please select an option.</option>
         {
         fetchedTitles.map((element,index)=>(
           <option 
@@ -194,6 +195,8 @@ const MovieTitles = (
               {(element["title"])}
             </option>))
         }
+          {(fetchedTitles.length<dbEntries-400)&&
+          <option disabled>Please wait. More are loading..</option>}
       </motion.select>
 
       <br/>
