@@ -55,7 +55,12 @@ const RegisterForm = () =>{
     <form 
       onSubmit={async(event)=>{
         event.preventDefault();
-        await app.emailPasswordAuth.registerUser({email,password})
+        try{
+          await app.emailPasswordAuth.registerUser({email,password})
+        }
+        catch(error){
+          alert(`Error email is already in use. ${error}`)
+        }
         //.then(()=>{goToNextPage})
       
       }}
