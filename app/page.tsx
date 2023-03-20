@@ -9,8 +9,8 @@ import {app} from "@/app/components/appObject"
 //Realm
 import * as Realm from "realm-web"
 import UserDetails from "@/app/components/userDetails"
-import LoginButton from "@/app/components/Login_Logout/loginButton"
-import LogoutButton from "@/app/components//Login_Logout/logoutButton"
+import LoginButton from "@/app/components/Login_Logout_Register/anonymous/loginButton"
+import LogoutButton from "@/app/components//Login_Logout_Register/logoutButton"
 
 
 

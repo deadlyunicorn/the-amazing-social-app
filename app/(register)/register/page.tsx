@@ -4,9 +4,8 @@ import { useEffect, useState } from "react";
 import "@/app/components/Styles/styles.css"
 import * as Realm from "realm-web"
 import UserDetails from "@/app/components/userDetails";
-import LogoutButton from "../../components/Login_Logout/logoutButton";
-
-
+import LogoutButton from "@/app/components/Login_Logout_Register/logoutButton";
+import RegisterForm from "@/app/components/Login_Logout_Register/email/register_form";
 
 
 
@@ -48,43 +47,6 @@ const UserPage = () =>{
   )
 }
 
-const RegisterForm = () =>{
-  const [email,setEmail]=useState<string>("");
-  const [password,setPassword]=useState<string>("");
-  return(
-    <form 
-      onSubmit={async(event)=>{
-        event.preventDefault();
-        try{
-          await app.emailPasswordAuth.registerUser({email,password})
-        }
-        catch(error){
-          alert(`Error email is already in use. ${error}`)
-        }
-        //.then(()=>{goToNextPage})
-      
-      }}
-//add functionality to redirect you to a verification page where it tells them to check their email
 
-
-      className="flex flex-col gap-2 px-3 py-2">
-      
-      <input
-        onChange={(event)=>{setEmail(event.target.value);}}
-        className="py-1 px-2"
-        placeholder="Email" type={"email"} minLength={10} required/>
-      
-      <input
-        onChange={(event)=>{setPassword(event.target.value);}}
-        className="py-1 px-2"
-        placeholder="Password" type={"password"} minLength={10} required/>
-
-      <button 
-        className="border bg-slate-100 hover:bg-slate-200 px-2 py-1 rounded-md">
-        Submit
-      </button>
-    </form>
-  )
-}
 
 export default UserPage;
