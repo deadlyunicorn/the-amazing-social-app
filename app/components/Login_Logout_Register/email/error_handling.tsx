@@ -31,10 +31,10 @@ const ErrorHandler = (
     
   const resetSend=async()=>{
     if(!loading){
-      setLoading(true);
+      setLoading(true); //add a loading component 
       await app.emailPasswordAuth.sendResetPasswordEmail({email});
       setLoading(false);
-      alert(`Succes..`);
+      alert(`Succes..`); //add a success component
     }
   }
 
@@ -105,7 +105,7 @@ const InvalidPassword = (resetSend:()=>void) =>(
     <button 
       onClick={resetSend}
       className="w-fit hover:text-blue-400 text-blue-600">
-      Reset Password!
+      Send Password reset link.
     </button>
 
   </div>
