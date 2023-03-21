@@ -12,14 +12,14 @@ export default async function DynamicPage(
     token,
     tokenId}}:
   {searchParams:{
-    token:string|null,
-    tokenId:string|null}}
+    token:string,
+    tokenId:string}}
 ){
 
 
   
   try{
-    await app.emailPasswordAuth.confirmUser({})
+    await app.emailPasswordAuth.confirmUser({token,tokenId})
     //if error the following will be skipped
     return(<ConfirmationSuccess token={token} tokenId={tokenId}/>)
 
