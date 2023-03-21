@@ -21,7 +21,7 @@ export default async function DynamicPage(
   try{
     await app.emailPasswordAuth.confirmUser({token,tokenId})
     //if error the following will be skipped
-    return(<ConfirmationSuccess token={token} tokenId={tokenId}/>)
+    return(<ConfirmationSuccess/>)
 
   }
   catch(error){
@@ -35,18 +35,12 @@ export default async function DynamicPage(
 }
 
 
-const ConfirmationSuccess = (
-  {token,tokenId}:
-  {token:string|null,tokenId:string|null}
-) =>{
+const ConfirmationSuccess = () =>{
   return(
     <>
       <div className="w-56">
         <div className="break-all">
-
-        MyPost 
-        <br/> token:{token&&token.split(5)}
-        <br/> tokenID:{tokenId}
+        Success 
         </div>
       </div>
     </>
