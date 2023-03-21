@@ -51,3 +51,4 @@ ignore/old/mongodb[old]/fetchedData.tsx
 ignore/old/mongodb[old]/fetchedElement.unused
 ignore/old/mongodb[old]/makingItWork!!.md
 ignore/old/mongodb[old]/MongoGetElements.tsx
+ignore/old/mongodb[old]/fetchButton.tsx
