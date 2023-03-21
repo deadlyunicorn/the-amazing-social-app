@@ -2,7 +2,7 @@
 
 import "@/app/components/Styles/styles.css"
 
-import { FormEvent, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 
 import {app} from "@/app/components/appObject"
 import * as Realm from "realm-web"
