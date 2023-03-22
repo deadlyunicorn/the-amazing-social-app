@@ -7,13 +7,17 @@ interface MongoError{
   errorCode:string|null;
 };
 
-const LoginForm = (
-  {setErrorCode,
+const Form = (
+  {formType,
+  setErrorCode,
   email,setEmail,
-  password,setPassword}:
-  {setErrorCode:(error:string)=>void,
+  password,setPassword,
+  setUser
+  }:
+  {formType:string,setErrorCode:(error:string|null)=>void,
   email:string,setEmail:(email:string)=>void,
-  password:string,setPassword:(password:string)=>void
+  password:string,setPassword:(password:string)=>void,
+  setUser?:(user:Realm.User|null)=>void
   }
 ) =>{
 
@@ -24,20 +28,23 @@ const LoginForm = (
   
   
 
-  const loginSubmit = async(event:FormEvent<HTMLFormElement>)=>{
-    event.preventDefault();
+  const loginSubmit = async()=>{
     if(!loading){
+      setErrorCode("Loading")
       setLoading(true);
 
       const credentials=Realm.Credentials.emailPassword(email,password);
       try{
         await app.logIn(credentials)
+        if(setUser)setUser(app.currentUser);
+        setErrorCode(null)
+        
       }
 
       catch(error){
         const JSONError=error as MongoError;
 
-        console.log(JSONError.error + "\nerror_code:" + JSONError.errorCode);
+//        console.log(JSONError.error + "\nerror_code:" + JSONError.errorCode);
 
         if(JSONError.errorCode){
           setErrorCode(JSONError.errorCode);
@@ -54,10 +61,50 @@ const LoginForm = (
   }
 
 
+  const registerSubmit = async()=>{
+        if(!loading){
+          setLoading(true);
+          try{
+            setErrorCode("Loading");
+            await app.emailPasswordAuth.registerUser({email,password})
+            setErrorCode("register_complete");//prompt user to check email for confirmation.
+          }
+          catch(error){
+            const JSONerror=error as MongoError;
+            if (JSONerror.errorCode){
+              setErrorCode(JSONerror.errorCode);
+            }
+            else{
+              setErrorCode("Uknown Error")
+            }
+          }
+          finally{
+            setLoading(false);
+            //.then(()=>{goToNextPage})
+          }
+        }
+  }
+
+  const FormSubmit=(event:FormEvent<HTMLFormElement>)=>{
+    event.preventDefault();
+
+    switch(formType){
+      case "register":
+        registerSubmit();
+        break;
+
+      case "login":
+        loginSubmit();
+        break;
+    }
+
+  }
+
+
   return(
 
     <form 
-    onSubmit={loginSubmit}
+    onSubmit={FormSubmit}
     //add functionality to redirect you to a verification page where it tells them to check their email
     
     
@@ -83,5 +130,5 @@ const LoginForm = (
 
 }
 
-export default LoginForm;
+export default Form;
 
