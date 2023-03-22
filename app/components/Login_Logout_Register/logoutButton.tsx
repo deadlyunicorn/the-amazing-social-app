@@ -7,9 +7,18 @@ const LogoutButton = (
 ) => {
 
 
-  const logout = async() =>{
+  const deleteUser = async() =>{
     if (app.currentUser){
       await app.deleteUser(app.currentUser);
+      //removeUser -> Logouts
+      //deleteUser -> Deletes user from DB as well
+      setUser(null);
+    }
+  }
+
+  const logout = async() =>{
+    if (app.currentUser){
+      await app.removeUser(app.currentUser);
       //removeUser -> Logouts
       //deleteUser -> Deletes user from DB as well
       setUser(null);
@@ -20,9 +29,20 @@ const LogoutButton = (
       <>
       <button 
         className="hover:text-blue-400 text-blue-600"
-        onClick={()=>{logout();}}>
-        Logout
+        onClick={()=>{deleteUser();}}>
+        Delete Account
       </button>
+      {app.currentUser&&
+      app.currentUser['identities'][0]['providerType']!="anon-user"&&
+      <>
+        &nbsp;or&nbsp;
+        <button 
+          className="hover:text-blue-400 text-blue-600"
+          onClick={()=>{logout();}}>
+          Logout
+        </button>
+      </>
+      }
     </>
     )
 }
