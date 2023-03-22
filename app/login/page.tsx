@@ -10,7 +10,7 @@ import * as Realm from "realm-web"
 import UserDetails from "@/app/components/userDetails";
 import LogoutButton from "@/app/components/Login_Logout_Register/logoutButton";
 
-import LoginForm from "../components/Login_Logout_Register/email/login_form";
+import Form from "@/app/components/Login_Logout_Register/email/login_register_form";
 import ErrorHandler from "@/app/components/Login_Logout_Register/email/error_handling";
 
 
@@ -41,10 +41,10 @@ const UserPage = () =>{
   return(
     <div>
 
-      <div className="bg-white p-4 rounded-lg w-96 h-44 mb-4 duration-700 ">
+      <div className="bg-white p-4 rounded-lg w-96 h-44 mb-4 animate-appearance text-center ">
         <div
           data-pageload={pageLoad}
-          className="data-[pageload=true]:inline animate-hidden hidden">
+          className="data-[pageload=true]:inline animate-hidden hidden ">
 
             {user?
             <>
@@ -54,7 +54,12 @@ const UserPage = () =>{
             </>:
             <>
               Login today!
-              <LoginForm setErrorCode={setErrorCode} email={email} setEmail={setEmail} password={password} setPassword={setPassword}/>
+              <Form
+                formType="login"
+                setErrorCode={setErrorCode} 
+                email={email} setEmail={setEmail} 
+                password={password} setPassword={setPassword}
+                setUser={setUser}/>
 
             </>
             }
