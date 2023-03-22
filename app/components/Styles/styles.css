@@ -3,6 +3,11 @@
   animation-name: appear;
 }
 
+.animate-appearance{
+  animation-duration: 1s;
+  animation-name: appear;
+}
+
 @keyframes appear {
   from{
     opacity: 0;
@@ -11,3 +16,5 @@
     opacity: 1;
   }
 }
+
+
