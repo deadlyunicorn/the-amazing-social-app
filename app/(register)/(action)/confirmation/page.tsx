@@ -1,11 +1,15 @@
+import "@/app/components/Styles/styles.css"
 import {app} from "@/app/components/appObject"
+import ErrorHandler from "@/app/components/Login_Logout_Register/email/error_handling";
+import Link from "next/link";
+
+interface MongoError{
+  error:string;
+  errorCode:string|null;
+};
 
 
-interface errorInterface{
-  errorCode:string
-}
-
-export default async function DynamicPage(
+export default async function ConfirmationPage(
   
   //{params}=params.params
   {searchParams:{
@@ -13,52 +17,43 @@ export default async function DynamicPage(
     tokenId}}:
   {searchParams:{
     token:string,
-    tokenId:string}}
-){
-
-
+    tokenId:string}})
+{
   
   try{
     await app.emailPasswordAuth.confirmUser({token,tokenId})
-    //if error the following will be skipped
-    return(<ConfirmationSuccess/>)
-
   }
   catch(error){
-    const errorJson=error as errorInterface;
-    if(errorJson.errorCode=="BadRequest"){
-      console.log("rofl");
-    }
-    return(<ConfirmationFailure/>)
+    const JSONError=error as MongoError;
   }
 
-}
 
+  
 
-const ConfirmationSuccess = () =>{
   return(
     <>
-      <div className="w-56">
-        <div className="break-all">
-        Success 
-        </div>
+      <div className="bg-white p-4 rounded-lg w-96 h-44 mb-4 animate-appearance text-center ">
+      {token&&tokenId&&
+      <>
+        Your email has been successfully confirmed!
+        <br/>You can now&nbsp;
+        <Link 
+        className="w-fit hover:text-blue-400 text-blue-600"
+        href="/login">login</Link>
+      </>
+      }
+      <br/>
+      {!token||!tokenId&&<PageNotFound/>}
       </div>
     </>
   )
 }
 
-const ConfirmationFailure = (
-) =>{
+
+const PageNotFound = () =>{
   return(
     <>
-      <div className="w-56">
-        <div className="break-all">
-
-        MyPost 
-        Confirmation Failed
-        </div>
-      </div>
+      You might have clicked on this page by mistake.
     </>
   )
 }
-
