@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className='bg-gradient-to-b from-zinc-700  to-zinc-900 h-screen overflow-auto'>
         <Header/>
       
-        <main className="flex justify-center mt-28">
+        <main className="flex justify-center mt-28 min-h-screen">
           <div className="max-w-xs py-5 pb-32">
             {children}
           </div>
