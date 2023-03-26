@@ -132,8 +132,8 @@ const MovieTitles = (
         {$sort:{title:1}},
         //Before using skip I simply was increasing the limit by 100
         //this is more optimized.. both for the user and the db..
-        {$skip:(itemsToSkip-100)}, 
-        {$limit:100}
+        {$skip:(itemsToSkip-2000)}, 
+        {$limit:2000}
       ])
       .then(data=>{
         if(fetchedTitles&&data){
@@ -151,11 +151,11 @@ const MovieTitles = (
 
       //kinda works? //better for less movies..
       const interval = setInterval(()=>{
-          if(itemsToSkip<dbEntries+100){
-            setItemsToSkip(itemsToSkip+100);
+          if(itemsToSkip<dbEntries+2000){
+            setItemsToSkip(itemsToSkip+2000);
             fetchTitles();
           }; 
-        },10000)
+        },1000)
       
       return()=>{clearInterval(interval)};
       
