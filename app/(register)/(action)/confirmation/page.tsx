@@ -25,6 +25,7 @@ export default async function ConfirmationPage(
   }
   catch(error){
     const JSONError=error as MongoError;
+    alert(JSONError.errorCode);
   }
 
 
