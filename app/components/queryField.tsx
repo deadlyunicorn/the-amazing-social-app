@@ -108,9 +108,11 @@ const MovieTitles = (
   ) =>{
 
   const [fetchedTitles,setFetchedTitles]=useState<null|any[]>(null)
-  const [itemsToSkip,setItemsToSkip]=useState(100);
+  const [itemsToSkip,setItemsToSkip]=useState(2000);
 
   const [dbEntries,setDbEntries]=useState(0);
+  const [initialFetch,setInitialFetch]=useState(true);
+  const [triggerFetch,toggleTriggerFetch]=useState(false);
 
   useEffect(()=>{
     const getEntries=async()=>{
@@ -132,8 +134,8 @@ const MovieTitles = (
         {$sort:{title:1}},
         //Before using skip I simply was increasing the limit by 100
         //this is more optimized.. both for the user and the db..
-        {$skip:(itemsToSkip-2000)}, 
-        {$limit:2000}
+        // {$skip:(itemsToSkip-2000)}, 
+        // {$limit:2000}
       ])
       .then(data=>{
         if(fetchedTitles&&data){
@@ -144,22 +146,38 @@ const MovieTitles = (
         }
 
       });
-    }
-    if(itemsToSkip<101){ //initial function call
-      fetchTitles();
-    }
+    };
+    fetchTitles();
+
 
       //kinda works? //better for less movies..
-      const interval = setInterval(()=>{
-          if(itemsToSkip<dbEntries+2000){
-            setItemsToSkip(itemsToSkip+2000);
-            fetchTitles();
-          }; 
-        },1000)
+      // const interval = setInterval(()=>{
+        
+      //   if(initialFetch){ //initial function call
+      //     fetchTitles();
+      //     setInitialFetch(false);
+      //     toggleTriggerFetch(!triggerFetch);
+      //   }
+      //   else if(fetchedTitles&&dbEntries-itemsToSkip>0){
+
+      //     if(itemsToSkip<=dbEntries-2000){
+      //       setItemsToSkip(itemsToSkip+2000);
+      //       fetchTitles();
+
+      //     }
+      //     else if(itemsToSkip<=dbEntries){
+      //       setItemsToSkip(itemsToSkip+(dbEntries-itemsToSkip));
+      //       fetchTitles();
+      //     }
+          
+      //     console.log(dbEntries-itemsToSkip)
+      //     toggleTriggerFetch(!triggerFetch);
+      //   }
+      // },1000)
       
-      return()=>{clearInterval(interval)};
+      // return()=>{clearInterval(interval)};
       
-  },[itemsToSkip,dbEntries])
+  },[dbEntries])
 
 
 
