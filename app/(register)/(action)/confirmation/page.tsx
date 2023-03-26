@@ -6,6 +6,7 @@ import {app} from "@/app/components/appObject"
 import ErrorHandler from "@/app/components/Login_Logout_Register/email/error_handling";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import {useSearchParams} from 'next/navigation';
 
 interface MongoError{
   error:string;
@@ -16,13 +17,16 @@ interface MongoError{
 export default function ConfirmationPage(
   
   //{params}=params.params
-  {searchParams:{
-    token,
-    tokenId}}:
-  {searchParams:{
-    token:string,
-    tokenId:string}})
+)
 {
+
+  //For some reason search params 
+  //was working alright on the client side
+  //when developing..
+  //but not when deploying.
+  const searchParams=useSearchParams();
+  const token=searchParams.get("token");
+  const tokenId=searchParams.get("tokenId");
   
 
 
@@ -31,8 +35,9 @@ export default function ConfirmationPage(
   useEffect(()=>{
     const confirm=async()=>{
       try{
-        await app.emailPasswordAuth.confirmUser({token,tokenId})
-        alert("success")
+        if (token&&tokenId){
+          await app.emailPasswordAuth.confirmUser({token,tokenId})
+        }
       }
       catch(error){
         const JSONError=error as MongoError;

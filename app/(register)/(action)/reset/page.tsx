@@ -6,6 +6,9 @@ import "@/app/components/Styles/styles.css"
 import {app} from "@/app/components/appObject"
 import ErrorHandler from "@/app/components/Login_Logout_Register/email/error_handling";
 
+import {useSearchParams} from 'next/navigation';
+
+
 interface MongoError{
   error:string;
   errorCode:string|null;
@@ -15,13 +18,14 @@ interface MongoError{
 export default function ResetPage(
   
   //{params}=params.params
-  {searchParams:{
-    token,
-    tokenId}}:
-  {searchParams:{
-    token:string,
-    tokenId:string}}
+
 ){
+
+
+  const searchParams=useSearchParams();
+  const token=searchParams.get("token");
+  const tokenId=searchParams.get("tokenId");
+  
   
 
 
@@ -54,8 +58,11 @@ export default function ResetPage(
         setLoading(true);
 
         try{
-          await app.emailPasswordAuth.resetPassword({password,token,tokenId});
-          setErrorCode("ResetSuccess");
+          if(token&&tokenId){
+            await app.emailPasswordAuth.resetPassword({password,token,tokenId});
+            setErrorCode("ResetSuccess");
+          }
+
         }
         catch(error){
           const errorJSON=error as MongoError;
