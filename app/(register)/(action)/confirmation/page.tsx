@@ -51,8 +51,8 @@ export default function ConfirmationPage(
 
   return(
     <>
-      <div className="bg-white p-4 rounded-lg w-96 h-44 mb-4 animate-appearance text-center ">
       {token&&tokenId&&!errorCode&&
+      <div className="bg-white p-4 rounded-lg w-96 h-44 mb-4 animate-appearance text-center ">
       <>
         Your email has been successfully confirmed!
         <br/>You can now&nbsp;
@@ -60,12 +60,12 @@ export default function ConfirmationPage(
         className="w-fit hover:text-blue-400 text-blue-600"
         href="/login">login</Link>
       </>
+      </div>
       }
+      {!token||!tokenId&&<PageNotFound/>}
       {errorCode&&
       <ErrorHandler setErrorCode={setErrorCode} errorCode={errorCode}/>}
       <br/>
-      {!token||!tokenId&&<PageNotFound/>}
-      </div>
     </>
   )
 }
