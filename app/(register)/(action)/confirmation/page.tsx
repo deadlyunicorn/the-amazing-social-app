@@ -1,7 +1,11 @@
+'use client'
+
+
 import "@/app/components/Styles/styles.css"
 import {app} from "@/app/components/appObject"
 import ErrorHandler from "@/app/components/Login_Logout_Register/email/error_handling";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 interface MongoError{
   error:string;
@@ -9,7 +13,7 @@ interface MongoError{
 };
 
 
-export default async function ConfirmationPage(
+export default function ConfirmationPage(
   
   //{params}=params.params
   {searchParams:{
@@ -20,21 +24,30 @@ export default async function ConfirmationPage(
     tokenId:string}})
 {
   
-  try{
-    await app.emailPasswordAuth.confirmUser({token,tokenId})
-  }
-  catch(error){
-    const JSONError=error as MongoError;
-    alert(JSONError.errorCode);
-  }
 
 
+  const [errorCode,setErrorCode]=useState<string|null>(null);
+
+  useEffect(()=>{
+    const confirm=async()=>{
+      try{
+        await app.emailPasswordAuth.confirmUser({token,tokenId})
+        alert("success")
+      }
+      catch(error){
+        const JSONError=error as MongoError;
+        setErrorCode(JSONError.errorCode);
+      }
+
+    }
+    confirm();
+  },[token,tokenId])
   
 
   return(
     <>
       <div className="bg-white p-4 rounded-lg w-96 h-44 mb-4 animate-appearance text-center ">
-      {token&&tokenId&&
+      {token&&tokenId&&!errorCode&&
       <>
         Your email has been successfully confirmed!
         <br/>You can now&nbsp;
@@ -43,6 +56,8 @@ export default async function ConfirmationPage(
         href="/login">login</Link>
       </>
       }
+      {errorCode&&
+      <ErrorHandler setErrorCode={setErrorCode} errorCode={errorCode}/>}
       <br/>
       {!token||!tokenId&&<PageNotFound/>}
       </div>
