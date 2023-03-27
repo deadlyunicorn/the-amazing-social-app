@@ -1,6 +1,7 @@
 'use client'
 
 import {app} from "@/app/components/appObject"
+import Link from "next/link"
 import { useState } from "react"
 import * as Realm from "realm-web"
 
@@ -26,11 +27,18 @@ const LoginButton = (
   if (loading||!user)
   return (
     <>
-      <button
-        className="hover:text-blue-400 text-blue-600"
-        onClick={()=>{login();}}>
-        Anon Login
-      </button>
+    <div className="flex flex-col justify-center items-center w-full">
+        <button
+          className="hover:text-blue-400 text-blue-600  "
+          onClick={()=>{login();}}>
+          Anon Login
+        </button>
+        <Link 
+        className="hover:text-blue-400 text-blue-600  "
+        href="/login">
+          Email Login
+        </Link>
+      </div>
     </>
   )
   else return(<>hello?</>)

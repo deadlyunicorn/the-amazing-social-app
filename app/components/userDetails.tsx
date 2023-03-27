@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 const UserDetails = (
   {user}:{user:Realm.User|null}
 ) => {
@@ -16,7 +18,18 @@ const UserDetails = (
     return(
       <>
         <div className="text-3xl">
-          Not logged in. <span className="text-lg">Consider&nbsp;logging&nbsp;in</span>
+          Not logged in. 
+          <br/>
+          <br/>
+            <p className="text-lg text-center">
+              Consider&nbsp;          
+            <Link
+              className="hover:text-blue-400 text-blue-600"
+              href="/">
+              Logging in
+            </Link>
+            .
+            </p>
         </div>
       </>
     )

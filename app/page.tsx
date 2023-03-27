@@ -36,8 +36,6 @@ const Testing = () => {
     <>
       <div>
         <div className="bg-white p-4 rounded-lg w-96 h-48 animate-appearance">
-            <div className="text-center">Login to my App</div>
-            <br/>
             <div
               data-pageload={pageLoad}
               className="data-[pageload=true]:inline animate-hidden hidden">

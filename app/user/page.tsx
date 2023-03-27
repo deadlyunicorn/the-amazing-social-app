@@ -3,7 +3,7 @@ import {app} from "@/app/components/appObject"
 import { useEffect, useState } from "react";
 import "@/app/components/Styles/styles.css"
 import * as Realm from "realm-web"
-import UserDetails from "./components/userDetails";
+import UserDetails from "@/app/components/userDetails";
 
 
 
@@ -36,5 +36,6 @@ const UserPage = () =>{
     </div>
   )
 }
+
 
 export default UserPage;

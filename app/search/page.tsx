@@ -41,7 +41,16 @@ const Testing = () => {
       <div className="rounded-lg w-96 min-h-96">
         { user ? 
         <QueryField/> :
-        <UserDetailsWrap pageLoad={pageLoad}/>
+        <div className="bg-white p-4 rounded-lg w-96 h-48">
+        <div
+          data-pageload={pageLoad}
+          className="data-[pageload=true]:inline animate-hidden hidden">
+  
+          <UserDetails user={user}/>
+          <div className="flex justify-between">
+          </div>
+        </div>
+      </div>
         }
       </div>
     </>
