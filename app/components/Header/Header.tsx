@@ -8,7 +8,7 @@ import Time from "./Header_time"
 
 const Header = () => (
   <header 
-    className="absolute w-full ">
+    className="fixed w-full">
       <SiteLogo/>
       <GuestOptions/>
   </header>

@@ -18,7 +18,12 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.svg"/>
 
       </head>
-      <body className='bg-gradient-to-b from-zinc-700  to-zinc-900 h-screen overflow-auto flex flex-col'>
+
+      <body className='bg-gradient-to-b from-zinc-700  to-zinc-900 
+      w-screen h-full
+      flex flex-col overflow-x-hidden
+      relative
+      '>
         <Header/>
       
         <main className="flex justify-center mt-28 min-h-screen w-screen">

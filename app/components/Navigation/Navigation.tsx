@@ -1,7 +1,7 @@
 import Link from "next/link"
 
 const NavigationBar = () => (
-  <nav className="w-full h-16 absolute bottom-0
+  <nav className="w-full h-16 fixed bottom-0
   border-t border-zinc-400 rounded-t-md bg-black bg-opacity-25
   flex justify-evenly items-center">
 
