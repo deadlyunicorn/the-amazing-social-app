@@ -5,20 +5,44 @@ import Link from "next/link"
 import { useState } from "react"
 import * as Realm from "realm-web"
 
+interface MongoError{
+  error:string;
+  errorCode:string|null;
+};
 
 
 const LoginButton = (
 
-  {setUser,user}:{setUser:(user:Realm.User)=>void,user:Realm.User|null}
+  {setUser,user,
+  setErrorCode}
+  :{setUser:(user:Realm.User)=>void,user:Realm.User|null,
+  setErrorCode:(error:string|null)=>void
+  }
 ) =>{
 
   const [loading,setLoading]=useState(false)
   const login=async()=>{
     if (!loading){
-    setLoading(true); //prevents multiple sessions if
+      setErrorCode("Loading")
+
+      setLoading(true); 
+      //prevents multiple sessions if
     //somebody clicks the button multipl times
-    const user:Realm.User = await app.logIn(Realm.Credentials.anonymous()); 
-    setUser(user);
+    
+    try{
+      const user:Realm.User = await app.logIn(Realm.Credentials.anonymous()); 
+      setUser(user);
+      setErrorCode(null)
+    }
+    catch(error){
+      const JSONError=error as MongoError;
+      if(JSONError.errorCode){
+        setErrorCode(JSONError.errorCode);
+      }
+      else{
+        setErrorCode("Uknown Error")
+      }
+    }
     setLoading(false);
   }
 

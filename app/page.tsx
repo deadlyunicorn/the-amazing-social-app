@@ -11,6 +11,7 @@ import * as Realm from "realm-web"
 import UserDetails from "@/app/components/userDetails"
 import LoginButton from "@/app/components/Login_Logout_Register/anonymous/loginButton"
 import LogoutButton from "@/app/components//Login_Logout_Register/logoutButton"
+import ErrorHandler from "./components/Login_Logout_Register/email/error_handling"
 
 
 
@@ -23,6 +24,10 @@ const Testing = () => {
 
 
   const [user,setUser]=useState<Realm.User | null>(null);
+  const [errorCode,setErrorCode]=useState<string|null>(null);
+
+
+
 
   useEffect(()=>{
     setUser(app.currentUser);
@@ -42,11 +47,17 @@ const Testing = () => {
   
               <UserDetails user={user}/>
               <div className="flex justify-between">
-                <LoginButton user={user} setUser={setUser}/>
+                <LoginButton user={user} setUser={setUser} setErrorCode={setErrorCode}/>
                 {user&&<LogoutButton setUser={setUser}/>}
               </div>
             </div>
         </div>
+        {errorCode&&
+        <div className="mt-4">
+
+          <ErrorHandler errorCode={errorCode} setErrorCode={setErrorCode}/>
+        </div>
+        }
 
       </div>
     </>
