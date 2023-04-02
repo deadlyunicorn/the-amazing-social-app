@@ -12,6 +12,7 @@ import UserDetails from "@/app/components/userDetails"
 import LoginButton from "@/app/components/Login_Logout_Register/anonymous/loginButton"
 import LogoutButton from "@/app/components/Login_Logout_Register/logoutButton"
 import ErrorHandler from "@/app/components/Login_Logout_Register/email/error_handling"
+import WhiteBox from "../components/whiteBox"
 
 
 
@@ -28,7 +29,7 @@ const LoginPage = () => {
 
   return (
     <>
-        <div className="bg-white p-4 rounded-lg w-96 h-48 animate-appearance">
+      <WhiteBox>
 
             <div>
               <UserDetails/>
@@ -36,7 +37,7 @@ const LoginPage = () => {
                 <LoginButton/>
               </div>
             </div>
-        </div>
+      </WhiteBox>
 
         
         {errorCode&&
