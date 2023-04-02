@@ -1,12 +1,14 @@
 'use client'
 
-import { FormEvent, useEffect, useState } from "react"
+import { FormEvent, useContext, useEffect, useState } from "react"
 import "@/app/components/Styles/styles.css"
 
 import {app} from "@/app/components/appObject"
 import ErrorHandler from "@/app/components/Login_Logout_Register/email/error_handling";
 
 import {useSearchParams} from 'next/navigation';
+import WhiteBox from "@/app/components/whiteBox";
+import { appContext } from "@/app/components/ContextComponent/contextComp";
 
 
 interface MongoError{
@@ -30,8 +32,8 @@ export default function ResetPage(
 
 
 
-  
-  const [errorCode,setErrorCode]=useState<string|null>(null);
+  const {errorCode,setErrorCode}=useContext(appContext)
+
   const [password,setPassword]=useState('');
   const [confirmPassword,setConfirmPassword]=useState('');
   const [loading,setLoading]=useState(false);
@@ -82,21 +84,22 @@ export default function ResetPage(
   return(
     <>
 
-      <div className="bg-white p-4 rounded-lg w-96 h-44 mb-4 animate-appearance text-center ">
+      <WhiteBox>
 
-      {token&&
-      <>
-        Reset Password
-        {resetPassForm({resetPassword,setPassword,setConfirmPassword})}
-      </>
+        {token&&
+        <>
+          Reset Password
+          {resetPassForm({resetPassword,setPassword,setConfirmPassword})}
+        </>
 
-      }
-      
-      <br/>
-      {!token&&<PageNotFound/>}
+        }
         
-      </div>
-      {errorCode&&<ErrorHandler errorCode={errorCode} setErrorCode={setErrorCode}/>}
+        <br/>
+        {!token&&<PageNotFound/>}
+          
+      </WhiteBox>
+      {errorCode&&<ErrorHandler/>}
+
       
     </>
   )

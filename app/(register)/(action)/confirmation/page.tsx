@@ -5,8 +5,10 @@ import "@/app/components/Styles/styles.css"
 import {app} from "@/app/components/appObject"
 import ErrorHandler from "@/app/components/Login_Logout_Register/email/error_handling";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {useSearchParams} from 'next/navigation';
+import { appContext } from "@/app/components/ContextComponent/contextComp";
+import WhiteBox from "@/app/components/whiteBox";
 
 interface MongoError{
   error:string;
@@ -28,9 +30,8 @@ export default function ConfirmationPage(
   const token=searchParams.get("token");
   const tokenId=searchParams.get("tokenId");
   
+  const {errorCode,setErrorCode}=useContext(appContext)
 
-
-  const [errorCode,setErrorCode]=useState<string|null>(null);
 
   useEffect(()=>{
     const confirm=async()=>{
@@ -52,15 +53,16 @@ export default function ConfirmationPage(
   return(
     <>
       {token&&tokenId&&!errorCode&&
-      <div className="bg-white p-4 rounded-lg w-96 h-44 mb-4 animate-appearance text-center ">
-      <>
+      <WhiteBox>
+
+        <>
         Your email has been successfully confirmed!
         <br/>You can now&nbsp;
         <Link 
         className="w-fit hover:text-blue-400 text-blue-600"
         href="/login">login</Link>
       </>
-      </div>
+      </WhiteBox>
       }
       {!token||!tokenId&&<PageNotFound/>}
       {errorCode&&
