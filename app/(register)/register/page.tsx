@@ -2,7 +2,7 @@
 
 import "@/app/components/Styles/styles.css"
 
-import {  useContext, useState } from "react";
+import {  useContext, useEffect, useState } from "react";
 
 
 import UserDetails from "@/app/components/userDetails";
@@ -17,6 +17,10 @@ import WhiteBox from "@/app/components/whiteBox";
 const UserPage = () =>{
 
   const {user,setUser,errorCode,setErrorCode}=useContext(appContext)
+
+  useEffect(()=>{
+    setErrorCode(null);
+  },[])
 
 
   const [email,setEmail]=useState<string>("");
