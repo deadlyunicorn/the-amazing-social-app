@@ -2,10 +2,11 @@
 
 import {app} from "@/app/components/appObject"
 import Link from "next/link";
-import {  ReactNode, useEffect, useState } from "react"
+import {  ReactNode, useContext, useEffect, useState } from "react"
 import "@/app/components/Styles/styles.css"
 
 import * as Realm from "realm-web"
+import { appContext } from "@/app/components/ContextComponent/contextComp";
 
 
 interface MongoError{
@@ -13,20 +14,15 @@ interface MongoError{
   errorCode:string|null;
 };
 
-const ErrorHandler = (
-  {errorCode,setErrorCode,
+const ErrorHandler = ({
   email
   }:
   {
-    errorCode:string,
-    setErrorCode:(changeCode:(null|string))=>void,
     email?:string
   }
   ) => {
 
-
-
-
+  const {errorCode,setErrorCode}=useContext(appContext)
   const [loading,setLoading]=useState(false)
 
   const confirmationSend=async()=>{
@@ -44,7 +40,7 @@ const ErrorHandler = (
   //let errorSelect; //We know the error when component 
   //gets rendered so we don't have to use hook ig?
   
-  const [errorSelect,setErrorSelect]=useState<ReactNode>("Uknown error! Try again.");
+  const [errorSelect,setErrorSelect]=useState<ReactNode>(null);
 
   useEffect(()=>{
     switch(errorCode){
