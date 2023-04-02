@@ -1,15 +1,29 @@
 import Link from "next/link"
+import LogoutButton from "@/app/components/Login_Logout_Register/logoutButton"
+
+import { useContext } from "react"
+import { appContext } from "@/app/components/ContextComponent/contextComp"
+
 
 const UserDetails = (
-  {user}:{user:Realm.User|null}
 ) => {
+  const {user,setUser}=useContext(appContext)
 
   if(user){
 
     return(
       <>
-      <div className="text-3xl">
-        Logged in with <span className="text-lg">{user.id}</span>
+      <div className="
+        text-3xl 
+        flex flex-col justify-between 
+        h-28 ">
+        
+        Logged in with 
+          <span className="text-lg">
+            {user.id}
+          </span>
+          {user&&<LogoutButton setUser={setUser}/>}
+
       </div>
     </>
     )
@@ -25,7 +39,7 @@ const UserDetails = (
               Consider&nbsp;          
             <Link
               className="hover:text-blue-400 text-blue-600"
-              href="/">
+              href="/login">
               Logging in
             </Link>
             .
