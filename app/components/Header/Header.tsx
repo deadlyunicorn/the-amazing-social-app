@@ -1,8 +1,15 @@
+'use client'
 import Link from "next/link"
+import Image from "next/image"
 import { Neucha } from 'next/font/google'
-import { ReactNode } from "react"
+import { ReactNode, useContext, useEffect, useState } from "react"
 import Time from "./Header_time"
   const neucha = Neucha({subsets:['latin'],weight:"400"})
+import {app} from "@/app/components/appObject"
+
+import "@/app/components/Styles/styles.css"
+import { appContext } from "@/app/components/ContextComponent/contextComp"
+
 
 
 
@@ -18,22 +25,29 @@ const SiteLogo = () => (
   <div
   className="
     text-3xl  flex justify-center
-    text-neutral-300 bg-neutral-800 p-2">
+    text-yellow-200 bg-neutral-800 p-2">
 
     <span className={neucha.className}>
-      <Link href="/" className='underline'>
+      <Link href="/" className=' flex items-center gap-x-3'>
         Social App
+        <Image alt="Page icon" width={30} height={30} src="/favicon.svg"/>
       </Link>
     </span>
   </div>
 
 )
 
-const GuestOptions = () => (
+const GuestOptions = () => {
+  const [pageLoad,setPageLoad]=useState(false);
+  const {user}=useContext(appContext)
+
+
+  return(
   <div 
   className="w-full bg-neutral-800 
   flex justify-between gap-2 
-  py-2 px-2 border-t border-zinc-400">
+  py-2 px-2 border-t border-zinc-400
+  ">
 
 
     <div>
@@ -43,8 +57,10 @@ const GuestOptions = () => (
     </div>
 
     {/* If not Signed In show the following else show "Profile Button" */}
-    <div>
-      <Link href="/login">
+    {!user&&
+    <div className="animate-appearance">
+
+        <Link href="/login">
         <Authenticate>
           Log in
         </Authenticate>
@@ -57,10 +73,24 @@ const GuestOptions = () => (
       </Link>
 
     </div>
+      }
+
+{user&&
+    <div className="animate-appearance">
+
+        <Link href="/user">
+        <Authenticate>
+          Profile
+        </Authenticate>
+      </Link>
+
+    </div>
+      }
+    
     {/*  */}
 
   </div>
-)
+)}
 
 const Authenticate = (props:{children:ReactNode}) => (
   <button 
