@@ -1,4 +1,5 @@
 import {app} from "@/app/components/appObject"
+import { useRouter } from "next/navigation";
 import {  FormEvent, useState } from "react";
 import * as Realm from "realm-web"
 
@@ -25,7 +26,7 @@ const Form = (
   
   const [loading,setLoading]=useState(false);
 
-  
+  const router = useRouter();
   
 
   const loginSubmit = async()=>{
@@ -37,7 +38,8 @@ const Form = (
       try{
         await app.logIn(credentials)
         if(setUser)setUser(app.currentUser);
-        setErrorCode(null)
+        setErrorCode(null);
+        router.push('/')
         
       }
 
