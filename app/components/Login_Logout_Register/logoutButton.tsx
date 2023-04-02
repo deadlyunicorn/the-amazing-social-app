@@ -26,7 +26,7 @@ const LogoutButton = (
   }
 
     return(
-      <>
+      <div className="text-lg flex gap-x-3 justify-center">
       <button 
         className="hover:text-blue-400 text-blue-600"
         onClick={()=>{deleteUser();}}>
@@ -43,7 +43,7 @@ const LogoutButton = (
         </button>
       </>
       }
-    </>
+    </div>
     )
 }
 

@@ -1,16 +1,11 @@
 import "@/app/components/Styles/styles.css"
+import WhiteBox from "@/app/components/whiteBox"
 
 
 export default function Loader(){
   return(
-    <>
-      <div>
-        <div className="bg-white p-4 rounded-lg w-96 h-48 animate-appearance flex flex-col justify-center">
-            <div className="text-center">Loading...</div>
-            <br/>
-        </div>
-
-      </div>
-    </>
+        <WhiteBox>
+            <div className="text-center flex flex-col justify-center">Loading...</div>
+        </WhiteBox>
   )
 }
