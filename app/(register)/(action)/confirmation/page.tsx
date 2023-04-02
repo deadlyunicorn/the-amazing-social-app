@@ -64,7 +64,7 @@ export default function ConfirmationPage(
       }
       {!token||!tokenId&&<PageNotFound/>}
       {errorCode&&
-      <ErrorHandler setErrorCode={setErrorCode} errorCode={errorCode}/>}
+      <ErrorHandler/>}
       <br/>
     </>
   )
