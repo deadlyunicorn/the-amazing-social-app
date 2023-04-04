@@ -1,7 +1,8 @@
 import Header from '@/app/components/Header/Header'
 import NavigationBar from '@/app/components/Navigation/Navigation'
 import '@/app/components/Styles/globals.css'
-import UserContext from './components/ContextComponent/contextComp'
+import "@/app/components/Styles/styles.css"
+import UserContext from '@/app/components/ContextComponent/contextComp'
 
 export const metadata = {
   title: 'Social App',
