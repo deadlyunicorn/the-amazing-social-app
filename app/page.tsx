@@ -3,7 +3,6 @@
 
 //
 import { useContext, useEffect} from "react"
-import "@/app/components/Styles/styles.css"
 
 //Realm
 import UserDetails from "@/app/components/userDetails"
@@ -12,6 +11,8 @@ import ErrorHandler from "@/app/components/Login_Logout_Register/email/error_han
 
 import WhiteBox from "@/app/components/whiteBox"
 import { appContext } from "@/app/components/ContextComponent/contextComp"
+
+import About from "@/app/components/about"
 
 
 
@@ -33,14 +34,20 @@ const Homepage = () => {
   return (
     <>
       <WhiteBox>
-        <UserDetails/>
-        <LoginButton/>
+        <About/>
       </WhiteBox>
 
+
+
+      <WhiteBox>
+          <UserDetails/>
+      </WhiteBox>
+
+
       {errorCode&&
-        <div className="mt-4">
-          <ErrorHandler/>
-        </div>
+      <div className="mt-4">
+        <ErrorHandler/>
+      </div>
       }
 
     </>
