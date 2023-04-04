@@ -13,10 +13,7 @@ body {
 
 
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+
 
 
 input {
@@ -34,6 +31,26 @@ input {
   }
 }
 
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+a {
+  color: inherit;
+  text-decoration: none;
+  color: rgb(37 99 235);
+
+}
+
+a:hover{
+  color: rgb(96 165 250);
+}
+
+h1{
+  border-top: solid 1px;
+  font-size: 1.875rem/* 30px */;
+  line-height: 2.25rem/* 36px */;
+}
+
