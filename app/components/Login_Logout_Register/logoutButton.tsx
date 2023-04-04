@@ -1,27 +1,63 @@
 'use client'
-import {app} from "../../components/appObject"
+import {app} from "@/app/components/appObject"
+import { useContext, useState } from "react"
+import { appContext } from "@/app/components/ContextComponent/contextComp"
+
 import * as Realm from "realm-web"
 
-const LogoutButton = (
-  {setUser}:{setUser:(user:Realm.User|null)=>void}
-) => {
+interface MongoError{
+  error:string;
+  errorCode:string|null;
+};
+
+const LogoutButton = () => {
+
+  const {setUser,setErrorCode}=useContext(appContext)
+  const [loading,setLoading]=useState(false);
 
 
-  const deleteUser = async() =>{
-    if (app.currentUser){
-      await app.deleteUser(app.currentUser);
+
       //removeUser -> Logouts
       //deleteUser -> Deletes user from DB as well
-      setUser(null);
+  const deleteUser = async() =>{
+    if (app.currentUser&&!loading){
+      try{
+        setLoading(true)
+        setErrorCode('Loading')
+        await app.deleteUser(app.currentUser);
+        setUser(null);
+        setErrorCode(null);
+
+      }
+      catch(error){
+        const JSONError=error as MongoError;
+        setErrorCode(JSONError.errorCode||"Uknown Error")
+      }
+      finally{
+        setLoading(false)
+      }
+
     }
   }
 
   const logout = async() =>{
-    if (app.currentUser){
-      await app.removeUser(app.currentUser);
+    if (app.currentUser&&!loading){
+      try{
+        setLoading(true)
+        setErrorCode('Loading')
+        await app.removeUser(app.currentUser);
+        setUser(null);
+        setErrorCode(null);
+      }
+      catch(error){
+        const JSONError=error as MongoError;
+        setErrorCode(JSONError.errorCode||"Uknown Error")
+      }
+      finally{
+        setLoading(false)
+      }
       //removeUser -> Logouts
       //deleteUser -> Deletes user from DB as well
-      setUser(null);
     }
   }
 
