@@ -1,7 +1,8 @@
 import {app} from "@/app/components/appObject"
 import { useRouter } from "next/navigation";
-import {  FormEvent, useState } from "react";
+import {  FormEvent, useContext, useState } from "react";
 import * as Realm from "realm-web"
+import { appContext } from "@/app/components/ContextComponent/contextComp";
 
 interface MongoError{
   error:string;
@@ -10,19 +11,16 @@ interface MongoError{
 
 const Form = (
   {formType,
-  setErrorCode,
   email,setEmail,
   password,setPassword,
-  setUser
   }:
-  {formType:string,setErrorCode:(error:string|null)=>void,
+  {formType:string,
   email:string,setEmail:(email:string)=>void,
   password:string,setPassword:(password:string)=>void,
-  setUser?:(user:Realm.User|null)=>void
   }
 ) =>{
 
-  
+  const {setErrorCode,setUser}=useContext(appContext)
   
   const [loading,setLoading]=useState(false);
 
