@@ -16,7 +16,7 @@ import WhiteBox from "@/app/components/whiteBox";
 
 const UserPage = () =>{
 
-  const {user,setUser,errorCode,setErrorCode}=useContext(appContext)
+  const {user,errorCode,setErrorCode}=useContext(appContext)
 
   useEffect(()=>{
     setErrorCode(null);
@@ -39,14 +39,13 @@ const UserPage = () =>{
             {user?
             <>
               <UserDetails/>
-              <LogoutButton setUser={setUser}/>
+              <LogoutButton/>
               <span>&nbsp;to Signup for a new account.</span>
             </>:
             <>
               Signup today!
                 <Form 
                   formType="register"
-                  setErrorCode={setErrorCode} 
                   email={email} setEmail={setEmail} 
                   password={password} setPassword={setPassword}/>
 
