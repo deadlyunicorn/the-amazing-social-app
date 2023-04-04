@@ -7,7 +7,7 @@ import { appContext } from "@/app/components/ContextComponent/contextComp"
 
 const UserDetails = (
 ) => {
-  const {user,setUser}=useContext(appContext)
+  const {user}=useContext(appContext)
 
   if(user){
 
@@ -22,7 +22,7 @@ const UserDetails = (
           <span className="text-lg">
             {user.id}
           </span>
-          {user&&<LogoutButton setUser={setUser}/>}
+          {user&&<LogoutButton/>}
 
       </div>
     </>
