@@ -25,10 +25,10 @@ const SiteLogo = () => (
   <div
   className="
     text-3xl  flex justify-center
-    text-yellow-200 bg-neutral-800 p-2">
+    bg-neutral-800 p-2">
 
     <span className={neucha.className}>
-      <Link href="/" className=' flex items-center gap-x-3'>
+      <Link href="/" className=' flex items-center gap-x-3 text-yellow-200'>
         Social App
         <Image alt="Page icon" width={30} height={30} src="/favicon.svg"/>
       </Link>
