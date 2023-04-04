@@ -44,10 +44,8 @@ const UserPage = () =>{
               Login today!
               <Form
                 formType="login"
-                setErrorCode={setErrorCode} 
                 email={email} setEmail={setEmail} 
-                password={password} setPassword={setPassword}
-                setUser={setUser}/>
+                password={password} setPassword={setPassword}/>
 
             </>
             }
