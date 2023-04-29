@@ -93,7 +93,7 @@ const MovieTitles = () =>{
 
     <div className="my-6">
 
-      <select
+      <datalist
         className=" bg-slate-50 px-2 py-1 rounded-md w-3/4 text-center h-9"
         
         onChange={
@@ -123,7 +123,7 @@ const MovieTitles = () =>{
           {fetchedTitles&&(fetchedTitles.length<movieCount-400)&&
           <option disabled>Please wait. More are loading..</option>
           }
-      </select>
+      </datalist>
 
       {/*  */}
 
