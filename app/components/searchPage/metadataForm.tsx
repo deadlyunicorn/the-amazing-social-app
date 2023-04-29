@@ -19,6 +19,7 @@ const MetaForm = () => {
     <div className="flex justify-around mb-1">
 
     <input 
+      list="metadataSearch"
       placeholder="Search metadata" 
       onChange={
         (event)=>{
@@ -28,6 +29,14 @@ const MetaForm = () => {
         }
       className="
         bg-slate-50 px-2 py-1 rounded-md"/>
+        <datalist id="metadataSearch">
+          <option>title</option>
+          <option>plot</option>
+          <option>genres</option>
+          <option>released</option>
+          <option>directors</option>
+          <option>languages</option>
+        </datalist>
     
     <button 
       className="border bg-slate-100 hover:bg-slate-200 px-2 py-1 rounded-md">

@@ -8,7 +8,7 @@ type count=[{title:number}]
 
 const MovieTitles = () =>{
     
-  const {collection,setTitleInput}=useContext(searchContext)
+  const {collection,setTitleInput,titleInput}=useContext(searchContext)
   const [fetchedTitles,setFetchedTitles]=useState<null|titlesObjectArray>(null)
 
   // movie count
@@ -36,22 +36,23 @@ const MovieTitles = () =>{
     const fetchTitles = async () =>{
       await collection
       .aggregate([
+        {$match:{title: new RegExp(`^${titleInput}`,"i")}},
         {$project:{title:1,_id:0}},
-        {$sort:{title:1}},
+        {$sort:{title:1}}
         //Before using skip I simply was increasing the limit by 100
         //this is more optimized.. both for the user and the db..
         // {$skip:(itemsToSkip-2000)}, 
-        {$limit:2000}
       ])
 
       .then((data:titlesObjectArray)=>{
-        if(fetchedTitles&&data){
-          setFetchedTitles([...fetchedTitles,...data]);
-          // needs to be fixed with the skip
-        }
-        else if(data){
-          setFetchedTitles(data);
-        }
+        // if(fetchedTitles&&data){
+        //   setFetchedTitles([...fetchedTitles,...data]);
+        //   // needs to be fixed with the skip
+        // }
+        // else if(data){
+        //   setFetchedTitles(data);
+        // }
+        setFetchedTitles(data)
 
       });
     };
@@ -85,7 +86,7 @@ const MovieTitles = () =>{
       
       // return()=>{clearInterval(interval)};
       
-  },[movieCount])
+  },[movieCount,titleInput])
 
 
 
@@ -93,21 +94,21 @@ const MovieTitles = () =>{
 
     <div className="my-6">
 
-      <datalist
-        className=" bg-slate-50 px-2 py-1 rounded-md w-3/4 text-center h-9"
-        
-        onChange={
-          (event)=>{
-            setTitleInput(event.target.value);
+      <input list="movie-menu"
+      placeholder="Select Movie"
+      className=" bg-slate-50 px-2 py-1 rounded-md w-3/4 text-center h-9"
+      onChange={
+        (event)=>{
+          setTitleInput(event.target.value);
 
-            ///below shouldn't be here on 'On Change'... Maybe if 'onScroll worked'..
-            // const bottom=event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight;
-            // if(bottom){
-            //   setItemsToSkip(itemsToSkip+15)
-            // }
-          }
-          
+          ///below shouldn't be here on 'On Change'... Maybe if 'onScroll worked'..
+          // const bottom=event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight;
+          // if(bottom){
+          //   setItemsToSkip(itemsToSkip+15)
+          // }
         }
+      }/>
+      <datalist
         id="movie-menu">
         
           <option disabled selected>Please select an option.</option>
