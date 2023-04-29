@@ -49,7 +49,7 @@ a:hover{
 }
 
 h1{
-  border-top: solid 1px;
+  border-bottom: solid 1px;
   font-size: 1.875rem/* 30px */;
   line-height: 2.25rem/* 36px */;
 }
