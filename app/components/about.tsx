@@ -43,9 +43,14 @@ export default function About(){
       <h1>
         Checklist
       </h1>
-      <Link href="https://github.com/deadly-unicorn/mongodb-social-app-1/issues">
-        Github
-      </Link>
+      <div className="flex justify-center">
+        <Link 
+        className="w-fit"
+        target="_blank" rel="noopener noreferrer"
+        href="https://github.com/deadly-unicorn/mongodb-social-app-1/issues">
+          Github
+        </Link>
+      </div>
 
     </div>
   </>
