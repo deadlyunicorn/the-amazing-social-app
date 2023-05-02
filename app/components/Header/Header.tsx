@@ -28,7 +28,7 @@ const SiteLogo = () => (
     bg-neutral-800 p-2">
 
     <span className={neucha.className}>
-      <Link href="/" className=' flex items-center gap-x-3 text-yellow-200'>
+      <Link href="/" className=' flex items-center gap-x-3 text-yellow-200 hover:text-yellow-100'>
         Social App
         <Image alt="Page icon" width={30} height={30} src="/favicon.svg"/>
       </Link>
