@@ -16,7 +16,7 @@ export default function About(){
 
       <p>
         Just as the name implies
-        <br/> this is going to be a kind of a Social App
+        <br/> this is going to be a kind of a mock Social App
       </p>
 
       <p>
