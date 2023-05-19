@@ -11,7 +11,16 @@ export default function About(){
     
       <p>
         Welcome to the Social App!
-        <br/>A personal project of mine.
+        <br/>A personal project of&nbsp;
+        <Link
+          target="_blank"
+          rel="noopener noreferrer"
+          tabIndex={0}
+          href={"https://www.linkedin.com/in/alexander-petrache/"}>
+          Alexander Petrache
+        </Link>
+        , 
+        <br/>also known as &quot;deadlyunicorn&quot;.
       </p>
 
       <p>
@@ -47,6 +56,7 @@ export default function About(){
         <Link 
         className="w-fit"
         target="_blank" rel="noopener noreferrer"
+        tabIndex={0}
         href="https://github.com/deadly-unicorn/mongodb-social-app-1/issues">
           Github
         </Link>

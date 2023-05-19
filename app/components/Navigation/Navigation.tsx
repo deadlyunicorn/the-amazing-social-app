@@ -21,6 +21,7 @@ const NavItem = (
   ) => (
   <Link
   href={props.link}
+  tabIndex={0}
   className="text-4xl h-12
   flex items-center justify-center
   border-l-2 border-zinc-400 hover:border-zinc-200 bg-neutral-900 hover:bg-neutral-800 rounded-lg p-2">
