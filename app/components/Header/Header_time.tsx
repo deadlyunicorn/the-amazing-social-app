@@ -36,7 +36,9 @@ export default function Time(){
     <>
       <div className="w-12">
 
-      {time=="30:00"?<LoadingTime/>:time}
+        <time>
+          {time=="30:00"?<LoadingTime/>:time}
+        </time>
       </div>
 
 
