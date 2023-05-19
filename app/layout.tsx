@@ -6,7 +6,7 @@ import UserContext from '@/app/components/ContextComponent/contextComp'
 
 export const metadata = {
   title: 'Social App',
-  description: 'The new social app!',
+  description: 'The new social app! A personal project being built by Alexander Petrache, also known as "deadlyunicorn".',
 }
 
 export default function RootLayout({
