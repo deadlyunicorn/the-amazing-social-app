@@ -11,8 +11,8 @@ import ErrorHandler from "@/app/components/Login_Logout_Register/email/error_han
 
 import WhiteBox from "@/app/components/whiteBox"
 import { appContext } from "@/app/components/ContextComponent/contextComp"
+import About from "./about"
 
-import About from "@/app/components/about"
 
 
 

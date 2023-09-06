@@ -8,7 +8,6 @@ import "@/app/components/Styles/styles.css"
 //Realm
 import UserDetails from "@/app/components/userDetails"
 
-import QueryField from "@/app/components/searchPage/queryField"
 import WhiteBox from "@/app/components/whiteBox"
 import { appContext } from "@/app/components/ContextComponent/contextComp"
 
@@ -27,7 +26,7 @@ const Search= () => {
   return (
     <>
         { user ? 
-        <QueryField/> :
+        "Hello world" :
         
         <WhiteBox>
           <UserDetails/>
