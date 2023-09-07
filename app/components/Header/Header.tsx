@@ -15,7 +15,7 @@ import { appContext } from "@/app/components/ContextComponent/contextComp"
 
 const Header = () => (
   <header 
-    className="fixed w-full">
+    className="fixed w-full z-10">
       <SiteLogo/>
       <GuestOptions/>
   </header>
