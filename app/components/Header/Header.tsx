@@ -51,9 +51,9 @@ const GuestOptions = () => {
 
 
     <div>
-      <Authenticate>
+      <HeaderButton>
         <Time/>
-      </Authenticate>
+      </HeaderButton>
     </div>
 
     {/* If not Signed In show the following else show "Profile Button" */}
@@ -61,16 +61,12 @@ const GuestOptions = () => {
     <div className="animate-appearance">
 
         <Link href="/login">
-        <Authenticate>
+        <HeaderButton>
           Log in
-        </Authenticate>
+        </HeaderButton>
       </Link>
       
-      <Link href="/register">
-        <Authenticate>
-          Sign up
-        </Authenticate>
-      </Link>
+
 
     </div>
       }
@@ -79,9 +75,9 @@ const GuestOptions = () => {
     <div className="animate-appearance">
 
         <Link href="/user">
-        <Authenticate>
+        <HeaderButton>
           Profile
-        </Authenticate>
+        </HeaderButton>
       </Link>
 
     </div>
@@ -92,7 +88,7 @@ const GuestOptions = () => {
   </div>
 )}
 
-const Authenticate = (props:{children:ReactNode}) => (
+const HeaderButton = (props:{children:ReactNode}) => (
   <button 
   className='
     border-b-zinc-400 hover:border-b-zinc-200 border-b 
