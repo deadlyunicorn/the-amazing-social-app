@@ -54,7 +54,6 @@ const UserPage = () =>{
       </WhiteBox>
 
 
-      {!user&&errorCode&&<ErrorHandler email={email}/>}
 
     </div>
   )

@@ -4,7 +4,6 @@ import { FormEvent, useContext, useEffect, useState } from "react"
 import "@/app/components/Styles/styles.css"
 
 import {app} from "@/app/components/appObject"
-import ErrorHandler from "@/app/components/Login_Logout_Register/email/error_handling";
 
 import {useSearchParams} from 'next/navigation';
 import WhiteBox from "@/app/components/whiteBox";
@@ -98,7 +97,6 @@ export default function ResetPage(
         {!token&&<PageNotFound/>}
           
       </WhiteBox>
-      {errorCode&&<ErrorHandler/>}
 
       
     </>

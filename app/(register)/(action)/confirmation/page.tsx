@@ -55,18 +55,14 @@ export default function ConfirmationPage(
       {token&&tokenId&&!errorCode&&
       <WhiteBox>
 
-        <>
         Your email has been successfully confirmed!
         <br/>You can now&nbsp;
         <Link 
         className="w-fit hover:text-blue-400 text-blue-600"
         href="/login">login</Link>
-      </>
       </WhiteBox>
       }
       {!token||!tokenId&&<PageNotFound/>}
-      {errorCode&&
-      <ErrorHandler/>}
       <br/>
     </>
   )
