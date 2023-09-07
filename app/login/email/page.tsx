@@ -9,7 +9,6 @@ import { appContext } from "@/app/components/ContextComponent/contextComp"
 import UserDetails from "@/app/components/userDetails";
 
 import Form from "@/app/components/Login_Logout_Register/email/login_register_form";
-import ErrorHandler from "@/app/components/Login_Logout_Register/email/error_handling";
 import WhiteBox from "@/app/components/whiteBox";
 
 
@@ -51,7 +50,6 @@ const UserPage = () =>{
             }
       </WhiteBox>
 
-      {!user&&errorCode&&<ErrorHandler email={email}/>}
     </div>
   )
 }
