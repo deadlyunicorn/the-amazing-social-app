@@ -12,7 +12,7 @@ interface MongoError{
 };
 
 
-const LoginButton = (
+const LoginOptions = (
 ) =>{
   const {user,setUser,setErrorCode}=useContext(appContext)
 
@@ -60,7 +60,7 @@ const LoginButton = (
       </div>
     </>
   )
-  else return(<>hello?</>)
+  else return(<>hello? You are already logged in.</>)
 }
 
-export default LoginButton;
+export default LoginOptions;
