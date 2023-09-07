@@ -1,3 +1,4 @@
+'use client'
 import Link from "next/link"
 import LogoutButton from "@/app/components/Login_Logout_Register/logoutButton"
 
@@ -20,7 +21,7 @@ const UserDetails = (
         
         Logged in with 
           <span className="text-lg">
-            {user.id}
+            id: {user.id}
           </span>
           {user&&<LogoutButton/>}
 
