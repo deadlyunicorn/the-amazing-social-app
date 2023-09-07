@@ -13,7 +13,7 @@ export const SignUpSection = () => {
   return (!user ? 
     <aside className="flex flex-col items-center mt-4">
           <p>
-            Don't have an account?
+            Don&apos;t have an account?
           </p>
           <Link href="/register">
               Sign up
