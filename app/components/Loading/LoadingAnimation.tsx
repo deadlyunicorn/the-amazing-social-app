@@ -15,20 +15,16 @@ export const LoadingScreen = ({height}:{
     )
     
     return(
-        <div className={`
-          h-[${height}px]
-          w-full
-          relative
+        <div 
+            style={{height:height}}
+            className={`
+          relative 
+          animation-loader 
           `}>
-            <div className="
-                h-full
-                animation-loader 
-                ">
 
                 <Dot/>
                 <Dot/>
                 <Dot/>
-            </div>
         </div>
     )
 }

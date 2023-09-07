@@ -5,6 +5,14 @@ import { LoadingScreen } from "./components/Loading/LoadingAnimation"
 
 export default function Loader(){
   return(
-        <LoadingScreen height={200}/>
+    <main className="
+    top-[30%]
+    flex justify-center
+    fixed left-0 w-full">
+
+     <LoadingScreen height={200}/>
+  
+    </main>
+
   )
 }

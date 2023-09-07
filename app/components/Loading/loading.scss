@@ -1,7 +1,8 @@
 @for $i from 1 through 3{
   .animation-loader :nth-child(#{$i}){
-      position: absolute;
-      transform: translateX(#{90*$i}px); 
+    position: absolute;
+      bottom: 50%;
+      transform: translateX(#{90*($i - 2)}px); 
       animation: movingDots #{$i + 2}s infinite;
       animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
       animation-direction: reverse;
