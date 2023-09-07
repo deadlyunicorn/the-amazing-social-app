@@ -21,10 +21,11 @@ export default function RootLayout({
 
       </head>
 
-      <body className='bg-gradient-to-b from-zinc-700 to-zinc-900 
-      w-screen h-full 
+      <body className='
+      m-0 p-0
+      bg-gradient-to-b from-zinc-700 to-zinc-900 
       flex flex-col overflow-x-hidden
-      relative dark:text-black text-black
+      dark:text-black text-black
       '>
         <UserContext>
 
