@@ -1,38 +1,27 @@
-// import WhiteBox from "@/app/components/whiteBox"
-
 import About from "@/app/about/about"
 // import UserDetails from "@/app/components/userDetails";
-import { LoadingScreen } from "../components/Loading/LoadingAnimation";
 
 
-const Homepage = async() => {
+const AboutPage = async() => {
 
 
 
   return (
     <>
-      <main>
+      <section className="flex flex-col gap-y-2 text-center">
 
-        {/* <WhiteBox> */}
           <About/>
-        {/* </WhiteBox> */}
-
-      </main>
-
-
-      <aside>
-
-        {/* <WhiteBox> */}
+          <aside>
             {/* <UserDetails/> */}
-        {/* </WhiteBox> */}
-      </aside>
+          </aside>
 
+      </section>
 
     </>
   )
 }
 
-export default Homepage;
+export default AboutPage;
 
 
 
