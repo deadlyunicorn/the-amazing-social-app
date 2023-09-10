@@ -1,7 +1,7 @@
 import { createServerActionClient, createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import {redirect} from "next/navigation"
-import { supabaseCredentials } from "../global";
+import { supabaseCredentials } from "../(supabase)/global";
 
 export default async function Home(
   {searchParams}:{
@@ -20,7 +20,7 @@ export default async function Home(
 
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <section className="flex min-h-screen flex-col items-center justify-between p-24">
       
       {session.data.session?.user.email || " No user "}
 
@@ -40,15 +40,12 @@ export default async function Home(
 
         {searchParams.error && 
         <section
-          className="
-            bg-white rounded-lg 
-            px-4 py-2 text-error-light
-          ">
+          className="text-error-light">
             {searchParams.error}
         </section>}
         
         
-    </main>
+    </section>
   )
 }
 
