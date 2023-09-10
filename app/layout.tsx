@@ -4,7 +4,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Social App',
+  title: 'Social App v2',
   description: 'Social App project by deadlyunicorn!',
 }
 
@@ -19,22 +19,26 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="icon" href="/favicon.svg"/>
-
       </head>
 
       <body className='
       m-0 p-0
       bg-gradient-to-b from-zinc-700 to-zinc-900 
       flex flex-col overflow-x-hidden
+      items-center
       dark:text-black text-black
       '>
 
           <Header/>
         
-          <main className="flex justify-center mt-28 min-h-screen w-screen">
-            <div className=" py-5 pb-32">
+          <main className="
+            max-w-xl
+            2xl:max-w-4xl
+            flex justify-center 
+            mt-28 min-h-screen w-full
+            px-12
+            pt-5 pb-32">
               {children}
-            </div>
           </main>
       
           <NavigationBar/>  
