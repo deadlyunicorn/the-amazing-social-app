@@ -27,7 +27,7 @@ const LoginPage = async() => {
           </center>
         : <>
             <LoginOptions/>
-            <SignUpSection/>
+            <SignUpAside/>
           </>
         }
         
@@ -37,7 +37,7 @@ const LoginPage = async() => {
   )
 }
 
-const SignUpSection = () => {
+export const SignUpAside = () => {
 
     return (
       <aside className="flex flex-col items-center mt-4">
