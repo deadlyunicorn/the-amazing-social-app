@@ -16,6 +16,10 @@ section{
   padding-inline: 32px;
 }
 
+.section-color{
+  background-color: aliceblue;
+}
+
 
 
 input {
@@ -37,14 +41,14 @@ h2{
     line-height: 40px;
 }
 
-a {
+a,.text-link {
   color: inherit;
   text-decoration: none;
   color: rgb(37 99 235);
 
 }
 
-a:hover{
+a:hover,.text-link:hover{
   color: rgb(96 165 250);
 }
 
