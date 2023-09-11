@@ -1,5 +1,5 @@
 
-.animate-appearance{
+.animate-appearance,section{
   animation-duration: 1s;
   animation-name: appear;
 }
