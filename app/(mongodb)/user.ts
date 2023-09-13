@@ -31,6 +31,9 @@ export const getUserInfo = async(username:string) : Promise<userObject|null>=>{
 
 
   } finally {
+
+      await client.close();
+
     // Ensures that the client will close when you finish/error
 
   }
