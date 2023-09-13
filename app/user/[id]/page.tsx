@@ -31,7 +31,7 @@ const UserProfile = async (
         signedUserId = data.user?.id;
   })
   // params.id
-  const userInfo = await getUserInfo(String(signedUserEmail));
+  const userInfo = await getUserInfo({username:String(params.id)});
 
 
 

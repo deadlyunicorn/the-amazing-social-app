@@ -16,7 +16,7 @@ const UserRedirect = async() => {
 
   const signedUserEmail = user?.email;
 
-  const userInfo = await getUserInfo(String(signedUserEmail));
+  const userInfo = await getUserInfo(({email:String(signedUserEmail)}));
 
 
   if (user){

@@ -12,13 +12,19 @@ const client = new MongoClient(process.env.MONGODB_URI!, {
 });
 
 
-export const getUserInfo = async(username:string) : Promise<userObject|null>=>{
+export const getUserInfo = async(
+    query:{
+      email?:string,
+      username?:String,
+    }
+  
+  ) : Promise<userObject|null>=>{
   try {
     await client.connect();
     
     const users = client.db('the-amazing-social-app').collection('users');
 
-    const result:userObject|null = await users.findOne({email:username})
+    const result:userObject|null = await users.findOne(query)
       .then(
         data=>{
           if (data!=null){
