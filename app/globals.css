@@ -58,3 +58,31 @@ h1{
   line-height: 2.25rem/* 36px */;
 }
 
+.disappear{
+  animation: disappear-animation;
+  animation-duration: 5s;
+  animation-iteration-count: 1;
+  animation-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  opacity: 0%;
+  pointer-events: none;
+
+}
+
+@keyframes disappear-animation {
+  0%{
+      display: block;
+      opacity: 0%;
+      pointer-events: all;
+
+  }
+  50%{
+      display: block;
+      opacity: 100%;
+  }
+  99%{
+      opacity: 0%;
+  }
+  100%{
+      display: none;
+  }
+}
