@@ -1,8 +1,12 @@
+import { MultipleRowsWrapper } from "@/app/(components)/FormWrapper"
 import { LogOutForm } from "@/app/(components)/LogoutForm"
-import { getUserInfo, userObject } from "@/app/(mongodb)/user"
+import { getUserInfo } from "@/app/(mongodb)/user"
 import { supabaseCredentials } from "@/app/(supabase)/global"
 import {  createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
+import Link from "next/link"
+import { UserInfoComponent } from "./UserInfoComponent"
+import { ProfileCreationForm } from "./ProfileCreationForm"
 
 const UserProfile = async (
   {params}
@@ -29,51 +33,64 @@ const UserProfile = async (
   // params.id
   const userInfo = await getUserInfo(String(signedUserEmail));
 
-  //username:user id until changed.
 
 
   return (
+    <MultipleRowsWrapper>
+      {
       userInfo 
-      ? <div className="w-full flex flex-col gap-y-10">
+      ? 
+        <>
         <UserInfoComponent userInfo={userInfo}/>
-        {(userInfo.email == signedUserEmail) && <LogOutSection/>}
-        </div>
+          {
+            (userInfo.email == signedUserEmail) 
+            && <AccountOptions/>
+          }
+        </>
+          
       : params.id == signedUserId
         
-        ?<section>
+        ?<>
+          <section className="text-center">
 
-        You have successfully registered your account.
-        <br/>Now you can choose a username to start socializing!
-        <br/>(no pun intended)"hehe"
-        </section>
+          You have successfully registered your account.
+          <br/>Now you can choose a username to start socializing!
+          <br/>(no pun intended)
+
+
+          <ProfileCreationForm email={String(signedUserEmail)}/>
+
+          </section>
+          <AccountOptions/>
+        </>
+          
+
 
         :<section>
           the user you are looking for doesn't exist
         </section>
+        }
+        </MultipleRowsWrapper>
+
   )
 }
 
 
-const UserInfoComponent = ({userInfo}:{userInfo:userObject}) => {
-  
 
-  return (
-    <section>
-      {userInfo?.username}
-
-    </section>
-    
-  )
-
-}
-
-const LogOutSection = () => (
+const AccountOptions = () => (
   <aside className="w-fit self-center">
-    <section>
+    <section className="flex flex-col gap-y-2 items-center">
       <LogOutForm/>
+      <Link
+        className="capitalize"
+        href={'/account/delete'}>delete account</Link>
+
+
     </section>
   </aside>
 )
+
+
 
 
 export default UserProfile;
