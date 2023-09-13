@@ -66,7 +66,7 @@ const PostsMap = ({userInfo}:{userInfo:userObject}) => (
         className="
           pt-4 pb-2 px-4 relative
           rounded-sm
-          border-2 border-black"
+          border border-dashed border-black"
         key={key}>
         <div className="text-xs absolute left-2 top-0">
           {`#${key+1}`}
