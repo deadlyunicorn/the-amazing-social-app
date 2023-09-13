@@ -67,7 +67,7 @@ const UserProfile = async (
 
 
         :<section>
-          the user you are looking for doesn't exist
+          the user you are looking for doesn&apos;t exist
         </section>
         }
         </MultipleRowsWrapper>
