@@ -41,6 +41,7 @@ export const getUserInfo = async(username:string) : Promise<userObject|null>=>{
 
 export type userObject={
   _id: ObjectId,
+  age: number,
   email: string,
   username: string,
   latestPosts: Array<{ created_at: Timestamp, postText: string }>
