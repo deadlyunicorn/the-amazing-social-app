@@ -14,15 +14,15 @@ const RegisterPage = async ({ searchParams }: { searchParams: { error: string } 
 
   return (
 
-
-
-
     user
 
       ? <section className="flex flex-col items-center">
-        <p>You already have an account!</p>
-        <LogOutForm />
-        <span>&nbsp;to signup for a new account.</span>
+        <p className="flex">
+          You already have an account!
+        </p>
+        <p className="flex">
+          <div className="w-fit"><LogOutForm /></div >&nbsp;to signup for a new account.</p> 
+
       </section>
 
       :
