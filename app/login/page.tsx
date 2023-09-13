@@ -74,7 +74,7 @@ export default LoginPage;
 
 
 
-export const SignUpAside = () => {
+const SignUpAside = () => {
 
     return (
       <aside className="flex flex-col items-center mt-4">
@@ -85,7 +85,7 @@ export const SignUpAside = () => {
                 Sign up
             </Link>
       </aside>
-      )
+    )
 }
 
 
