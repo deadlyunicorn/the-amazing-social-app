@@ -8,6 +8,13 @@ import Link from "next/link"
 import { UserInfoComponent } from "./UserInfoComponent"
 import { ProfileCreationForm } from "./ProfileCreationForm"
 
+export const generateMetadata = ({params}:{params:{id:string}}) =>  {
+
+  return {
+    title:params.id
+  }
+}
+
 const UserProfile = async (
   {params}
   :{
