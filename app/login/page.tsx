@@ -26,16 +26,20 @@ const LoginPage = async(
 
 
   return (
-    session
-      ?<section> 
-        <center>
-          <h2>Hello there!</h2>
-          <p>You are already logged in with {session.user.email}</p>
-          <LogOutForm/>
-        </center>
-      </section>
-      : 
-        <MultipleRowsWrapper>
+    <MultipleRowsWrapper>
+
+      {session
+        ?
+        <section> 
+          <center>
+            <h2>Hello there!</h2>
+            <p>You are logged in with {session.user.email}.</p>
+            <LogOutForm/>
+          </center>
+        </section>
+        
+        : 
+        <>
           <EmailPasswordForm
             formHeader="Login today!"
             action={emailLogin}
@@ -47,14 +51,17 @@ const LoginPage = async(
               </Link>
             <SignUpAside />
           </section>
+        </>
+        
+        }
+        {
+          searchParams.error &&
 
-          {searchParams.error &&
-
-            <ErrorSection>
-              {searchParams.error}
-            </ErrorSection>
-          }
-        </MultipleRowsWrapper>
+          <ErrorSection>
+            {searchParams.error}
+          </ErrorSection>
+        }
+      </MultipleRowsWrapper>
   )
 }
 
