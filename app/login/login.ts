@@ -51,6 +51,9 @@ const serverActionLogin = async(
   })
   .catch(
     err=>{
+      if (err=='Invalid login credentials'){
+        err += ' (account might not exist)'
+      }
      redirect(`/login/email?error=${err}`)
     }
   );
