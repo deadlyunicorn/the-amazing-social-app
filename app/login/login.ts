@@ -54,8 +54,8 @@ const serverActionLogin = async(
       if (err=='Invalid login credentials'){
         err += ' (account might not exist)'
       }
-     redirect(`/login/email?error=${err}`)
+     redirect(`/login?error=${err}`)
     }
   );
-  redirect('/')
+  redirect('/explore')
 }
