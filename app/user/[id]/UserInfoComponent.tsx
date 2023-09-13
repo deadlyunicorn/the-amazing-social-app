@@ -8,7 +8,7 @@ export const UserInfoComponent = ({userInfo}:{userInfo:userObject}) => {
   return (
     <>
       <section className="grid grid-cols-2 gap-x-2">
-        <div className="flex flex-col justify-between">
+        <div className="flex flex-col justify-center">
           <Image
             className="self-center aspect-square"
             src={'/favicon.svg'}
