@@ -9,8 +9,6 @@ import { userObject } from "../(mongodb)/user";
 
 export const emailRegister = async(formData:FormData)=>{
 
-  console.log('here1')
-
   const email = String(formData.get('email'));
   const password = String(formData.get('password'));
 
@@ -21,13 +19,12 @@ export const emailRegister = async(formData:FormData)=>{
   await serverActionRegister(supabase,email,password)
   .then(
     async(data)=>{
-      const username = data.data.user?.id;
+      // const username = data.data.user?.id;
+      // await addUserToMongoDB(email,username);
 
-      console.log(`Your data is ${JSON.stringify(data)}, the username is ${username}`)
 
       redirect('/register/success');
 
-      // await addUserToMongoDB(email,username);
 
     }
   )
