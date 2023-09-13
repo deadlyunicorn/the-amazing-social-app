@@ -1,6 +1,7 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
+import { getUserInfo } from "../(mongodb)/user"
 
 const UserRedirect = async() => {
   
@@ -13,8 +14,18 @@ const UserRedirect = async() => {
   const session = await supabase.auth.getSession();
   const user = session.data.session?.user;
 
+  const signedUserEmail = user?.email;
+
+  const userInfo = await getUserInfo(String(signedUserEmail));
+
+
   if (user){
-    redirect(`/user/${user.id}`);
+    if (userInfo){
+      redirect(`/user/${userInfo.username}`);
+    }
+    else{
+      redirect(`/user/${user.id}`);
+    }
   }
   else{
     redirect(`/login`);
