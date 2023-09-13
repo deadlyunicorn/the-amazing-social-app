@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   description: 'Social App project by deadlyunicorn!',
 }
 
+export const dynamic = 'force-dynamic'
+
 export default function RootLayout({
   children,
 }: {
