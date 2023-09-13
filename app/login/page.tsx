@@ -1,41 +1,71 @@
+import "@/app/(styles)/styles.css"
+import { ErrorSection } from "@/app/(components)/ErrorSection"
+import { MultipleRowsWrapper } from "@/app/(components)/FormWrapper"
+import { EmailPasswordForm } from "@/app/(components)/EmailPasswordForm"
 import Link from "next/link"
-import { LoginOptions } from "./Options"
-import { SupabaseClient, createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { emailLogin } from "./login"
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
+import { cookies } from "next/headers"
+import { LogOutForm } from "../(components)/LogoutForm"
 
-const LoginPage = async() => {
+const LoginPage = async(
+  { searchParams }: {
+    searchParams: {
+      error?: string
+    }
+  }) => {
+
+    const supabase = createServerComponentClient(
+      {cookies},
+      {supabaseKey:process.env.supabaseKey,
+      supabaseUrl:process.env.supabaseUrl}
+    )
+    
+    const session = (await supabase.auth.getSession()).data.session;
   
-  const supabase = createServerComponentClient(
-    {cookies},
-    {supabaseKey:process.env.supabaseKey,
-    supabaseUrl:process.env.supabaseUrl}
-  )
-  
-  const session = (await supabase.auth.getSession()).data.session;
+
 
   return (
-    <>
-
-      <section>
-
-        {session
-        ? <center>
-            <h2>Hello there</h2>
-            <p>You are already logged in with {session.user.email}</p>
-            Logout button'''' ' " "
-          </center>
-        : <>
-            <LoginOptions/>
-            <SignUpAside/>
-          </>
-        }
-        
-        
+    session
+      ?<section> 
+        <center>
+          <h2>Hello there!</h2>
+          <p>You are already logged in with {session.user.email}</p>
+          <LogOutForm/>
+        </center>
       </section>
-    </>
+      : 
+        <MultipleRowsWrapper>
+          <EmailPasswordForm
+            formHeader="Login today!"
+            action={emailLogin}
+          />
+
+          <section className="text-center">
+              <Link href="/account/recover">
+                I forgot my password :(
+              </Link>
+            <SignUpAside />
+          </section>
+
+          {searchParams.error &&
+
+            <ErrorSection>
+              {searchParams.error}
+            </ErrorSection>
+          }
+        </MultipleRowsWrapper>
   )
 }
+
+
+
+export default LoginPage;
+
+
+
+
+
 
 export const SignUpAside = () => {
 
@@ -53,7 +83,6 @@ export const SignUpAside = () => {
 
 
 
-export default LoginPage;
 
 
 
