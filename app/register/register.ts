@@ -63,38 +63,52 @@ export const serverActionRegister = async(
 }
 
 
-// const addUserToMongoDB = async(email:string,username:string) => {
-//     try {
-//       await client.connect();
+export const addUserToMongoDB = async(formData:FormData) => {
+
+
+    const email = String(formData.get('email'));
+    const username = String(formData.get('username'));
+    const age = Number(formData.get('age'));
+    let success = false;
+
+    try {
+      await client.connect();
       
-//       const users = client.db('the-amazing-social-app').collection('users');
+      const users = client.db('the-amazing-social-app').collection('users');
 
-//       const userObject:userObject = {
-//         _id: new ObjectId,
-//         email: email,
-//         username: username,
-//         latestPosts: [{
-//             created_at: new Timestamp(BigInt(new Date().getTime())),
-//             postText: "Hello world! I created my profile today."
-//           }
-//         ]
+      const userObject:userObject = {
+        _id: new ObjectId,
+        email: email,
+        age: age,
+        username: username,
+        latestPosts: [{
+            created_at: new Timestamp(BigInt(new Date().getTime())),
+            postText: "Hello world! I created my profile today."
+          }
+        ]
 
-//       }
+      }
   
-//       await users.insertOne(userObject)
+      await users.insertOne(userObject)
+      .catch(err=>{redirect(`/login?error=${err}`)})
+      success=true;
   
-//     } finally {
-//       await client.close();
-//       redirect('/');
-  
-//     }
-// }
+    } finally {
+      await client.close();
 
-// const client = new MongoClient(process.env.MONGODB_URI!, {
-//   serverApi: {
-//     version: ServerApiVersion.v1,
-//     strict: true,
-//     deprecationErrors: true,
-//   }
-// });
+      if (success){
+        redirect(`/user/${username}`);
+      }
+      
+  
+    }
+}
+
+const client = new MongoClient(process.env.MONGODB_URI!, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
 
