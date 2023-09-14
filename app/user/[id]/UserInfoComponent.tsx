@@ -1,3 +1,5 @@
+import { ChangeProfilePicture } from "@/app/(aws)/ImageUploadForm";
+import { formatDate } from "@/app/(lib)/formatDate";
 import { userObject } from "@/app/(mongodb)/user";
 import Image from "next/image";
 
@@ -15,6 +17,8 @@ export const UserInfoComponent = ({userInfo}:{userInfo:userObject}) => {
             width={100}
             height={100}
             alt={`Profile picture of ${userInfo.username}`}/>
+
+          <ChangeProfilePicture username={userInfo.username}/>
           
 
           <div className="flex flex-col">
@@ -53,12 +57,10 @@ const PostsMap = ({userInfo}:{userInfo:userObject}) => (
     (post,key)=>{
 
       const postDate = new Date(+post.created_at)
-      
-      const postDay = postDate.getDay() < 10 ? '0' + postDate.getDay() :String(postDate.getDay());
-      const postMonth = postDate.getMonth() < 10 ?'0' + postDate.getMonth():String(postDate.getMonth());
-      const postYear = postDate.getFullYear();
 
-      const formattedDate = `${postDay}/${postMonth}/${postYear}`;
+      const formattedDate = formatDate(postDate);
+      
+      
 
       return (
       
@@ -81,3 +83,4 @@ const PostsMap = ({userInfo}:{userInfo:userObject}) => (
 
     )
 )
+
