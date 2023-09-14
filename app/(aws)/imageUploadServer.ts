@@ -36,38 +36,38 @@ const uploadImage = async(image:File) => {
   
 
   throw 'not yet implemented:)';
-  const toBase64 = (file: File): Promise<string> => (new Promise((res, err) => {
+  // const toBase64 = (file: File): Promise<string> => (new Promise((res, err) => {
 
-      fs.readFile(file,(err,data)=>{
+  //     fs.readFile(file,(err,data)=>{
       
-      });
-      const reader = new filereader();
-      reader.readAsDataURL(file);
-      reader.onload = () => (res(reader.result as string))
-      reader.onerror = () => { alert("There was an error reading your file.") }
-    }));
+  //     });
+  //     const reader = new filereader();
+  //     reader.readAsDataURL(file);
+  //     reader.onload = () => (res(reader.result as string))
+  //     reader.onerror = () => { alert("There was an error reading your file.") }
+  //   }));
         
             
 
-    const encodedFile: string = await toBase64(image)
-      .then(res => res.slice(res.indexOf('base64,') + 'base64,'.length));
+  //   const encodedFile: string = await toBase64(image)
+  //     .then(res => res.slice(res.indexOf('base64,') + 'base64,'.length));
 
 
-      if (encodedFile) {
-          return await uploadToAwsPublic(encodedFile,fileName)
-          .then( async(res) => {
-              console.log(res);
-              if (res.$metadata.httpStatusCode==200){
-                //we should return the image url (which is public/filename) and upload it on mongodb on user/avatarSrc.
-                console.log('Success!')
-              }
-              else{
-                throw "Upload failed"
-              }
+  //     if (encodedFile) {
+  //         return await uploadToAwsPublic(encodedFile,fileName)
+  //         .then( async(res) => {
+  //             console.log(res);
+  //             if (res.$metadata.httpStatusCode==200){
+  //               //we should return the image url (which is public/filename) and upload it on mongodb on user/avatarSrc.
+  //               console.log('Success!')
+  //             }
+  //             else{
+  //               throw "Upload failed"
+  //             }
              
-          })
+  //         })
          
-      }
+  //     }
       
 
     }
