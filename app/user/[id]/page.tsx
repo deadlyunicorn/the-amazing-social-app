@@ -7,6 +7,7 @@ import { cookies } from "next/headers"
 import Link from "next/link"
 import { UserInfoComponent } from "./UserInfoComponent"
 import { ProfileCreationForm } from "./ProfileCreationForm"
+import { ErrorSection } from "@/app/(components)/ErrorSection"
 
 export const generateMetadata = ({params}:{params:{id:string}}) =>  {
 
@@ -16,10 +17,13 @@ export const generateMetadata = ({params}:{params:{id:string}}) =>  {
 }
 
 const UserProfile = async (
-  {params}
+  {params,searchParams}
   :{
     params:{
       id:string
+    },
+    searchParams:{
+      error?:string;
     }
   }
 ) => {
@@ -77,6 +81,9 @@ const UserProfile = async (
           the user you are looking for doesn&apos;t exist
         </section>
         }
+
+        {searchParams.error&&
+        <ErrorSection>{searchParams.error}</ErrorSection>}
         </MultipleRowsWrapper>
 
   )
