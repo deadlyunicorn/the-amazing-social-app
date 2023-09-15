@@ -13,7 +13,9 @@ export const UserInfoComponent = ({userInfo}:{userInfo:userObject}) => {
       <section className="grid md:grid-cols-2 gap-x-2 gap-y-4">
         <div className="flex flex-col justify-center">
           <Image
-            className="self-center aspect-square object-cover"
+            className="
+              rounded-full
+              self-center aspect-square object-cover"
             src={userInfo.avatarSrc||'/favicon.svg'}
             width={100}
             height={100}
