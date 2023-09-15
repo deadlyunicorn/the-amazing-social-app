@@ -15,6 +15,9 @@ const config: Config = {
       },
       textColor:{
         'error-light': 'rgb(220 38 38)'
+      },
+      screens:{
+        'xs':'440px'
       }
     },
   },
