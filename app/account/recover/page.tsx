@@ -58,7 +58,6 @@ const recoverAccount = async(formData:FormData) => {
   try{
     await supabase.auth.resetPasswordForEmail(email)
     .then(res=>{
-      console.log(res)
 
       if (res.error?.message){
         throw res.error.message; 

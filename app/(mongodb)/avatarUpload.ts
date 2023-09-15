@@ -19,8 +19,6 @@ export const setAvatarLink = async( username : string, url : string ) : Promise 
     await users.updateOne({username:username},{$set:{avatarSrc:url}})
       .then(
         data=>{
-          console.log(data);
-          
           if (!data.acknowledged){
             throw "Setting avatar failed";
           }
