@@ -7,21 +7,22 @@ export const ChangeProfilePicture = ({username}:{username:string}) => {
   return (
 
     <form
+      className="flex flex-col items-center"
       action={async(formData)=>{
         "use server"
         await handleImageForm(formData,username)}}>
+
+
       <label
+        htmlFor="imgFile"
         className="
-                px-2 py-1
-                cursor-pointer"
-        id="fileLabel"
-        htmlFor="imgFile">
-
-              Change avatar
-
-        </label>
+        text-link hover:underline
+          cursor-pointer">
+          Change avatar
+      </label>
 
           <input
+            required
             className="hidden"
             id="imgFile"
               accept="image/*"

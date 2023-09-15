@@ -2,13 +2,17 @@ import Link from "next/link"
 
 const NavigationBar = () => (
   <nav className="w-full h-16 fixed bottom-0
-  border-t border-zinc-400 rounded-t-md bg-black bg-opacity-25
-  flex justify-evenly items-center">
+  backdrop-blur-md flex justify-center
+  border-t border-zinc-400 rounded-t-md bg-black bg-opacity-40">
 
-    <NavItem icon="🏠" link="/"/>
-    <NavItem icon="🌊" link="/search"/>      
-    <NavItem icon="💬" link="/chat"/>      
-    <NavItem icon="🔒" link="/user"/>      
+    <div className="
+      max-w-xl w-full
+      flex justify-evenly items-center h-full">
+      <NavItem icon="🏠" link="/"/>
+      <NavItem icon="🌊" link="/search"/>      
+      <NavItem icon="💬" link="/chat"/>      
+      <NavItem icon="😶‍🌫️" link="/user"/>     
+    </div> 
   </nav>
 )
 

@@ -6,10 +6,11 @@ import Image from "next/image";
 
 export const UserInfoComponent = ({userInfo}:{userInfo:userObject}) => {
   
+  const date = new Date();
 
   return (
     <>
-      <section className="grid grid-cols-2 gap-x-2">
+      <section className="grid md:grid-cols-2 gap-x-2 gap-y-4">
         <div className="flex flex-col justify-center">
           <Image
             className="self-center aspect-square"
@@ -22,13 +23,13 @@ export const UserInfoComponent = ({userInfo}:{userInfo:userObject}) => {
           
 
           <div className="flex flex-col">
-            <p className="self-center text-xl">{userInfo.username}</p>
             <p>{userInfo.age}y.o.</p>
+            <p className="self-center text-3xl rotate-2">@{userInfo.username}</p>
           </div>
         </div>
 
-        <div>
-          <h3 className="text-center">Description</h3>
+        <div className="text-center">
+          <h1>Description</h1>
           <p>A very cool user description goes here (max 200 words).A very cool user description goes here (max 200 words).A very cool user description goes here (max 200 words).A very cool user description goes here.
           </p>
         </div>
@@ -37,7 +38,7 @@ export const UserInfoComponent = ({userInfo}:{userInfo:userObject}) => {
         
       </section>
 
-      <section>
+      <section className="max-w-xl">
         <h1>Posts</h1>
         <ul className="mt-2">
           <PostsMap userInfo={userInfo}/>
