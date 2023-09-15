@@ -48,6 +48,9 @@ const UserProfile = async (
 
   return (
     <MultipleRowsWrapper>
+
+      {searchParams.error&&
+        <ErrorSection>{searchParams.error}</ErrorSection>}
       {
       userInfo 
       ? 
@@ -82,8 +85,7 @@ const UserProfile = async (
         </section>
         }
 
-        {searchParams.error&&
-        <ErrorSection>{searchParams.error}</ErrorSection>}
+       
         </MultipleRowsWrapper>
 
   )
