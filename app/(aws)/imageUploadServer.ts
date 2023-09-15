@@ -4,6 +4,7 @@ import { userObject } from "../(mongodb)/user";
 import { revalidatePath } from "next/cache";
 import {  formatDateUTC } from "../(lib)/formatDate";
 import { uploadToAwsPublic } from "./s3";
+import { setAvatarLink } from "../(mongodb)/avatarUpload";
 
 
 
@@ -22,14 +23,19 @@ export const handleImageForm = async(formData:FormData,username:string)=>{
     await handleUploadToAWS(image)
       .then(res=>{
         if (res.aws.$metadata.httpStatusCode==200){
-          //we should return the image url (which is public/filename) and upload it on mongodb on user/avatarSrc.
-          console.log(`Success! Your image is ${res.url}`)
+          return res.url;
         }
         else{
           throw "Upload failed"
         }
       })
-      revalidatePath('/');
+
+      .then(async(url)=>{
+        await setAvatarLink(username,url)
+      })
+
+
+      revalidatePath(`/`);
   }
   catch(err){
     redirect(`user/${username}?error=${err}`);
