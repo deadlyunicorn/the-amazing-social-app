@@ -1,37 +1,31 @@
-import { SubmitButtonClient } from "../(components)/SubmitButtonClient";
-import { userObject } from "../(mongodb)/user";
+import { ImageInput } from "./ImageInput";
 import { handleImageForm } from "./imageUploadServer";
 
-export const ChangeProfilePicture = ({username}:{username:string}) => {
+export const ChangeProfilePicture = ({ username }: { username: string }) => {
 
   return (
 
     <form
       className="flex flex-col items-center"
-      action={async(formData)=>{
+      action={async (formData) => {
         "use server"
-        await handleImageForm(formData,username)}}>
+        //if you pass the username via formdata, anyone could change anyone's image.. 
+        await handleImageForm(formData, username)
+      }}>
+
 
 
       <label
         htmlFor="imgFile"
         className="
-        text-link hover:underline
-          cursor-pointer">
-          Change avatar
+            text-link hover:underline
+              cursor-pointer">
+        Change avatar
       </label>
+      <ImageInput />
 
-          <input
-            required
-            className="hidden"
-            id="imgFile"
-              accept="image/*"
-              name="imgFile"
-              type="file" />
+    </form>
 
-          <SubmitButtonClient/>
-      </form>
-
-    )
+  )
 }
 
