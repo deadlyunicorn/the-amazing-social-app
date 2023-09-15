@@ -5,3 +5,12 @@ export const formatDate = (date:Date)=>{
 
   return `${postDay}/${postMonth}/${postYear}`;
 }
+
+export const formatDateUTC = (date:Date)=>{
+  const day = date.getUTCDate() < 10 ? '0' + date.getUTCDate() :String(date.getUTCDate());
+  const month = date.getUTCMonth()+1 < 10 ?'0' + (date.getUTCMonth()+1):String(date.getUTCMonth()+1);
+  const year = date.getUTCFullYear();
+
+  return `${year}_${month}_${year}`;
+
+}
