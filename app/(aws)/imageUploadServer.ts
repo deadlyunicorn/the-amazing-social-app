@@ -1,15 +1,23 @@
 "use server"
 import { redirect } from "next/navigation";
-import { userObject } from "../(mongodb)/user";
+import { getUserInfo, userObject } from "../(mongodb)/user";
 import { revalidatePath } from "next/cache";
 import {  formatDateUTC } from "../(lib)/formatDate";
-import { uploadToAwsPublic } from "./s3";
+import { deleteImageAWS, uploadToAwsPublic } from "./s3";
 import { setAvatarLink } from "../(mongodb)/avatarUpload";
+import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
+import { supabaseCredentials } from "../(supabase)/global";
+import { cookies } from "next/headers";
 
 
 
-export const handleImageForm = async(formData:FormData,username:string)=>{
+export const handleImageForm = async(formData:FormData)=>{
   // const imgSource = URL.createObjectURL(e.target.files[0]);
+  const session = await createServerActionClient({cookies},supabaseCredentials).auth.getSession();
+  const userDetails = await getUserInfo({email:session.data.session?.user.email});
+
+  const username = String(userDetails?.username);
+  const oldAvatarSrc = String(userDetails?.avatarSrc);
 
   try{
     const image = formData.get('imgFile') as File;
@@ -32,6 +40,10 @@ export const handleImageForm = async(formData:FormData,username:string)=>{
 
       .then(async(url)=>{
         await setAvatarLink(username,url)
+      })
+      .then(async()=>{
+        // await ?? 
+        await deleteImageAWS(oldAvatarSrc);
       })
 
 
