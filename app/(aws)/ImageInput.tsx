@@ -9,9 +9,12 @@ export const ImageInput = () => {
 
   const [temp, setTemp] = useState<undefined | string>(undefined);
   const {pending} = experimental_useFormStatus();
-
+ 
   useEffect(()=>{
-    setTemp(undefined)
+    if (!pending){
+      setTemp(undefined);
+    }
+    
   },[pending])
 
   return (
