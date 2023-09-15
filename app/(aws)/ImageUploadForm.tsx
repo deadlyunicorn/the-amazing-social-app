@@ -7,11 +7,7 @@ export const ChangeProfilePicture = ({ username }: { username: string }) => {
 
     <form
       className="flex flex-col items-center"
-      action={async (formData) => {
-        "use server"
-        //if you pass the username via formdata, anyone could change anyone's image.. 
-        await handleImageForm(formData, username)
-      }}>
+      action={handleImageForm}>
 
 
 
