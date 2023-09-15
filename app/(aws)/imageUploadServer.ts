@@ -2,9 +2,8 @@
 import { redirect } from "next/navigation";
 import { userObject } from "../(mongodb)/user";
 import { revalidatePath } from "next/cache";
-import { formatDate } from "../(lib)/formatDate";
+import {  formatDateUTC } from "../(lib)/formatDate";
 import { uploadToAwsPublic } from "./s3";
-import fs from 'fs';
 
 
 
@@ -19,8 +18,18 @@ export const handleImageForm = async(formData:FormData,username:string)=>{
     if (!image.type.includes('image')){
       throw "Only images are allowed";
     }
-    await uploadImage(image);
-    revalidatePath('/');
+
+    await handleUploadToAWS(image)
+      .then(res=>{
+        if (res.aws.$metadata.httpStatusCode==200){
+          //we should return the image url (which is public/filename) and upload it on mongodb on user/avatarSrc.
+          console.log(`Success! Your image is ${res.url}`)
+        }
+        else{
+          throw "Upload failed"
+        }
+      })
+      revalidatePath('/');
   }
   catch(err){
     redirect(`user/${username}?error=${err}`);
@@ -28,46 +37,33 @@ export const handleImageForm = async(formData:FormData,username:string)=>{
 }
 
 
-const uploadImage = async(image:File) => {
+const handleUploadToAWS = async(image:File) => {
 
   const date = new Date();
-  const fileName = `IMG_${formatDate(date).replaceAll('/','')}_${date.getHours()}h${date.getMinutes()}m${date.getSeconds()}s${date.getMilliseconds()}ms.${image.type.slice(image.type.indexOf('/')+1)}`;
 
+  const fileType = image.type;
+  const fileName = `IMG_${formatDateUTC(date)}_${date.getUTCHours()}h${date.getUTCMinutes()}m${date.getUTCSeconds()}s${date.getUTCMilliseconds()}ms.${image.type.slice(fileType.indexOf('/')+1)}`;
   
 
-  throw 'not yet implemented:)';
-  // const toBase64 = (file: File): Promise<string> => (new Promise((res, err) => {
+  const imageReader = image.stream().getReader();
+  const imageDataU8: number[] = [];
+  //u8[]
 
-  //     fs.readFile(file,(err,data)=>{
-      
-  //     });
-  //     const reader = new filereader();
-  //     reader.readAsDataURL(file);
-  //     reader.onload = () => (res(reader.result as string))
-  //     reader.onerror = () => { alert("There was an error reading your file.") }
-  //   }));
-        
-            
+  while (true){
 
-  //   const encodedFile: string = await toBase64(image)
-  //     .then(res => res.slice(res.indexOf('base64,') + 'base64,'.length));
+    const {done,value} = await imageReader.read();
+    if (done) break;
+
+    imageDataU8.push(...value);
+
+  }
+
+  //@ts-ignore
+  const imageBinary = Buffer.from(imageDataU8,'binary');
 
 
-  //     if (encodedFile) {
-  //         return await uploadToAwsPublic(encodedFile,fileName)
-  //         .then( async(res) => {
-  //             console.log(res);
-  //             if (res.$metadata.httpStatusCode==200){
-  //               //we should return the image url (which is public/filename) and upload it on mongodb on user/avatarSrc.
-  //               console.log('Success!')
-  //             }
-  //             else{
-  //               throw "Upload failed"
-  //             }
-             
-  //         })
-         
-  //     }
-      
 
-    }
+ 
+  return {aws:await uploadToAwsPublic(imageBinary,fileName,fileType),url:`https://the-amazing-social-app.s3.eu-central-1.amazonaws.com/public/${fileName}`};
+
+}

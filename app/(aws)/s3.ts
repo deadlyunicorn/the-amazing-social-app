@@ -19,13 +19,14 @@ const bucket = {
 
 }
 
-export const uploadToAwsPublic = async (binaryData:string,fileName:string) => {
+export const uploadToAwsPublic = async (binaryData:Buffer,fileName:string,fileType:string) => {
 
   // try {
     return await client.send(new PutObjectCommand({
       Bucket:bucket.name,
-      Key:"public/Testfile.txt",
-      Body:"Cool body2"
+      Key:`public/${fileName}`,
+      Body:binaryData,
+      ContentType: fileType
     }))
 
 
