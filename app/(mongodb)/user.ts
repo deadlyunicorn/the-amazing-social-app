@@ -1,6 +1,4 @@
-import { MongoClient, ObjectId, Timestamp } from "mongodb";
-const {  ServerApiVersion } = require('mongodb');
-
+import {ServerApiVersion, MongoClient, ObjectId, Timestamp, } from "mongodb";
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 
 const client = new MongoClient(process.env.MONGODB_URI!, {
@@ -50,5 +48,7 @@ export type userObject={
   age: number,
   email: string,
   username: string,
+  avatarSrc?: string,
+  description?: string,
   latestPosts: Array<{ created_at: Timestamp, postText: string }>
 }
