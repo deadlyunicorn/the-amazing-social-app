@@ -23,7 +23,7 @@ export const UserInfoComponent = ({userInfo}:{userInfo:userObject}) => {
           
 
           <div className="flex flex-col">
-            <p>{userInfo.age}y.o.</p>
+            <p>{date.getFullYear()-userInfo.age}y.o.</p>
             <p className="self-center text-3xl rotate-2">@{userInfo.username}</p>
           </div>
         </div>
