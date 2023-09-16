@@ -7,7 +7,7 @@ export const EmailPasswordForm = (
   }) => {
 
   return (
-    <section className=" bg-stone-800">
+    <section className=" bg-stone-800 max-w-md">
 
       <h3 className="
       
