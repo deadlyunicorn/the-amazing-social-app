@@ -1,20 +1,20 @@
 "use server"
 import { redirect } from "next/navigation";
-import { getUserInfo, userObject } from "../(mongodb)/user";
+import { getUserDetails, getUserInfo, userObject } from "../../(mongodb)/user";
 import { revalidatePath } from "next/cache";
-import {  formatDateUTC } from "../(lib)/formatDate";
-import { deleteImageAWS, uploadToAwsPublic } from "./s3";
-import { setAvatarLink } from "../(mongodb)/avatarUpload";
+import {  formatDateUTC } from "../../(lib)/formatDate";
+import { setAvatarLink } from "../../(mongodb)/avatarUpload";
 import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
-import { supabaseCredentials } from "../(supabase)/global";
+import { supabaseCredentials } from "../../(supabase)/global";
 import { cookies } from "next/headers";
+import { deleteImageAWS, uploadToAwsPublic } from "@/app/(aws)/images";
 
 
 
 export const handleImageForm = async(formData:FormData)=>{
   // const imgSource = URL.createObjectURL(e.target.files[0]);
-  const session = await createServerActionClient({cookies},supabaseCredentials).auth.getSession();
-  const userDetails = await getUserInfo({email:session.data.session?.user.email});
+  
+  const userDetails = await getUserDetails();
 
   const username = String(userDetails?.username);
   const oldAvatarSrc = String(userDetails?.avatarSrc);

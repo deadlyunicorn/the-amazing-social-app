@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { experimental_useFormStatus } from "react-dom";
-import { SubmitButtonClient } from "../(components)/SubmitButtonClient";
+import { SubmitButtonClient } from "../../(components)/SubmitButtonClient";
 
 export const ImageInput = () => {
 

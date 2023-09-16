@@ -12,6 +12,7 @@ export const ChangeProfilePicture = ({ username }: { username: string }) => {
 
 
       <label
+        tabIndex={0}
         htmlFor="imgFile"
         className="
             text-link hover:underline
