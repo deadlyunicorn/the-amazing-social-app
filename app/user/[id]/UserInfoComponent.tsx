@@ -1,16 +1,18 @@
-import { ChangeProfilePicture } from "@/app/(aws)/ImageUploadForm";
 import { formatDate } from "@/app/(lib)/formatDate";
 import { userObject } from "@/app/(mongodb)/user";
 import Image from "next/image";
+import { ChangeProfilePicture } from "../updateImage/ImageUploadForm";
+import { UserDescription } from "../description/UserDescription";
 
 
 export const UserInfoComponent = ({userInfo}:{userInfo:userObject}) => {
   
   const date = new Date();
+  const sampleDescription = "Hello world!"; 
 
   return (
     <>
-      <section className="grid md:grid-cols-2 gap-x-2 gap-y-4">
+      <section className="grid md:grid-cols-2 gap-x-2 gap-y-4 min-h-[250px]">
         <div className="flex flex-col justify-center">
           <Image
           blurDataURL="/favicon.svg"
@@ -31,11 +33,15 @@ export const UserInfoComponent = ({userInfo}:{userInfo:userObject}) => {
           </div>
         </div>
 
-        <div className="text-center">
+        <div className="text-center relative">
           <h1>Description</h1>
-          <p>A very cool user description goes here (max 200 words).A very cool user description goes here (max 200 words).A very cool user description goes here (max 200 words).A very cool user description goes here.
-          </p>
+          <UserDescription description={userInfo.description || sampleDescription}/>   
+
+            
+
+
         </div>
+
 
         
         
