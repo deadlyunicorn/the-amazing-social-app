@@ -86,3 +86,11 @@ h1{
       display: none;
   }
 }
+
+.text-error-light-reactive{
+  color:rgb(220 38 38);
+}
+
+.text-error-light-reactive:hover{
+  color:rgb(239 68 68);
+}
