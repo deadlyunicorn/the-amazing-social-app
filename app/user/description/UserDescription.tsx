@@ -3,7 +3,7 @@ import { SubmitButtonClient } from "@/app/(components)/SubmitButtonClient";
 import { KeyboardEvent, ReactNode, useEffect, useState } from "react"
 import { handleDescriptionForm } from "./putDescription";
 
-export const UserDescription = ({ description }: { description: string }) => {
+export const UserDescription = ({ description, ownsProfile }: { description: string, ownsProfile : boolean }) => {
 
   const [editing, setEditing] = useState(false);
 
@@ -14,7 +14,7 @@ export const UserDescription = ({ description }: { description: string }) => {
 
     <>
     {
-      editing
+      (editing && ownsProfile)
         ?<EditDescription>
           
           <textarea
@@ -32,20 +32,23 @@ export const UserDescription = ({ description }: { description: string }) => {
 
       : <DisplayDescription description={description} />
     } 
-    {editing?
-      <button
-      className="
-        absolute bottom-0 right-0
-        text-error-light-reactive"
-      onClick={() => { setEditing(!editing) }}>
-        Discard
-    </button>
 
-    :<button
-      onClick={() => { setEditing(!editing) }}
-      className="text-link ">
-      Update description
-    </button>
+    {ownsProfile &&
+      editing?
+        <button
+        className="
+          absolute bottom-0 right-0
+          text-error-light-reactive"
+        onClick={() => { setEditing(!editing) }}>
+          Discard
+      </button>
+
+      :<button
+        onClick={() => { setEditing(!editing) }}
+        className="text-link ">
+        Update description
+      </button>
+      
     }
       
 

@@ -44,6 +44,7 @@ const UserProfile = async (
   // params.id
   const userInfo = await getUserInfo({username:String(params.id)});
 
+  const ownsProfile = params.id == signedUserId;
 
 
   return (
@@ -55,16 +56,18 @@ const UserProfile = async (
       userInfo 
       ? 
         <>
-        <UserInfoComponent userInfo={userInfo}/>
+        <UserInfoComponent 
+          ownsProfile={ownsProfile}
+          userInfo={userInfo}/>
           {
             (userInfo.email == signedUserEmail) 
             && <AccountOptions/>
           }
         </>
           
-      : params.id == signedUserId
+      : 
         
-        ?<>
+        ownsProfile?<>
           <section className="text-center">
 
           You have successfully registered your account.

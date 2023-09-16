@@ -5,10 +5,12 @@ import { ChangeProfilePicture } from "../updateImage/ImageUploadForm";
 import { UserDescription } from "../description/UserDescription";
 
 
-export const UserInfoComponent = ({userInfo}:{userInfo:userObject}) => {
+export const UserInfoComponent = ({userInfo,ownsProfile}:{userInfo:userObject,ownsProfile:boolean}) => {
   
   const date = new Date();
   const sampleDescription = "Hello world!"; 
+
+  
 
   return (
     <>
@@ -24,7 +26,7 @@ export const UserInfoComponent = ({userInfo}:{userInfo:userObject}) => {
             height={100}
             alt={`Profile picture of ${userInfo.username}`}/>
 
-          <ChangeProfilePicture username={userInfo.username}/>
+          {ownsProfile&&<ChangeProfilePicture username={userInfo.username}/>}
           
 
           <div className="flex flex-col">
@@ -35,7 +37,9 @@ export const UserInfoComponent = ({userInfo}:{userInfo:userObject}) => {
 
         <div className="text-center relative">
           <h1>Description</h1>
-          <UserDescription description={userInfo.description || sampleDescription}/>   
+          <UserDescription 
+            ownsProfile={ownsProfile}
+            description={userInfo.description || sampleDescription}/>   
 
             
 
