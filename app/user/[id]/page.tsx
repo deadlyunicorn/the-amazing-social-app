@@ -44,8 +44,8 @@ const UserProfile = async (
   // params.id
   const userInfo = await getUserInfo({username:String(params.id)});
 
-  const ownsProfile = params.id == signedUserId;
-
+  const ownsProfile = signedUserEmail == userInfo?.email;
+  
 
   return (
     <MultipleRowsWrapper>
