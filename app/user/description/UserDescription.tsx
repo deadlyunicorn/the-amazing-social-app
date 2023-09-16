@@ -34,20 +34,22 @@ export const UserDescription = ({ description, ownsProfile }: { description: str
     } 
 
     {ownsProfile &&
-      editing?
-        <button
-        className="
-          absolute bottom-0 right-0
-          text-error-light-reactive"
-        onClick={() => { setEditing(!editing) }}>
-          Discard
-      </button>
+      (
+        editing?
+          <button
+          className="
+            absolute bottom-0 right-0
+            text-error-light-reactive"
+          onClick={() => { setEditing(!editing) }}>
+            Discard
+          </button>
 
       :<button
         onClick={() => { setEditing(!editing) }}
         className="text-link ">
         Update description
       </button>
+      )
       
     }
       
