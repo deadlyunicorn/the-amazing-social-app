@@ -98,6 +98,7 @@ const AccountOptions = () => (
     <section className="flex flex-col gap-y-2 items-center">
       <LogOutForm/>
       <Link
+        tabIndex={0}
         className="capitalize"
         href={'/account/delete'}>delete account</Link>
 
