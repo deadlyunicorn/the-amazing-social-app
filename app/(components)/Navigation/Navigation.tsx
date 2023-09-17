@@ -9,7 +9,7 @@ const NavigationBar = () => (
       max-w-xl w-full
       flex justify-evenly items-center h-full">
       <NavItem icon="🏠" link="/"/>
-      <NavItem icon="🌊" link="/search"/>      
+      <NavItem icon="🌊" link="/explore"/>      
       <NavItem icon="💬" link="/chat"/>      
       <NavItem icon="😶‍🌫️" link="/user"/>     
     </div> 
