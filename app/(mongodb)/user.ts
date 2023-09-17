@@ -53,7 +53,7 @@ export type userObject={
   username: string,
   avatarSrc?: string,
   description?: string,
-  latestPosts: Array<{ created_at: Timestamp, postText: string }>
+  latestPosts: Array<{ created_at: Date, postText: string }>
 }
 
 export const getUserDetails = async() => {

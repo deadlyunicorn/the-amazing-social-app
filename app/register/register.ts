@@ -83,7 +83,7 @@ export const addUserToMongoDB = async (formData: FormData) => {
       age: age,
       username: username,
       latestPosts: [{
-        created_at: new Timestamp(BigInt(new Date().getTime())),
+        created_at: new Date(),
         postText: "Hello world! I created my profile today."
       }
       ]
