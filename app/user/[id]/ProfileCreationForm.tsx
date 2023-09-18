@@ -8,11 +8,6 @@ export const ProfileCreationForm = ({email}:{email:string}) => (
 
     <div className="flex gap-x-5">
       <input 
-        readOnly
-        name="email"
-        value={email}
-        className="hidden"/>
-      <input 
         className="w-40 "
         required
         placeholder="username" name="username" minLength={6} maxLength={30}/>

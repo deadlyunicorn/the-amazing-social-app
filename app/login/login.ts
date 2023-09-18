@@ -6,19 +6,18 @@ import { supabaseCredentials } from "../(supabase)/global";
 import { redirect } from "next/navigation";
 
 
-export const guestLogin = async()=>{
-  const supabase = createServerActionClient({cookies},supabaseCredentials);
-
-  const email = 'anonymous@no.email';
-  const password = "123123123";
-
-  await serverActionLogin(supabase,email,password);
-}
 
 export const emailLogin = async(formData:FormData)=>{
 
   const email = String(formData.get('email'));
   const password = String(formData.get('password'));
+
+  if (password.length<6){
+    throw 'Not a valid password';
+  }
+  else if (email.length < 12){
+    throw 'Not a valid email';
+  }
 
   const supabase = createServerActionClient(
     {cookies},supabaseCredentials

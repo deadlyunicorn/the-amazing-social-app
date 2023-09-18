@@ -4,13 +4,20 @@ import { MongoClient, ObjectId, ServerApiVersion, Timestamp } from "mongodb";
 import { cookies } from "next/headers";
 import { supabaseCredentials } from "../(supabase)/global";
 import { redirect } from "next/navigation";
-import { userObject } from "../(mongodb)/user";
+import { getUserInfo, userObject } from "../(mongodb)/user";
 
 
 export const emailRegister = async (formData: FormData) => {
 
   const email = String(formData.get('email'));
   const password = String(formData.get('password'));
+
+  if (password.length<6){
+    throw 'Password too short';
+  }
+  else if (email.length < 12){
+    throw 'Not a valid email';
+  }
 
   const supabase = createServerActionClient(
     { cookies }, supabaseCredentials
@@ -67,9 +74,19 @@ export const addUserToMongoDB = async (formData: FormData) => {
 
 
   const date = new Date();
-  const email = String(formData.get('email'));
+  const supabase = createServerActionClient({cookies},supabaseCredentials);
+
+  
+  const email = String((await supabase.auth.getSession()).data.session?.user.email);
+  if (!email){throw "Not logged in"};
+
   const username = String(formData.get('username'));
+  if (username.length<6){throw 'Username too short'};
+
+
   const age = date.getFullYear()-Number(formData.get('age'));
+  if (age < 18 || age > 85){throw "Invalid age"};
+
   let success = false;
 
   try {
