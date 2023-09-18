@@ -7,11 +7,12 @@ import { setAvatarLink } from "../../(mongodb)/avatarUpload";
 import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
 import { supabaseCredentials } from "../../(supabase)/global";
 import { cookies } from "next/headers";
-import { deleteImageAWS, uploadToAwsPublic } from "@/app/(aws)/images";
+import { deleteAvatarAws, uploadToAwsAvatars } from "@/app/(aws)/images";
+import { getBinaryData } from "@/app/(lib)/getBinaryData";
 
 
 
-export const handleImageForm = async(formData:FormData)=>{
+export const handleAvatarForm = async(formData:FormData)=>{
   // const imgSource = URL.createObjectURL(e.target.files[0]);
   
   const userDetails = await getUserDetails();
@@ -28,22 +29,13 @@ export const handleImageForm = async(formData:FormData)=>{
       throw "Only images are allowed";
     }
 
-    await handleUploadToAWS(image)
-      .then(res=>{
-        if (res.aws.$metadata.httpStatusCode==200){
-          return res.url;
-        }
-        else{
-          throw "Upload failed"
-        }
-      })
-
+    await AvatarUploadAWS(image)
       .then(async(url)=>{
         await setAvatarLink(username,url)
       })
       .then(async()=>{
         // await ?? 
-        await deleteImageAWS(oldAvatarSrc);
+        await deleteAvatarAws(oldAvatarSrc);
       })
 
 
@@ -55,33 +47,28 @@ export const handleImageForm = async(formData:FormData)=>{
 }
 
 
-const handleUploadToAWS = async(image:File) => {
+const AvatarUploadAWS = async(image:File) => {
 
   const date = new Date();
 
   const fileType = image.type;
   const fileName = `IMG_${formatDateUTC(date)}_${date.getUTCHours()}h${date.getUTCMinutes()}m${date.getUTCSeconds()}s${date.getUTCMilliseconds()}ms.${image.type.slice(fileType.indexOf('/')+1)}`;
-  
 
-  const imageReader = image.stream().getReader();
-  const imageDataU8: number[] = [];
-  //u8[]
+  const imageBinary = await getBinaryData(image);
 
-  while (true){
-
-    const {done,value} = await imageReader.read();
-    if (done) break;
-
-    imageDataU8.push(...value);
-
-  }
-
-  //@ts-ignore
-  const imageBinary = Buffer.from(imageDataU8,'binary');
-
-
+  return await uploadToAwsAvatars(imageBinary,fileName,fileType)
+  .then(res=>{
+    if (res.$metadata.httpStatusCode==200){
+      return `https://the-amazing-social-app.s3.eu-central-1.amazonaws.com/public/avatars/${fileName}`;
+    }
+    else{
+      throw "Upload failed";
+    }
+  })
 
  
-  return {aws:await uploadToAwsPublic(imageBinary,fileName,fileType),url:`https://the-amazing-social-app.s3.eu-central-1.amazonaws.com/public/avatars/${fileName}`};
+  
 
 }
+
+

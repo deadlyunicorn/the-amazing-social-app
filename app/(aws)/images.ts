@@ -1,7 +1,7 @@
 import { DeleteObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { bucket, client } from "./s3";
 
-export const uploadToAwsPublic = async (binaryData: Buffer, fileName: string, fileType: string) => {
+export const uploadToAwsAvatars = async (binaryData: Buffer, fileName: string, fileType: string) => {
 
   // try {
   return await client.send(new PutObjectCommand({
@@ -19,7 +19,7 @@ export const uploadToAwsPublic = async (binaryData: Buffer, fileName: string, fi
   // }
 }
 
-export const deleteImageAWS = async (url: string) => {
+export const deleteAvatarAws = async (url: string) => {
 
   // try {
 

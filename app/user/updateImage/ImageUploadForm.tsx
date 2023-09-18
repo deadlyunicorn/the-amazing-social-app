@@ -1,5 +1,5 @@
-import { ImageInput } from "./ImageInput";
-import { handleImageForm } from "./imageUploadServer";
+import { ImageInputStandalone } from "./ImageInput";
+import { handleAvatarForm } from "./avatarUploadServer";
 
 export const ChangeProfilePicture = ({ username }: { username: string }) => {
 
@@ -7,7 +7,7 @@ export const ChangeProfilePicture = ({ username }: { username: string }) => {
 
     <form
       className="flex flex-col items-center"
-      action={handleImageForm}>
+      action={handleAvatarForm}>
 
 
 
@@ -19,7 +19,7 @@ export const ChangeProfilePicture = ({ username }: { username: string }) => {
               cursor-pointer">
         Change avatar
       </label>
-      <ImageInput />
+      <ImageInputStandalone />
 
     </form>
 

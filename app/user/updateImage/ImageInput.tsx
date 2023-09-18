@@ -5,7 +5,7 @@ import Image from "next/image";
 import { experimental_useFormStatus } from "react-dom";
 import { SubmitButtonClient } from "../../(components)/SubmitButtonClient";
 
-export const ImageInput = () => {
+export const ImageInputStandalone = () => {
 
   const [temp, setTemp] = useState<undefined | string>(undefined);
   const {pending} = experimental_useFormStatus();
@@ -52,6 +52,51 @@ export const ImageInput = () => {
       }
 
 
+    </>
+
+  )
+}
+
+export const ImageInputOptional = ({pixels}:{pixels:number}) => {
+
+  const [temp, setTemp] = useState<undefined | string>(undefined);
+  const {pending} = experimental_useFormStatus();
+ 
+  useEffect(()=>{
+    if (!pending){
+      setTemp(undefined);
+    }
+    
+  },[pending])
+
+  return (
+    <>
+      <input
+        onChange={e => {
+          const files = e.target.files;
+          if (files) {
+            const temporaryImage = files[0];
+            setTemp(URL.createObjectURL(temporaryImage));
+          }
+        }}
+        className="hidden"
+        id="image"
+        accept="image/*"
+        name="image"
+        type="file" />
+
+      {temp&&
+      <figure className="my-2">
+        <figcaption>Preview</figcaption>
+        <Image
+          className="self-center aspect-square object-cover"
+          src={temp}
+          width={pixels}
+          height={pixels}
+          alt={`Something to go with your post`} />
+
+      </figure>
+      }
     </>
 
   )
