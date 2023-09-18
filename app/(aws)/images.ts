@@ -6,7 +6,7 @@ export const uploadToAwsPublic = async (binaryData: Buffer, fileName: string, fi
   // try {
   return await client.send(new PutObjectCommand({
     Bucket: bucket,
-    Key: `public/${fileName}`,
+    Key: `public/avatars/${fileName}`,
     Body: binaryData,
     ContentType: fileType
   }))

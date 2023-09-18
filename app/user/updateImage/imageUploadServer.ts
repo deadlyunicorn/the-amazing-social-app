@@ -82,6 +82,6 @@ const handleUploadToAWS = async(image:File) => {
 
 
  
-  return {aws:await uploadToAwsPublic(imageBinary,fileName,fileType),url:`https://the-amazing-social-app.s3.eu-central-1.amazonaws.com/public/${fileName}`};
+  return {aws:await uploadToAwsPublic(imageBinary,fileName,fileType),url:`https://the-amazing-social-app.s3.eu-central-1.amazonaws.com/public/avatars/${fileName}`};
 
 }
