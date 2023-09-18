@@ -1,5 +1,6 @@
 "use server"
 import { MongoClient, Timestamp, ServerApiVersion } from "mongodb";
+import { postLimit } from "../(lib)/postLimit";
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 
 
@@ -15,6 +16,15 @@ export const getPosts = async (
       {$sort:{"date_created":1}},
       {$skip:(query.page-1)*10},
       {$limit:10}]
+
+
+  const client = new MongoClient(process.env.MONGODB_URI!, {
+    serverApi: {
+      version: ServerApiVersion.v1,
+      strict: true,
+      deprecationErrors: true,
+    }
+  });
 
 
   try {
@@ -50,6 +60,9 @@ export const getPosts = async (
 }
 
 
+
+
+
 export type userPost = {
   created_by:string,
   content: {
@@ -68,10 +81,3 @@ type comment = {
 }
 
 
-const client = new MongoClient(process.env.MONGODB_URI!, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});

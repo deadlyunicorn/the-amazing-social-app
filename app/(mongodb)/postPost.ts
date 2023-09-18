@@ -8,6 +8,14 @@ import { getUserDetails, getUserInfo } from "./user";
 
 export const postPost = async (content:{textContent:string,imageURL?:string}) => {
 
+  
+  const client = new MongoClient(process.env.MONGODB_URI!, {
+    serverApi: {
+      version: ServerApiVersion.v1,
+      strict: true,
+      deprecationErrors: true,
+    }
+  });
 
   try {
     
@@ -42,10 +50,3 @@ export const postPost = async (content:{textContent:string,imageURL?:string}) =>
   }
 }
 
-const client = new MongoClient(process.env.MONGODB_URI!, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
