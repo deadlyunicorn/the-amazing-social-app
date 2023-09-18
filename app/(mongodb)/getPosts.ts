@@ -13,9 +13,9 @@ export const getPosts = async (
   : Promise<userPost[] | null> => {
 
     const pipeline =[
-      {$sort:{"date_created":1}},
-      {$skip:(query.page-1)*10},
-      {$limit:10}]
+      {$sort:{"created_at":-1}},
+      {$skip:(query.page-1)*postLimit},
+      {$limit:postLimit}]
 
 
   const client = new MongoClient(process.env.MONGODB_URI!, {
