@@ -3,7 +3,7 @@ import { MultipleRowsWrapper } from "../(components)/FormWrapper";
 import { ErrorSection } from "../(components)/ErrorSection";
 import { handleCreatePost } from "./createPost";
 import { ImageInputOptional } from "../user/updateImage/ImageInput";
-import { ResetOnSubmit } from "./TextArea";
+import { ResetOnSubmit } from "./ResetOnSubmit";
 import Link from "next/link";
 import { PostSection } from "./posts";
 import { getPosts, userPost } from "../(mongodb)/getPosts";
@@ -68,7 +68,7 @@ const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } 
 
 const CreatePost = () => {
 
-  const formId = 'postForm';
+  const formId = '#postForm';
 
   return (
     <section>
