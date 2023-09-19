@@ -21,7 +21,7 @@ const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } 
     )
   );
 
-  const maxPages = await getPostsPageLimit()||0;
+  const maxPages = await getPostsPageLimit() || 0;
 
   return (
 
@@ -30,7 +30,7 @@ const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } 
 
       {searchParams.error &&
         <ErrorSection path="/explore">
-          
+
           {searchParams.error}
         </ErrorSection>
       }
@@ -38,18 +38,11 @@ const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } 
 
       <CreatePostSection />
 
-
-      
-      {[0].map(()=>
-
-        <PostSection 
-          key={1}
-          maxPages={maxPages}
+      <PostSection
+        key={1}
+        maxPages={maxPages}
         // @ts-ignore (we can't pass Date to client.)
-          firstPagePosts={firstPagePosts} />
-        )
-      }
-
+        firstPagePosts={firstPagePosts} />
 
 
     </MultipleRowsWrapper>
