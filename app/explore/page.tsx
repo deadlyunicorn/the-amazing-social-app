@@ -69,7 +69,7 @@ const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } 
 
 const CreatePost = () => {
 
-  const formId = '#postForm';
+  const formId = 'postForm';
 
   return (
     <section>
@@ -89,7 +89,7 @@ const CreatePost = () => {
           htmlFor="image">Add image</label>
         <ImageInputOptional pixels={200} />
 
-
+        
         <ResetOnSubmit formId={formId} />
 
         <textarea
