@@ -2,8 +2,6 @@ import { cookies } from "next/headers";
 import { supabaseCredentials } from "../(supabase)/global";
 import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
 
-export const dynamic = 'force-dynamic'
-
 
 export const LogOutForm = async() => (
   <form

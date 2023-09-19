@@ -6,9 +6,6 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { supabaseCredentials } from "@/app/(supabase)/global"
 
-export const dynamic = 'force-dynamic'
-
-
 export const UserOptions = async () => {
   const supabase = createServerComponentClient({ cookies }, supabaseCredentials);
   const user = (await supabase.auth.getSession()).data.session?.user;
