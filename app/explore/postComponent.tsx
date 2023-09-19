@@ -35,7 +35,7 @@ export const PostComponent = ({ post }: { post: userPostComplete }) => {
           height={200}
         />}
 
-      <article>
+      <article tabIndex={0}>
         {post.content?.textContent}
       </article>
       
