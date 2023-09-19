@@ -1,15 +1,14 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { DisplayPosts } from "./postsDisplay";
-import { userPost } from "../(mongodb)/getPosts";
-import { PostComponent } from "./postComponent";
+import { DisplayPosts } from "./postsDisplayClient";
+import { PostComponent, userPostComplete } from "./postComponent";
 
-export const PostSection = ({ firstPagePosts,maxPages}: { firstPagePosts: userPost[],maxPages:number }) => {
+export const PostSection = ({ firstPagePosts,maxPages}: { firstPagePosts: userPostComplete[],maxPages:number }) => {
 
   const [viewY, setViewY] = useState(0);
   const [edgeY, setEdgeY] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [canLoadNext, setCanLoadNext] = useState(true); //being true disallows new page loading  
 
 
   const [pageNumber, setPageNumber] = useState(1);
@@ -18,11 +17,14 @@ export const PostSection = ({ firstPagePosts,maxPages}: { firstPagePosts: userPo
 
     onscroll = () => {
 
-      setViewY(window.screen.height + window.scrollY);
       const sectionEnd = document.querySelector('#postSection');
       //@ts-ignore
       setEdgeY(sectionEnd?.getBoundingClientRect().bottom + window.scrollY);
-
+      
+      const currentPosition = window.screen.height + window.scrollY;
+      if (edgeY>currentPosition){ //prevents bugs?
+        setViewY(currentPosition); 
+      }
 
     }
   });
@@ -30,13 +32,10 @@ export const PostSection = ({ firstPagePosts,maxPages}: { firstPagePosts: userPo
   useEffect(()=>{
     if (edgeY - 200 < viewY ){
 
-      if (!loading){
-        setPageNumber(prev=>{
-          if ( maxPages >= prev +1){
-            return prev+1
-          }
-          else{ return prev}
-        });
+      if (canLoadNext){
+        if (pageNumber < maxPages){
+          setPageNumber(pageNumber+1);
+        }
       }
       
     }
@@ -44,7 +43,7 @@ export const PostSection = ({ firstPagePosts,maxPages}: { firstPagePosts: userPo
 
 
 
-    
+
 
   const pagesArray = [];
 
@@ -69,28 +68,22 @@ export const PostSection = ({ firstPagePosts,maxPages}: { firstPagePosts: userPo
         </div>
 
       <ul>
-        {firstPagePosts.map(
+        {firstPagePosts && firstPagePosts.map(
           (post,key) =>
             <PostComponent 
               key={key}
               post={post} />
         )}
-      </ul>
+      </ul> 
 
 
         {pagesArray.map((page) =>
           <DisplayPosts 
             key={page}
-            loading={loading}
-            setLoading={setLoading}
+            canLoadNext={canLoadNext}
+            setCanLoadNext={setCanLoadNext}
             page={page} />
-        )}
-
-      {/* get all available pages with mongoFetch
-      and don't display more than allowed */}
-
-      {/* window:{windowLocation} */}
-      {/* <br/>divider:{dividerLocation} */}
+        )} 
 
 
     </section>
