@@ -6,31 +6,23 @@ import { PostComponent, userPostComplete } from "./postComponent";
 export const DisplayPosts = ({ page, canLoadNext, setCanLoadNext }: { page: number, setCanLoadNext: any, canLoadNext: boolean }) => {
 
   const [posts, setPosts] = useState<null | userPostComplete[]>(null);
-  const [loading,setLoading] = useState(false);
 
   useEffect(() => {
+    
+    setCanLoadNext(false);
 
     (async () => {
 
-      setLoading(true);
-      setCanLoadNext(false);
+      try {
 
-      try{
-
-      await fetch(`/explore/posts/${page}`, {
-        method: "GET",
-      })
-
-        .then(async (res) => {
-          return await res.json()
+        await fetch(`/explore/posts/${page}`, {
+          method: "GET",
         })
-        .then((posts) => {
-          setPosts(posts);
-        })
+          .then( async (res) => await res.json() )
+          .then( posts => { setPosts(posts); });
       }
-      finally{
+      finally {
         setCanLoadNext(true);
-        setLoading(false);
       }
 
 
@@ -40,24 +32,19 @@ export const DisplayPosts = ({ page, canLoadNext, setCanLoadNext }: { page: numb
 
   return (
 
-    <>
-      <h1>Page {page}</h1>
-      {posts && posts.length > 0
-        ? <ul>
+    posts && posts.length > 0 &&
 
-          {
-            posts.map(
-              (post) => (
-                <PostComponent
-                  key={new Date(post.created_at).getTime()}
-                  post={post} />
-              )
-            )
-          } 
-        </ul>
-        : loading && <p className="text-center">Loading...</p>
+    <ul>
+      {
+        posts.map(
+          (post) => (
+            <PostComponent
+              key={new Date(post.created_at).getTime()}
+              post={post} />
+          )
+        )
       }
-    </>
+    </ul>
   )
 }
 

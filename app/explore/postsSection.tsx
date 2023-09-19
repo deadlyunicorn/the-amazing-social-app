@@ -9,31 +9,33 @@ export const PostSection = ({ firstPagePosts,maxPages}: { firstPagePosts: userPo
   const [viewY, setViewY] = useState(0);
   const [edgeY, setEdgeY] = useState(0);
   const [canLoadNext, setCanLoadNext] = useState(true); //being true disallows new page loading  
-
-
   const [pageNumber, setPageNumber] = useState(1);
 
   useEffect(() => {
+    onscroll = handlePageMove;
+  });
 
-    onscroll = () => {
+  const handlePageMove = () => {
 
       const sectionEnd = document.querySelector('#postSection');
       //@ts-ignore
       setEdgeY(sectionEnd?.getBoundingClientRect().bottom + window.scrollY);
       
       const currentPosition = window.screen.height + window.scrollY;
-      if (edgeY>currentPosition){ //prevents bugs?
+      if ( edgeY  > currentPosition - 400 ){ //prevents bugs?
         setViewY(currentPosition); 
       }
 
-    }
-  });
+  } 
 
   useEffect(()=>{
-    if (edgeY - 200 < viewY ){
+
+    if (pageNumber < maxPages){
 
       if (canLoadNext){
-        if (pageNumber < maxPages){
+
+        if (edgeY - 200 < viewY ){
+
           setPageNumber(pageNumber+1);
         }
       }
@@ -55,20 +57,9 @@ export const PostSection = ({ firstPagePosts,maxPages}: { firstPagePosts: userPo
   return (
     <section
       id="postSection">
-
-        <div className="fixed bg-white top-0 left-0 z-20">
-          view:{viewY}
-          <br/>
-          edge:{edgeY}
-          <br/>
-          <br/>
-          page:{pageNumber}
-          <br/>
-          newValue:{Math.floor(viewY / edgeY) + 1}
-        </div>
-
+       
       <ul>
-        {firstPagePosts && firstPagePosts.map(
+        {firstPagePosts && firstPagePosts.map( //server loaded posts
           (post,key) =>
             <PostComponent 
               key={key}
@@ -76,15 +67,18 @@ export const PostSection = ({ firstPagePosts,maxPages}: { firstPagePosts: userPo
         )}
       </ul> 
 
+      {pagesArray.map((page) =>
+        <DisplayPosts 
+          key={page}
+          canLoadNext={canLoadNext}
+          setCanLoadNext={setCanLoadNext}
+          page={page} />
+      )} 
 
-        {pagesArray.map((page) =>
-          <DisplayPosts 
-            key={page}
-            canLoadNext={canLoadNext}
-            setCanLoadNext={setCanLoadNext}
-            page={page} />
-        )} 
-
+        {(!canLoadNext && pageNumber < maxPages) 
+        ? <p className="text-center" tabIndex={0}>Loading...</p>
+        : pageNumber == maxPages && <p className="text-center" tabIndex={0}>The road ends here O.o</p> 
+        }
 
     </section>
 
