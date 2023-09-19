@@ -26,7 +26,7 @@ export const postPost = async (content:{textContent:string,imageURL?:string}) =>
 
 
     const newPost:userPost ={
-      created_by:String(userDetails?.username),
+      created_by:String(userDetails?._id),
       content:{
         textContent:content.textContent,
         imageURL:content.imageURL
