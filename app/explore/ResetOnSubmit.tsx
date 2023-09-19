@@ -1,16 +1,20 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { experimental_useFormStatus } from "react-dom"
 
 export const ResetOnSubmit = ({formId}:{formId:string}) => {
 
   const {pending} = experimental_useFormStatus();
+  const [hasLoaded,setHasLoaded] = useState(false);
 
   useEffect(()=>{
-    if (!pending){
+    if (!pending && hasLoaded){
       //@ts-ignore
       document.querySelector(formId).reset();
+    }
+    else{
+      setHasLoaded(true);
     }
   },[pending])
 
