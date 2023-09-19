@@ -25,6 +25,7 @@ export const postPost = async (content:{textContent:string,imageURL?:string}) =>
     const posts = client.db('the-amazing-social-app').collection('posts');
 
 
+    //@ts-ignore _id is generated automatically
     const newPost:userPost ={
       created_by:String(userDetails?._id),
       content:{
