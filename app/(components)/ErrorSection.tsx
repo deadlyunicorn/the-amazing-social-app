@@ -5,6 +5,7 @@ export const ErrorSection = ({children, path}:{children:ReactNode,path:string}) 
   <section
           className="text-error-light text-center relative">
             <Link
+              tabIndex={0}
               href={path}
               className="
               text-error-light-reactive

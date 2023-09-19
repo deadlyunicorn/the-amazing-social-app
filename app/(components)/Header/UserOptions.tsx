@@ -28,7 +28,7 @@ export const UserOptions = async () => {
       {!user &&
         <div className="animate-appearance">
 
-          <Link tabIndex={0} href="/login">
+          <Link href="/login">
             <HeaderButton>
               Log in
             </HeaderButton>

@@ -46,8 +46,9 @@ const LoginPage = async(
           />
 
           <section className="text-center">
-              <Link href="/account/recover">
-                I forgot my password :(
+              <Link 
+                tabIndex={0} href="/account/recover">
+                I forgot my password :&#40;
               </Link>
             <SignUpAside />
           </section>

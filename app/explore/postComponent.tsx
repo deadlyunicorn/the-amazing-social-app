@@ -15,7 +15,7 @@ export const PostComponent = ({ post }: { post: userPostComplete }) => {
       key={postDate.getTime()}
       className="border border-dashed text-center">
         
-      <Link href={`user/${post.created_by}`}>
+      <Link tabIndex={0} href={`user/${post.created_by}`}>
         <Image
           width={50}
           height={50}
