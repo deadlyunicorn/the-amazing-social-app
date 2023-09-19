@@ -5,7 +5,7 @@ import { handleCreatePost } from "./createPost";
 import { ImageInputOptional } from "../user/updateImage/ImageInput";
 import { ResetOnSubmit } from "./ResetOnSubmit";
 import Link from "next/link";
-import { PostSection } from "./posts";
+import { PostSection } from "./postsSection";
 import { getPosts, userPost } from "../(mongodb)/getPosts";
 import { getPostsPageLimit } from "../(lib)/postLimit";
 
@@ -89,7 +89,7 @@ const CreatePost = () => {
           htmlFor="image">Add image</label>
         <ImageInputOptional pixels={200} />
 
-        
+
         <ResetOnSubmit formId={formId} />
 
         <textarea
