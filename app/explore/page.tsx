@@ -2,24 +2,13 @@ import { MultipleRowsWrapper } from "../(components)/FormWrapper";
 import { ErrorSection } from "../(components)/ErrorSection";
 import Link from "next/link";
 import { PostSection } from "./postsSection";
-import { getPosts } from "../(mongodb)/getPosts";
+import { getPosts, userPost } from "../(mongodb)/getPosts";
 import { getPostsPageLimit } from "../(lib)/postLimit";
 import { CreatePostSection } from "./postCreationForm";
 
 const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } }) => {
 
-  const firstPagePosts = (await getPosts({ page: 1 }))?.map(
-    post => (
-      {
-        comments: post.comments,
-        likers: post.likers,
-        content: post.content,
-        created_by: post.created_by,
-        created_at: post.created_at.getTime()
-      }
-
-    )
-  );
+  const firstPagePosts = PostsToClient(await getPosts({ page: 1 }));
 
   const maxPages = await getPostsPageLimit() || 0;
 
@@ -55,3 +44,18 @@ const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } 
 
 
 export default ExplorePage;
+
+const PostsToClient = (userPostArray:userPost[]|null) => {
+
+  return userPostArray?.map(post => (
+    {
+      comments: post.comments,
+      likers: post.likers,
+      content: post.content,
+      created_by: post.created_by,
+      created_at: post.created_at.getTime()
+    }
+
+  ))
+
+}
