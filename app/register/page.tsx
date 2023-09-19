@@ -7,6 +7,9 @@ import { ErrorSection } from "../(components)/ErrorSection";
 import { MultipleRowsWrapper } from "../(components)/FormWrapper";
 import { LogOutForm } from "../(components)/LogoutForm";
 
+export const dynamic = 'force-dynamic'
+
+
 const RegisterPage = async ({ searchParams }: { searchParams: { error: string } }) => {
 
   const supabase = createServerComponentClient({ cookies }, supabaseCredentials);

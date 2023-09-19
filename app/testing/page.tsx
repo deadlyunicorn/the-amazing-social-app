@@ -3,6 +3,8 @@ import { cookies } from "next/headers";
 import {redirect} from "next/navigation"
 import { supabaseCredentials } from "../(supabase)/global";
 
+export const dynamic = 'force-dynamic'
+
 export default async function Home(
   {searchParams}:{
     searchParams:{
