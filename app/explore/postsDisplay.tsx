@@ -18,7 +18,7 @@ export const DisplayPosts = ({ page, loading, setLoading }: { page: number, setL
 
       setLoading(true);
 
-      await fetch(`http://localhost:3000/explore/posts/${page}`, {
+      await fetch(`/explore/posts/${page}`, {
         method: "GET",
       })
 
