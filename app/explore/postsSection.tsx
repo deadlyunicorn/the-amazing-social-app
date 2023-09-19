@@ -1,8 +1,9 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { DisplayPosts, PostComponent } from "./postsDisplay";
+import { DisplayPosts } from "./postsDisplay";
 import { userPost } from "../(mongodb)/getPosts";
+import { PostComponent } from "./postComponent";
 
 export const PostSection = ({ firstPagePosts,maxPages}: { firstPagePosts: userPost[],maxPages:number }) => {
 

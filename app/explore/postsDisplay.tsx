@@ -1,10 +1,8 @@
 "use client"
 
-import Image from "next/image"
 import { userPost } from "../(mongodb)/getPosts"
 import { useEffect, useState } from "react";
-import { formatDate } from "../(lib)/formatDate";
-import Link from "next/link";
+import { PostComponent } from "./postComponent";
 
 export const DisplayPosts = ({ page, loading, setLoading }: { page: number, setLoading: any, loading: boolean }) => {
 
@@ -64,26 +62,3 @@ export const DisplayPosts = ({ page, loading, setLoading }: { page: number, setL
   )
 }
 
-export const PostComponent = ({ post }: { post: userPost }) => {
-
-
-  return (
-    <li
-      key={new Date(post.created_at).getTime()}
-      className="border border-dashed text-center">
-      <Link href={`user/${post.created_by}`}>@{post.created_by}</Link>{formatDate(new Date(post.created_at))}
-
-      {(post.content.imageURL && post.content.imageURL.length > 0) &&
-        <Image
-          className="aspect-square"
-          src={post.content.imageURL}
-          alt=""
-          width={200}
-          height={200}
-        />}
-      <br />
-      {post.content?.textContent}
-      <br />
-    </li>
-  )
-} 
