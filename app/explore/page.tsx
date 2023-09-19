@@ -49,9 +49,10 @@ const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } 
       </section>
       
       {[0].map(()=>
-        <PostSection 
-          maxPages={maxPages}
 
+        <PostSection 
+          key={1}
+          maxPages={maxPages}
         // @ts-ignore (we can't pass Date to client.)
           firstPagePosts={firstPagePosts} />
         )

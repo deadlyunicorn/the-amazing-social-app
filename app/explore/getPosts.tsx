@@ -46,7 +46,9 @@ export const DisplayPosts = ({ page,loading,setLoading }: { page: number,setLoad
       {posts && posts.length > 0
         ? posts.map(
           (post) => (
-            <PostComponent post={post} />
+            <PostComponent 
+              key={new Date(post.created_at).getTime()}
+              post={post} />
           )
         )
         : loading

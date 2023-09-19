@@ -76,6 +76,7 @@ export const PostSection = ({ firstPagePosts,maxPages}: { firstPagePosts: userPo
 
         {pagesArray.map((page) =>
           <DisplayPosts 
+            key={page}
             loading={loading}
             setLoading={setLoading}
             page={page} />
