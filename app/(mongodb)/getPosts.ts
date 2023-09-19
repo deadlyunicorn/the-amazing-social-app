@@ -1,5 +1,5 @@
 "use server"
-import { MongoClient, Timestamp, ServerApiVersion } from "mongodb";
+import { MongoClient, ServerApiVersion, ObjectId } from "mongodb";
 import { postLimit } from "../(lib)/postLimit";
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 
@@ -64,6 +64,7 @@ export const getPosts = async (
 
 
 export type userPost = {
+  _id:ObjectId,
   created_by:string,
   content: {
     textContent:string,
@@ -75,6 +76,7 @@ export type userPost = {
 }
 
 type comment = {
+  _id:ObjectId,
   author: string, //username
   comment: string,
   created_at: Date
