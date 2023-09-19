@@ -20,6 +20,11 @@ export const CreatePostSection = async () => {
         :<LoginPrompt/>
       }
 
+      <aside tabIndex={0} className="text-center">
+
+        <p>(Your post needs to be verified by the developer in order to be visible)</p>
+        <p>You can check the functionality however <Link tabIndex={0} href={'https://the-amazing-social-6msv74gbb-deadlyunicorn.vercel.app/explore'}>in some of the past dev deployments.</Link></p>
+      </aside>
 
 
     </section>
