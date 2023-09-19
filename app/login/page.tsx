@@ -8,8 +8,6 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { LogOutForm } from "../(components)/LogoutForm"
 
-export const dynamic = 'force-dynamic'
-
 const LoginPage = async(
   { searchParams }: {
     searchParams: {

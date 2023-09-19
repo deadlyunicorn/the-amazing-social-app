@@ -3,9 +3,6 @@ import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import { getUserInfo } from "../(mongodb)/user"
 
-
-export const dynamic = 'force-dynamic'
-
 const UserRedirect = async() => {
   
   const supabase = createServerComponentClient(

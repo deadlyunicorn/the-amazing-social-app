@@ -9,9 +9,6 @@ import { UserInfoComponent } from "./UserInfoComponent"
 import { ProfileCreationForm } from "./ProfileCreationForm"
 import { ErrorSection } from "@/app/(components)/ErrorSection"
 
-export const dynamic = 'force-dynamic'
-
-
 export const generateMetadata = ({params}:{params:{id:string}}) =>  {
 
   return {
