@@ -33,6 +33,7 @@ export const postPost = async (content:{textContent:string,imageURL?:string}) =>
         imageURL:content.imageURL
       },
       comments:[],
+      verified:false,
       likers:[],
       created_at: new Date()
     }

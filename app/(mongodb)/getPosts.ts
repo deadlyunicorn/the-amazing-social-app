@@ -12,7 +12,10 @@ export const getPosts = async (
   })
   : Promise<userPost[] | null> => {
 
+
+
     const pipeline =[
+      {$match:{verified:true}},
       {$sort:{"created_at":-1}},
       {$skip:(query.page-1)*postLimit},
       {$limit:postLimit}]
@@ -72,6 +75,7 @@ export type userPost = {
   },
   likers: string[], //username array
   comments: comment[],
+  verified: boolean,
   created_at: Date
 }
 
@@ -79,7 +83,8 @@ type comment = {
   _id:ObjectId,
   author: string, //username
   comment: string,
-  created_at: Date
+  created_at: Date,
+  verified: boolean,
 }
 
 
