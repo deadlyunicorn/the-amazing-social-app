@@ -14,3 +14,14 @@ export const formatDateUTC = (date:Date)=>{
   return `${year}_${month}_${year}`;
 
 }
+
+export const formatHours = (date:Date) =>{
+
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+
+    const postHours =  hours < 10 ? '0' + hours :String(hours);
+    const postMinutes = minutes+1 < 10 ?'0' + (minutes):String(minutes);
+  
+    return `${postHours}:${postMinutes}`;
+}
