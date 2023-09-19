@@ -11,7 +11,6 @@ export const PostSection = ({ firstPagePosts,maxPages}: { firstPagePosts: userPo
   const [loading, setLoading] = useState(false);
 
 
-                                        //edgeY, pageNumber
   const [pageNumber, setPageNumber] = useState(1);
 
   useEffect(() => {
@@ -23,21 +22,24 @@ export const PostSection = ({ firstPagePosts,maxPages}: { firstPagePosts: userPo
       //@ts-ignore
       setEdgeY(sectionEnd?.getBoundingClientRect().bottom + window.scrollY);
 
-      if (edgeY - 200 < viewY ){
-
-        if (!loading){
-          setPageNumber(prev=>{
-            if ( maxPages >= prev +1){
-              return prev+1
-            }
-            else{ return prev}
-          });
-        }
-        
-      }
 
     }
   });
+
+  useEffect(()=>{
+    if (edgeY - 200 < viewY ){
+
+      if (!loading){
+        setPageNumber(prev=>{
+          if ( maxPages >= prev +1){
+            return prev+1
+          }
+          else{ return prev}
+        });
+      }
+      
+    }
+  },[viewY])
 
 
 
@@ -67,11 +69,12 @@ export const PostSection = ({ firstPagePosts,maxPages}: { firstPagePosts: userPo
 
       <ul>
         {firstPagePosts.map(
-          (post) =>
-            <>
-              <PostComponent key={new Date(post.created_at).getTime()} post={post} />
-            </>
+          (post,key) =>
+            <PostComponent 
+              key={key}
+              post={post} />
         )}
+      </ul>
 
 
         {pagesArray.map((page) =>
@@ -81,7 +84,6 @@ export const PostSection = ({ firstPagePosts,maxPages}: { firstPagePosts: userPo
             setLoading={setLoading}
             page={page} />
         )}
-      </ul>
 
       {/* get all available pages with mongoFetch
       and don't display more than allowed */}
