@@ -1,39 +1,40 @@
 "use client"
 
-import { userPost } from "../(mongodb)/getPosts"
 import { useEffect, useState } from "react";
-import { PostComponent } from "./postComponent";
+import { PostComponent, userPostComplete } from "./postComponent";
 
-export const DisplayPosts = ({ page, loading, setLoading }: { page: number, setLoading: any, loading: boolean }) => {
+export const DisplayPosts = ({ page, canLoadNext, setCanLoadNext }: { page: number, setCanLoadNext: any, canLoadNext: boolean }) => {
 
-  const [posts, setPosts] = useState<null | userPost[]>(null);
+  const [posts, setPosts] = useState<null | userPostComplete[]>(null);
+  const [loading,setLoading] = useState(false);
+
   useEffect(() => {
-
-    const timeout = setTimeout(() => {
-      setLoading(false);
-    }, 5000);
-
 
     (async () => {
 
       setLoading(true);
+      setCanLoadNext(false);
+
+      try{
 
       await fetch(`/explore/posts/${page}`, {
         method: "GET",
       })
 
         .then(async (res) => {
-          setLoading(false);
           return await res.json()
         })
         .then((posts) => {
           setPosts(posts);
         })
-    })()
+      }
+      finally{
+        setCanLoadNext(true);
+        setLoading(false);
+      }
 
-    return () => {
-      clearTimeout(timeout);
-    };
+
+    })()
 
   }, [])
 
@@ -52,11 +53,9 @@ export const DisplayPosts = ({ page, loading, setLoading }: { page: number, setL
                   post={post} />
               )
             )
-          }
+          } 
         </ul>
-        : loading
-          ? <p className="text-center">Loading...</p>
-          : <p className="text-center">There are no more posts..</p>
+        : loading && <p className="text-center">Loading...</p>
       }
     </>
   )
