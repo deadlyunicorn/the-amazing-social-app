@@ -2,25 +2,12 @@ import Link from "next/link"
 import Image from "next/image"
 import { formatDate, formatHours } from "../(lib)/formatDate"
 import { userPost } from "../(mongodb)/getPosts"
-import { useEffect, useState } from "react"
-import { userDetailsSafe } from "../user/[id]/details/route"
 
-export const PostComponent = ({ post }: { post: userPost }) => {
+export type userPostComplete = userPost & { avatarURL:string } 
+
+export const PostComponent = ({ post }: { post: userPostComplete }) => {
 
   const postDate = new Date(post.created_at);
-  const [avatarURL,setAvatarURL] = useState<null|string>(null);
-  const [loading,setLoading] = useState(true);
-
-  useEffect(()=>{
-    
-    (async()=>{
-      fetch(`/user/${post.created_by}/details`)
-      .then(async(res)=>await res.json())
-      .then((user:userDetailsSafe)=>{setAvatarURL(user.avatarURL)});
-
-
-    })()
-  },[])
 
   return (
     
@@ -32,7 +19,7 @@ export const PostComponent = ({ post }: { post: userPost }) => {
         <Image
           width={50}
           height={50}
-          src={avatarURL||'/favicon.svg'}
+          src={post.avatarURL||'/favicon.svg'}
           alt={`${post.created_by}'s avatar`}/>
         @{post.created_by}
         

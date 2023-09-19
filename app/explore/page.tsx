@@ -1,14 +1,14 @@
 import { MultipleRowsWrapper } from "../(components)/FormWrapper";
 import { ErrorSection } from "../(components)/ErrorSection";
-import Link from "next/link";
 import { PostSection } from "./postsSection";
 import { getPosts, userPost } from "../(mongodb)/getPosts";
 import { getPostsPageLimit } from "../(lib)/postLimit";
 import { CreatePostSection } from "./postCreationForm";
+import { getUserInfo } from "../(mongodb)/user";
 
 const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } }) => {
 
-  const firstPagePosts = PostsToClient(await getPosts({ page: 1 }));
+  const firstPagePosts = await PostsToClient(await getPosts({ page: 1 }));
 
   const maxPages = await getPostsPageLimit() || 0;
 
@@ -45,17 +45,22 @@ const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } 
 
 export default ExplorePage;
 
-const PostsToClient = (userPostArray:userPost[]|null) => {
+const PostsToClient = async(userPostArray:userPost[]|null) => {
 
-  return userPostArray?.map(post => (
-    {
-      comments: post.comments,
-      likers: post.likers,
-      content: post.content,
-      created_by: post.created_by,
-      created_at: post.created_at.getTime()
-    }
-
-  ))
+  return userPostArray
+  ?
+    await Promise.all(
+      userPostArray.map(
+        async(post) => (
+          {
+          ...post,
+            _id:post._id.toString(),
+            created_at: post.created_at.getTime(),
+            avatarURL:(await getUserInfo({username:post.created_by}))?.avatarSrc
+          } 
+        )
+      )
+    )
+  :userPostArray
 
 }
