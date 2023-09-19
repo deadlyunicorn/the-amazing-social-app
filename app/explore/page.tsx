@@ -29,13 +29,8 @@ const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } 
     <MultipleRowsWrapper>
 
       {searchParams.error &&
-        <ErrorSection>
-          <Link
-            href="/explore"
-            className="
-            text-error-light-reactive
-            font-semibold
-            absolute top-2 right-5">X</Link>
+        <ErrorSection path="/explore">
+          
           {searchParams.error}
         </ErrorSection>
       }

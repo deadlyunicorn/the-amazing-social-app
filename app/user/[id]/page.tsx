@@ -51,7 +51,7 @@ const UserProfile = async (
     <MultipleRowsWrapper>
 
       {searchParams.error&&
-        <ErrorSection>{searchParams.error}</ErrorSection>}
+        <ErrorSection path={`/user/${params.id}`}>{searchParams.error}</ErrorSection>}
       {
       userInfo 
       ? 

@@ -35,7 +35,7 @@ const RegisterPage = async ({ searchParams }: { searchParams: { error: string } 
 
         {searchParams.error &&
 
-          <ErrorSection>
+          <ErrorSection path="/register">
             {searchParams.error}
           </ErrorSection>
         }

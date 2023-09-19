@@ -57,7 +57,7 @@ const LoginPage = async(
         {
           searchParams.error &&
 
-          <ErrorSection>
+          <ErrorSection path="/login">
             {searchParams.error}
           </ErrorSection>
         }

@@ -41,7 +41,7 @@ const DeleteAccountSection = async({searchParams}:{searchParams:{error:string}})
       </section>
 
       {searchParams.error && 
-        <ErrorSection>{searchParams.error}</ErrorSection>
+        <ErrorSection path="/account/delete">{searchParams.error}</ErrorSection>
       }
 
     </MultipleRowsWrapper>

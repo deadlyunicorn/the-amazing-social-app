@@ -36,7 +36,7 @@ const AccountRestore = async({searchParams}:{searchParams:{error:string}}) => {
       </section>
 
       {searchParams.error && 
-        <ErrorSection>{searchParams.error}</ErrorSection>
+        <ErrorSection path="/account/recover">{searchParams.error}</ErrorSection>
       }
 
     </MultipleRowsWrapper>
