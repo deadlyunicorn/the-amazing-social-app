@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { DisplayPosts } from "./postsDisplayClient";
-import { PostComponent, userPostComplete } from "./postComponent";
+import { PostComponent, userPostComplete } from "./postComponent/postComponent";
 
 export const PostSection = ({ firstPagePosts,maxPages}: { firstPagePosts: userPostComplete[],maxPages:number }) => {
 

@@ -1,8 +1,8 @@
 import { MultipleRowsWrapper } from "../(components)/FormWrapper";
 import { ErrorSection } from "../(components)/ErrorSection";
-import { CreatePostSection } from "./postCreationForm";
+import { CreatePostSection } from "./postCreation/postCreationForm";
 import { Suspense } from "react";
-import { FetchPosts } from "./fetchPosts";
+import { FetchPosts } from "./postDisplay/fetchPosts";
 
 const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } }) => {
 

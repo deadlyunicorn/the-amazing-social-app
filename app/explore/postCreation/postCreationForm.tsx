@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { SubmitButtonClient } from "../(components)/SubmitButtonClient";
-import { getSessionDetails } from "../(mongodb)/user";
-import { ImageInputOptional } from "../user/updateImage/ImageInput";
+import { SubmitButtonClient } from "../../(components)/SubmitButtonClient";
+import { getSessionDetails } from "../../(mongodb)/user";
+import { ImageInputOptional } from "../../user/updateImage/ImageInput";
 import { ResetOnSubmit } from "./ResetOnSubmit";
 import { handleCreatePost } from "./createPost";
 

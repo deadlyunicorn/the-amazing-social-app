@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { PostComponent, userPostComplete } from "./postComponent";
+import { PostComponent, userPostComplete } from "./postComponent/postComponent";
 
 export const DisplayPosts = ({ page, canLoadNext, setCanLoadNext }: { page: number, setCanLoadNext: any, canLoadNext: boolean }) => {
 

@@ -1,7 +1,8 @@
 import Link from "next/link"
 import Image from "next/image"
-import { formatDate, formatHours } from "../(lib)/formatDate"
-import { userPost } from "../(mongodb)/getPosts"
+import { formatDate, formatHours } from "../../../(lib)/formatDate"
+import { userPost } from "../../../(mongodb)/getPosts"
+import { LikeComponent } from "./likeComponent"
 
 export type userPostComplete = userPost & { avatarURL: string }
 
@@ -21,7 +22,7 @@ export const PostComponent = ({ post }: { post: userPostComplete }) => {
         bg-sky-100 rounded-2xl
         flex justify-between">
 
-        
+
 
         <div className="
         flex  gap-x-2
@@ -32,7 +33,7 @@ export const PostComponent = ({ post }: { post: userPostComplete }) => {
             className="self-end peer"
             tabIndex={0} href={`user/${post.created_by}`}>
 
-            <p >@{post.created_by}</p>
+            <p >@{String(post.created_by)}</p>
 
           </Link>
 
@@ -79,9 +80,18 @@ export const PostComponent = ({ post }: { post: userPostComplete }) => {
 
         <p>{post.content?.textContent}</p>
 
-      </article>
+       
 
+
+
+      </article>
 
     </li>
   )
 } 
+
+
+
+const CommentComponent = () => (
+  <div>Comments</div> 
+)

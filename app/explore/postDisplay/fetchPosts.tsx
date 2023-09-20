@@ -1,6 +1,6 @@
-import { getPostsPageLimit } from "../(lib)/postLimit";
-import { getPosts, userPost } from "../(mongodb)/getPosts";
-import { getUserInfo } from "../(mongodb)/user";
+import { getPostsPageLimit } from "../../(lib)/postLimit";
+import { getPosts, userPost } from "../../(mongodb)/getPosts";
+import { getUserInfo } from "../../(mongodb)/user";
 import { PostSection } from "./postsSection"
 
 export const FetchPosts = async () => {
