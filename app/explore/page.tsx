@@ -49,18 +49,7 @@ const PostsFallback = () => {
       <div className="
         mt-1 mr-2
         bg-sky-100 rounded-2xl
-        flex justify-between">
-
-        
-
-
-      </div>
-
-
-
-
-
-
+        flex justify-between"/>
 
     </section>
   )
