@@ -94,3 +94,12 @@ h1{
 .text-error-light-reactive:hover{
   color:rgb(239 68 68);
 }
+
+@keyframes pulseCustom {
+  50% {
+    opacity: .1;
+  }
+}
+.animate-pulseCustom {
+  animation: pulseCustom 2s cubic-bezier(0.4, 0.4, 0.6, 1) infinite;
+}
