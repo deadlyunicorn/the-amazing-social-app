@@ -1,12 +1,12 @@
 "use server"
-import { MongoClient, Timestamp, ServerApiVersion } from "mongodb";
+import { MongoClient, Timestamp, ServerApiVersion, InsertOneResult } from "mongodb";
 import { userPost } from "./getPosts";
-import { getUserDetails, getUserInfo } from "./user";
+import { getSessionDetails, getUserInfo } from "./user";
 
 
 
 
-export const postPost = async (content:{textContent:string,imageURL?:string}) => {
+export const postPost = async (content:{textContent:string,imageURL?:string}): Promise<InsertOneResult> => {
 
   
   const client = new MongoClient(process.env.MONGODB_URI!, {
@@ -20,7 +20,7 @@ export const postPost = async (content:{textContent:string,imageURL?:string}) =>
   try {
     
     await client.connect();
-    const userDetails = await getUserDetails();
+    const userDetails = await getSessionDetails();
 
     const posts = client.db('the-amazing-social-app').collection('posts');
 
@@ -38,11 +38,14 @@ export const postPost = async (content:{textContent:string,imageURL?:string}) =>
       created_at: new Date()
     }
 
-    await posts.insertOne(newPost).then(res=>{
-      if (!res.acknowledged){
+    const res = await posts.insertOne(newPost)
+
+    if (!res.acknowledged){
         throw "Failed to create post, try again";
-      }
-    })
+    }
+    else {
+      return res;
+    }
 
   } 
   finally {
