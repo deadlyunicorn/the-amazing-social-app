@@ -14,10 +14,14 @@ export async function GET(request:Request,context: {params:{page:number}} ){
 
     const res = await Promise.all(posts.map(async(post)=>{
 
-      const avatarURL = (await getUserInfo({username:post.created_by}))?.avatarSrc;
+      const poster = await getUserInfo({_id:post.created_by}) 
+
+      const avatarURL = poster?.avatarSrc;
+
 
       return{
           ...post,
+          created_by:poster?.username,
           created_at:post.created_at.getTime(),
           avatarURL:avatarURL
         }

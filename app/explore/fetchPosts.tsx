@@ -22,20 +22,24 @@ export const FetchPosts = async () => {
 
 const PostsToClient = async(userPostArray:userPost[]|null) => {
 
+
   return userPostArray
   ?
     await Promise.all(
       userPostArray.map(
-        async(post) => (
-          {
+        async(post) => {
+          const poster = await getUserInfo({_id:post.created_by});
+          
+          return {
           ...post,
-            _id:post._id.toString(),
-            created_at: post.created_at.getTime(),
-            avatarURL:(await getUserInfo({username:post.created_by}))?.avatarSrc
+          created_by : poster?.username,
+          _id:post._id.toString(),
+          created_at: post.created_at.getTime(),
+          avatarURL: poster?.avatarSrc
           } 
-        )
+        }
       )
-    )
+      )
   :userPostArray
 
 }
