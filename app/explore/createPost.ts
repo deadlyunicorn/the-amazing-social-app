@@ -6,6 +6,8 @@ import { revalidatePath } from "next/cache";
 import { getBinaryData } from "../(lib)/getBinaryData";
 import { uploadToAwsPosts } from "./(aws)/images";
 import { formatDateUTC } from "../(lib)/formatDate";
+import { addToRecentlyPosted } from "./(mongodb)/recentPosts";
+import { InsertOneResult, UpdateResult } from "mongodb";
 
 export const handleCreatePost = async (formData: FormData) => {
 
@@ -20,27 +22,9 @@ export const handleCreatePost = async (formData: FormData) => {
       throw "Post too short";
     }
 
-    if (image && image.size>0){
-
-      if (image.size > 2097152) {
-        throw "Maximum allowed file size is 2MB";
-      }
-      if (!image.type.includes('image')) {
-        throw "Only images are allowed";
-      }
-      
-      const date = new Date();
-
-      const binaryData = await getBinaryData(image);
-      const filename = `IMG_${formatDateUTC(date)}_${date.getUTCHours()}h${date.getUTCMinutes()}m${date.getUTCSeconds()}s${date.getUTCMilliseconds()}ms.${image.type.slice(image.type.indexOf('/')+1)}`;
-      
-      const imageURL = await uploadToAwsPosts(binaryData,filename,image.type);
-      await postPost({textContent:String(textContent),imageURL:String(imageURL)});
-    }
-
-    else{
-      await postPost({ textContent: String(textContent) });
-    }
+    const postResult:InsertOneResult = await sendPost(image,String(textContent));
+    await addToRecentlyPosted({documentId:postResult.insertedId});
+   
 
     revalidatePath('/');
 
@@ -48,7 +32,35 @@ export const handleCreatePost = async (formData: FormData) => {
 
   }
   catch (err) {
-    redirect(`/explore?page=1&error=${err}`);
+    redirect(`/explore?error=${err}`);
+  }
+
+}
+
+
+
+const sendPost = async(image:File|undefined,textContent:string) => {
+
+  if (image && image.size>0){
+
+    if (image.size > 2097152) {
+      throw "Maximum allowed file size is 2MB";
+    }
+    if (!image.type.includes('image')) {
+      throw "Only images are allowed";
+    }
+    
+    const date = new Date();
+
+    const binaryData = await getBinaryData(image);
+    const filename = `IMG_${formatDateUTC(date)}_${date.getUTCHours()}h${date.getUTCMinutes()}m${date.getUTCSeconds()}s${date.getUTCMilliseconds()}ms.${image.type.slice(image.type.indexOf('/')+1)}`;
+    
+    const imageURL = await uploadToAwsPosts(binaryData,filename,image.type);
+    return await postPost({textContent:String(textContent),imageURL:String(imageURL)});
+  }
+
+  else{
+    return await postPost({ textContent: String(textContent) });
   }
 
 }
