@@ -15,7 +15,7 @@ export const DisplayPosts = ({ page, canLoadNext, setCanLoadNext }: { page: numb
 
       try {
 
-        await fetch(`/explore/posts/${page}`, {
+        await fetch(`/explore/${page}`, {
           method: "GET",
         })
           .then( async (res) => await res.json() )
