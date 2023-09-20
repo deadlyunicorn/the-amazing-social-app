@@ -18,7 +18,7 @@ export const getPostsPageLimit = async () => {
     const posts = client.db('the-amazing-social-app').collection('posts');
 
     const postIterator = await posts.aggregate([
-      // { $match: {  } }, 
+      { $match: { verified:true } }, 
       { $count: "Visible Posts" }])
     let verifiedPostsCount;
 
