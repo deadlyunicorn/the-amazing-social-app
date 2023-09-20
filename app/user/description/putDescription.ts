@@ -1,7 +1,7 @@
 "use server"
 
 import { putDescription } from "@/app/(mongodb)/description";
-import { getUserDetails } from "@/app/(mongodb)/user";
+import { getSessionDetails } from "@/app/(mongodb)/user";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -12,7 +12,7 @@ export const handleDescriptionForm = async(formData:FormData) => {
     throw 'Description too long (max 200 words)'
   }
 
-  const userDetails = await getUserDetails();
+  const userDetails = await getSessionDetails();
   const username= String(userDetails?.username);
 
   try{

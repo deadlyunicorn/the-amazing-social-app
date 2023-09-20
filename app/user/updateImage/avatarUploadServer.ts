@@ -1,6 +1,6 @@
 "use server"
 import { redirect } from "next/navigation";
-import { getUserDetails, getUserInfo, userObject } from "../../(mongodb)/user";
+import { getSessionDetails } from "../../(mongodb)/user";
 import { revalidatePath } from "next/cache";
 import {  formatDateUTC } from "../../(lib)/formatDate";
 import { setAvatarLink } from "../../(mongodb)/avatarUpload";
@@ -15,7 +15,7 @@ import { getBinaryData } from "@/app/(lib)/getBinaryData";
 export const handleAvatarForm = async(formData:FormData)=>{
   // const imgSource = URL.createObjectURL(e.target.files[0]);
   
-  const userDetails = await getUserDetails();
+  const userDetails = await getSessionDetails();
 
   const username = String(userDetails?.username);
   const oldAvatarSrc = String(userDetails?.avatarSrc);

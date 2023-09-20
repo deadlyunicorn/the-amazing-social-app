@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { SubmitButtonClient } from "../(components)/SubmitButtonClient";
-import { getUserDetails } from "../(mongodb)/user";
+import { getSessionDetails } from "../(mongodb)/user";
 import { ImageInputOptional } from "../user/updateImage/ImageInput";
 import { ResetOnSubmit } from "./ResetOnSubmit";
 import { handleCreatePost } from "./createPost";
@@ -8,7 +8,7 @@ import { handleCreatePost } from "./createPost";
 
 export const CreatePostSection = async () => {
 
-  const userDetails = await getUserDetails();
+  const userDetails = await getSessionDetails();
 
   return (
     <section>

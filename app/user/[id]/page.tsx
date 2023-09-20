@@ -32,19 +32,15 @@ const UserProfile = async (
   const supabase = createServerComponentClient({cookies},supabaseCredentials);
   
   
-  let signedUserEmail;
-  let signedUserId;
 
-
-  await supabase.auth.getUser()
+  const userEmail = await supabase.auth.getUser()
     .then(({data})=>{
-        signedUserEmail = data.user?.email;
-        signedUserId = data.user?.id;
+        return data.user?.email;
   })
   // params.id
-  const userInfo = await getUserInfo({username:String(params.id)});
+  const profileInfo = await getUserInfo({username:String(params.id)});
 
-  const ownsProfile = signedUserEmail == userInfo?.email;
+  const ownsProfile = userEmail == profileInfo?.email;
   
 
   return (
@@ -53,14 +49,14 @@ const UserProfile = async (
       {searchParams.error&&
         <ErrorSection path={`/user/${params.id}`}>{searchParams.error}</ErrorSection>}
       {
-      userInfo 
+      profileInfo 
       ? 
         <>
         <UserInfoComponent 
           ownsProfile={ownsProfile}
-          userInfo={userInfo}/>
+          userInfo={profileInfo}/>
           {
-            (userInfo.email == signedUserEmail) 
+            (profileInfo.email == userEmail) 
             && <AccountOptions/>
           }
         </>
@@ -75,7 +71,7 @@ const UserProfile = async (
           <br/>(no pun intended)
 
 
-          <ProfileCreationForm email={String(signedUserEmail)}/>
+          <ProfileCreationForm email={String(userEmail)}/>
 
           </section>
           <AccountOptions/>

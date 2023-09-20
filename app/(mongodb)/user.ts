@@ -61,7 +61,7 @@ export type userObject = {
   latestPosts: Array<{ created_at: Date, postText: string }>
 }
 
-export const getUserDetails = async () => {
+export const getSessionDetails = async () => {
   const session = await createServerActionClient({ cookies }, supabaseCredentials).auth.getSession();
   const userDetails = await getUserInfo({ email: session.data.session?.user.email });
 
