@@ -1,16 +1,12 @@
 import { MultipleRowsWrapper } from "../(components)/FormWrapper";
 import { ErrorSection } from "../(components)/ErrorSection";
-import { PostSection } from "./postsSection";
-import { getPosts, userPost } from "../(mongodb)/getPosts";
-import { getPostsPageLimit } from "../(lib)/postLimit";
 import { CreatePostSection } from "./postCreationForm";
-import { getUserInfo } from "../(mongodb)/user";
+import { Suspense } from "react";
+import { FetchPosts } from "./fetchPosts";
 
 const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } }) => {
 
-  const firstPagePosts = await PostsToClient(await getPosts({ page: 1 }));
-
-  const maxPages = await getPostsPageLimit() || 0;
+  
 
   return (
 
@@ -27,11 +23,11 @@ const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } 
 
       <CreatePostSection />
 
-      <PostSection
-        key={1}
-        maxPages={maxPages}
-        // @ts-ignore (we can't pass Date to client.)
-        firstPagePosts={firstPagePosts} />
+      <Suspense fallback={<PostsFallback/>}>
+        
+        <FetchPosts/>
+
+      </Suspense>
 
 
     </MultipleRowsWrapper>
@@ -40,27 +36,36 @@ const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } 
 }
 
 
+const PostsFallback = () => {
 
+  
+
+  return (
+
+    <section
+      className="px-2 w-full h-screen animate-pulse">
+
+
+      <div className="
+        mt-1 mr-2
+        bg-sky-100 rounded-2xl
+        flex justify-between">
+
+        
+
+
+      </div>
+
+
+
+
+
+
+
+    </section>
+  )
+} 
 
 
 export default ExplorePage;
 
-const PostsToClient = async(userPostArray:userPost[]|null) => {
-
-  return userPostArray
-  ?
-    await Promise.all(
-      userPostArray.map(
-        async(post) => (
-          {
-          ...post,
-            _id:post._id.toString(),
-            created_at: post.created_at.getTime(),
-            avatarURL:(await getUserInfo({username:post.created_by}))?.avatarSrc
-          } 
-        )
-      )
-    )
-  :userPostArray
-
-}

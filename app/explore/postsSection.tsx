@@ -56,6 +56,7 @@ export const PostSection = ({ firstPagePosts,maxPages}: { firstPagePosts: userPo
 
   return (
     <section
+      className="animate-none"
       id="postSection">
        
       <ul>
