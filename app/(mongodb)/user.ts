@@ -9,6 +9,7 @@ import { cookies } from "next/headers";
 
 export const getUserInfo = async (
   query: {
+    _id? : ObjectId,
     email?: string,
     username?: String,
   }
@@ -58,7 +59,7 @@ export type userObject = {
   username: string,
   avatarSrc?: string,
   description?: string,
-  latestPosts: Array<{ created_at: Date, postText: string }>
+  latestPosts: Array<ObjectId>
 }
 
 export const getSessionDetails = async () => {

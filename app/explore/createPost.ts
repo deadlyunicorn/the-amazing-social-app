@@ -6,10 +6,22 @@ import { revalidatePath } from "next/cache";
 import { getBinaryData } from "../(lib)/getBinaryData";
 import { uploadToAwsPosts } from "./(aws)/images";
 import { formatDateUTC } from "../(lib)/formatDate";
-import { addToRecentlyPosted } from "./(mongodb)/recentPosts";
-import { InsertOneResult, UpdateResult } from "mongodb";
+import { addToRecentlyPosted } from "./(mongodb)/addToRecentPosts";
+import { InsertOneResult, MongoClient, ServerApiVersion, UpdateResult } from "mongodb";
 
 export const handleCreatePost = async (formData: FormData) => {
+
+  const client = new MongoClient(process.env.MONGODB_URI!, {
+    serverApi: {
+      version: ServerApiVersion.v1,
+      strict: true,
+      deprecationErrors: true,
+    }
+  });
+
+
+  const session = client.startSession();
+
 
   const textContent = formData.get('post');
 
@@ -18,12 +30,18 @@ export const handleCreatePost = async (formData: FormData) => {
 
 
   try {
+
+    session.startTransaction();
+
     if (!textContent || textContent.length < 6) {
       throw "Post too short";
     }
 
-    const postResult:InsertOneResult = await sendPost(image,String(textContent));
-    await addToRecentlyPosted({documentId:postResult.insertedId});
+    const postResult:InsertOneResult = await sendPost(image,String(textContent),client);
+    await addToRecentlyPosted({documentId:postResult.insertedId},client);
+
+    await session.commitTransaction();
+
    
 
     revalidatePath('/');
@@ -34,14 +52,18 @@ export const handleCreatePost = async (formData: FormData) => {
   catch (err) {
     redirect(`/explore?error=${err}`);
   }
+  finally{
+    await client.close();
+  }
 
 }
 
 
 
-const sendPost = async(image:File|undefined,textContent:string) => {
+const sendPost = async(image:File|undefined,textContent:string,client:MongoClient) => {
 
   if (image && image.size>0){
+
 
     if (image.size > 2097152) {
       throw "Maximum allowed file size is 2MB";
@@ -56,11 +78,11 @@ const sendPost = async(image:File|undefined,textContent:string) => {
     const filename = `IMG_${formatDateUTC(date)}_${date.getUTCHours()}h${date.getUTCMinutes()}m${date.getUTCSeconds()}s${date.getUTCMilliseconds()}ms.${image.type.slice(image.type.indexOf('/')+1)}`;
     
     const imageURL = await uploadToAwsPosts(binaryData,filename,image.type);
-    return await postPost({textContent:String(textContent),imageURL:String(imageURL)});
+    return await postPost({textContent:String(textContent),imageURL:String(imageURL)},client);
   }
 
   else{
-    return await postPost({ textContent: String(textContent) });
+    return await postPost({ textContent: String(textContent) },client);
   }
 
 }

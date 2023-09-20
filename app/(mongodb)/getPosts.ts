@@ -9,13 +9,18 @@ import { postLimit } from "../(lib)/postLimit";
 export const getPosts = async (
   query: {
     page: number,
+    postsToMatch? : ObjectId[]
   })
   : Promise<userPost[] | null> => {
 
 
+    const postsToMatch = query.postsToMatch || [];
 
     const pipeline =[
-      {$match:{verified:true}},
+      {$match:{
+        verified:true, 
+        _id:postsToMatch.length>0?{$in:postsToMatch}:{$exists:true},
+      }},
       {$sort:{"created_at":-1}},
       {$skip:(query.page-1)*postLimit},
       {$limit:postLimit}]
@@ -68,7 +73,7 @@ export const getPosts = async (
 
 export type userPost = {
   _id:ObjectId,
-  created_by:string,
+  created_by:ObjectId,
   content: {
     textContent:string,
     imageURL?:string
