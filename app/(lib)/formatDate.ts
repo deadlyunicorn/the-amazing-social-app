@@ -21,7 +21,7 @@ export const formatHours = (date:Date) =>{
     const minutes = date.getMinutes();
 
     const postHours =  hours < 10 ? '0' + hours :String(hours);
-    const postMinutes = minutes+1 < 10 ?'0' + (minutes):String(minutes);
+    const postMinutes = minutes < 10 ?'0' + (minutes):String(minutes);
   
     return `${postHours}:${postMinutes}`;
 }
