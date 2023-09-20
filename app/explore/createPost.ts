@@ -74,8 +74,10 @@ const sendPost = async(image:File|undefined,textContent:string,client:MongoClien
     
     const date = new Date();
 
+    const fileExtension = image.type.includes('svg')?'svg':image.type.slice(image.type.indexOf('/')+1);
+
     const binaryData = await getBinaryData(image);
-    const filename = `IMG_${formatDateUTC(date)}_${date.getUTCHours()}h${date.getUTCMinutes()}m${date.getUTCSeconds()}s${date.getUTCMilliseconds()}ms.${image.type.slice(image.type.indexOf('/')+1)}`;
+    const filename = `IMG_${formatDateUTC(date)}_${date.getUTCHours()}h${date.getUTCMinutes()}m${date.getUTCSeconds()}s${date.getUTCMilliseconds()}ms.${fileExtension}`;
     
     const imageURL = await uploadToAwsPosts(binaryData,filename,image.type);
     return await postPost({textContent:String(textContent),imageURL:String(imageURL)},client);
