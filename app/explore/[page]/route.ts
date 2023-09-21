@@ -8,7 +8,7 @@ export async function GET(request: Request, context: { params: { page: number } 
   const page = context.params.page;
   try {
 
-    const posts = await getPosts({ page: page });
+    const posts = await getPosts({ page: page, explore:true });
 
 
     return NextResponse.json(posts);

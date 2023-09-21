@@ -99,7 +99,7 @@ const PostsMapFallback = () => {
 
 const PostsMap = async ({ userInfo }: { userInfo: userObject }) => {
 
-  const posts = await getPosts({ page: 1, postsToMatch: userInfo.latestPosts })
+  const posts = await getPosts({ page: 1, postsToMatch: userInfo.latestPosts,userProfile:true })
 
   return (posts && posts.length > 0)
 

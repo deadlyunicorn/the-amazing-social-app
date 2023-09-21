@@ -6,7 +6,7 @@ import { userDetailsClient } from "../../page";
 export const FetchPostsServer = async ({userDetails}:{userDetails:userDetailsClient|null}) => {
 
   const maxPages = await getPostsPageLimit() || 0;
-  const firstPagePosts =  maxPages > 0 ? await getPosts({ page: 1 }) : null;
+  const firstPagePosts =  maxPages > 0 ? await getPosts({ page: 1,explore:true }) : null;
 
   return (
     <PostSectionWrapperWithViewMonitoring

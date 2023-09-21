@@ -24,36 +24,36 @@ export type userPostWithAvatar = {
 export const getPosts = async (
   query: {
     page: number,
-    postsToMatch?: ObjectId[]
+    postsToMatch?: ObjectId[],
+    explore?: boolean,
+    userProfile?: boolean,
   })
   : Promise<userPostWithAvatar[] | null> => {
 
 
-  const postsToMatch = query.postsToMatch || [];
+  const postsToMatch = query.postsToMatch;
 
-  const pipeline = [
-    {
-      $match: {
-        verified: true,
-        _id: postsToMatch.length > 0 ? { $in: postsToMatch } : { $exists: true },
-      }
-    },
-    { $sort: { "created_at": -1 } },
-    { $skip: (query.page - 1) * postLimit },
-    { $limit: postLimit }]
+  let pipeline;
+  if (query.explore){
+    pipeline = getHomePagePipeline(query.page);
+  }
+  else if (query.userProfile){
+    pipeline = getUserProfilePipeline(postsToMatch || []);
+  }
+  
 
-  try{
+  try {
 
 
 
-  const client = new MongoClient(process.env.MONGODB_URI!, {
-    serverApi: {
-      version: ServerApiVersion.v1,
-      strict: true,
-      deprecationErrors: true,
-    },
-    serverSelectionTimeoutMS: 500,
-  });
+    const client = new MongoClient(process.env.MONGODB_URI!, {
+      serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+      },
+      serverSelectionTimeoutMS: 500,
+    });
 
 
     try {
@@ -84,7 +84,7 @@ export const getPosts = async (
 
           return {
             ...post,
-            _id:post._id.toString(),
+            _id: post._id.toString(),
             avatarURL: String(poster?.avatarSrc),
             created_by: String(poster?.username),
             likers: likers
@@ -104,7 +104,7 @@ export const getPosts = async (
     }
 
   }
-  catch(err){
+  catch (err) {
     redirect('/explore?error=Network error')
   }
 
@@ -136,3 +136,22 @@ type comment = {
 }
 
 
+
+const getHomePagePipeline = (page: number) => ([
+  {
+    $match: {
+      verified: true,
+    }
+  },
+  { $sort: { "created_at": -1 } },
+  { $skip: (page - 1) * postLimit },
+  { $limit: postLimit }])
+
+const getUserProfilePipeline = ( postsToMatch: ObjectId[]) => ([
+  {
+    $match: {
+      _id: postsToMatch.length > 0 ? { $in: postsToMatch } : { $exists: false },
+    }
+  },
+  { $sort: { "created_at": -1 } },
+  { $limit: 10 }])
