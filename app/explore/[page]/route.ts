@@ -1,25 +1,21 @@
 import { getPosts } from "@/app/(mongodb)/getPosts";
-import { getUserInfo } from "@/app/(mongodb)/user";
 import { NextResponse } from "next/server";
-import { PostsToClient } from "./postsProcess";
+import { redirect } from "next/navigation";
 
 
-export async function GET(request:Request,context: {params:{page:number}} ){
+export async function GET(request: Request, context: { params: { page: number } }) {
 
   const page = context.params.page;
+  try {
 
-  const posts = await getPosts({page:page});
+    const posts = await getPosts({ page: page });
 
-  
-  if ( posts && posts.length > 0 ){
 
-    const res= await PostsToClient(posts);
-      
-    return NextResponse.json(res);
+    return NextResponse.json(posts);
 
   }
-  else{
-    return NextResponse.json(posts);
+  catch (err) {
+    redirect('/explore?error=Network error')
   }
 
 }
