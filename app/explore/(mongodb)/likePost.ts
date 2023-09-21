@@ -6,7 +6,7 @@ import { MongoClient, ObjectId, ServerApiVersion } from "mongodb";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export const toggleLike = async (formData: FormData) => {
+export const toggleLike = async (postId:string) => {
 
   const client = new MongoClient(process.env.MONGODB_URI!, {
     serverApi: {
@@ -21,29 +21,29 @@ export const toggleLike = async (formData: FormData) => {
 
   try {
 
-  const postId = String(formData.get('postId'));
-
- 
-
 
     const posts = client.db('the-amazing-social-app').collection('posts');
 
     //@ts-ignore
     const post: userPost = await posts.findOne({ _id: new ObjectId(postId) });
     
+    
+    let res; 
+
     if (post.likers.some(liker=>liker&&liker.equals(user._id))) {
 
-      await posts.updateOne({ _id: new ObjectId(postId) }, { $pull: { likers:  user._id  } });
+      res=await posts.updateOne({ _id: new ObjectId(postId) }, { $pull: { likers:  user._id  } });
 
     }
 
     else {
 
-      await posts.updateOne({ _id: new ObjectId(postId) }, { $addToSet: { likers:  user._id  } });
+      res=await posts.updateOne({ _id: new ObjectId(postId) }, { $addToSet: { likers:  user._id  } });
     
     }
 
     revalidatePath('/explore');
+    return res;
 
 
 

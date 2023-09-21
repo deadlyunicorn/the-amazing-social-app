@@ -1,6 +1,5 @@
 import { ObjectId } from "mongodb"
-import { toggleLike } from "../../(mongodb)/likePost"
-import { experimental_useOptimistic as useOptimistic, useState } from "react"
+import { useEffect, experimental_useOptimistic as useOptimistic, useState } from "react"
 import { userDetailsClient } from "../../page"
 
 
@@ -10,27 +9,36 @@ export const LikeComponent = ({ postId, likers, userDetails }: { postId: ObjectI
   const [optimisticLike, setOptimistic] = useOptimistic<any>(
     likers.length
   );
-  const [like,setLike] = useState(likers.includes(String(userDetails?._id)))
+
+  const initialLikeState = likers.includes(String(userDetails?._id));
+  const [like,setLike] = useState(likers.includes(String(userDetails?._id)));
+  
+
+  useEffect(()=>{
+
+    setOptimistic(like==initialLikeState?likers.length:like?optimisticLike+1:optimisticLike-1)
+
+
+    const timer = setTimeout(async()=>{
+
+      if (initialLikeState == !like){
+        await fetch('/explore/like',{method:'POST',body:JSON.stringify({postId:postId })})
+        .then(data=>{console.log(data)});
+      }
+    },3000)
+
+    return ()=>{clearTimeout(timer)};
+
+  },[like])
+
 
   return (
-    <form
-      action={toggleLike}>
-      <input
-        hidden
-        value={String(postId)}
-        name="postId"
-        readOnly />
+    <>
       <button
 
         onClick={() => {
-          if (like) {
-            setOptimistic(optimisticLike - 1);
-            setLike(!like);
-          }
-          else{
-            setOptimistic(optimisticLike + 1);
-            setLike(!like);
-          }
+          
+          setLike(!like);
         }}>
         <svg
           data-pending
@@ -56,7 +64,6 @@ export const LikeComponent = ({ postId, likers, userDetails }: { postId: ObjectI
       </button>
       {JSON.stringify(likers)}
       <p>{optimisticLike}</p>
-
-    </form>
+    </>
   )
 }
