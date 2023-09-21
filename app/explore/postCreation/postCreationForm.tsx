@@ -2,7 +2,7 @@ import Link from "next/link";
 import { SubmitButtonClient } from "../../(components)/SubmitButtonClient";
 import { ImageInputOptional } from "../../user/updateImage/ImageInput";
 import { ResetOnSubmit } from "./ResetOnSubmit";
-import { handleCreatePost } from "./createPost";
+import { handleCreatePost } from "./(mongodb)/createPost";
 import { userDetailsClient } from "../page";
 
 
