@@ -81,7 +81,13 @@ export const PostComponent = ({ post, userDetails }: { post: userPostWithAvatar,
 
         <p>{post.content?.textContent}</p>
 
-   
+        <aside className="flex">
+
+          <LikeComponent userDetails={userDetails} postId={post._id} likers={post.likers.map(liker=>String(liker))}/>
+          {/* <CommentComponent postId={post._id}/> */}
+    
+
+        </aside>
 
 
 
