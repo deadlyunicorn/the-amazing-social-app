@@ -1,7 +1,7 @@
 "use server"
 import { MongoClient, ServerApiVersion, ObjectId, Collection, AggregationCursor } from "mongodb";
-import { postLimit } from "../(lib)/postLimit";
-import { getUserInfo } from "./user";
+import { postLimit } from "../../../(lib)/postLimit";
+import { getUserInfo } from "../../../(mongodb)/user";
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 
 export type userPostWithAvatar = {
@@ -48,7 +48,7 @@ export const getPosts = async (
       strict: true,
       deprecationErrors: true,
     },
-    serverSelectionTimeoutMS: 500
+    serverSelectionTimeoutMS: 500,
   });
 
 

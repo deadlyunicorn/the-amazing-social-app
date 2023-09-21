@@ -1,7 +1,7 @@
 "use server"
 import { MongoClient, Timestamp, ServerApiVersion, InsertOneResult } from "mongodb";
-import { userPost } from "./getPosts";
-import { getSessionDetails, getUserInfo } from "./user";
+import { userPost } from "../../postDisplay/(mongodb)/getPosts";
+import { getSessionDetails, getUserInfo } from "../../../(mongodb)/user";
 import { redirect } from "next/navigation";
 
 

@@ -1,12 +1,12 @@
 "use server"
 
 import { redirect } from "next/navigation";
-import { postPost } from "../../(mongodb)/postPost";
+import { postPost } from "./postPost";
 import { revalidatePath } from "next/cache";
-import { getBinaryData } from "../../(lib)/getBinaryData";
-import { uploadToAwsPosts } from "../(aws)/images";
-import { formatDateUTC } from "../../(lib)/formatDate";
-import { addToRecentlyPosted } from "../(mongodb)/addToRecentPosts";
+import { getBinaryData } from "../../../(lib)/getBinaryData";
+import { uploadToAwsPosts } from "../../(aws)/images";
+import { formatDateUTC } from "../../../(lib)/formatDate";
+import { addToRecentlyPosted } from "../../(mongodb)/addToRecentPosts";
 import { InsertOneResult, MongoClient, ServerApiVersion, UpdateResult } from "mongodb";
 
 export const handleCreatePost = async (formData: FormData) => {

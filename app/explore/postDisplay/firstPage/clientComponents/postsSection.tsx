@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 import { PostComponent } from "../../postComponent/postComponent";
 import { userDetailsClient } from "../../../page";
-import { userPostWithAvatar } from "@/app/(mongodb)/getPosts";
 import { FetchPostsClient } from "./fetchClient";
+import { userPostWithAvatar } from "../../(mongodb)/getPosts";
 
-export const PostSectionWrapperWithViewMonitoring = ({ firstPagePosts,maxPages, userDetails}: { firstPagePosts: userPostWithAvatar[],maxPages:number,userDetails:userDetailsClient|null }) => {
+export const PostSectionWrapperWithViewMonitoring = ({ firstPagePosts,maxPages, userDetails}: { firstPagePosts: userPostWithAvatar[]|null,maxPages:number,userDetails:userDetailsClient|null }) => {
 
   const [viewY, setViewY] = useState(0);
   const [edgeY, setEdgeY] = useState(0);

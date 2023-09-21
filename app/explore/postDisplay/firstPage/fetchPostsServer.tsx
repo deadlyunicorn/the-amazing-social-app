@@ -1,5 +1,5 @@
 import { getPostsPageLimit } from "../../../(lib)/postLimit";
-import { getPosts, userPost } from "../../../(mongodb)/getPosts";
+import { getPosts } from "../(mongodb)/getPosts";
 import { PostSectionWrapperWithViewMonitoring } from "./clientComponents/postsSection"
 import { userDetailsClient } from "../../page";
 
@@ -14,7 +14,6 @@ export const FetchPostsServer = async ({userDetails}:{userDetails:userDetailsCli
           userDetails={userDetails}
           key={1}
           maxPages={maxPages}
-          // @ts-ignore (we can't pass Date to client.)
           firstPagePosts={firstPagePosts} />
   )
 }

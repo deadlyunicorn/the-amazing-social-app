@@ -1,9 +1,7 @@
 "use server"
 
-import { userPost } from "@/app/(mongodb)/getPosts";
 import { getSessionDetails } from "@/app/(mongodb)/user"
 import { MongoClient, ObjectId, ServerApiVersion } from "mongodb";
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export const likePost = async (postId: string, hasLiked: boolean) => {

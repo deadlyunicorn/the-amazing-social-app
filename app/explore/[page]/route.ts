@@ -1,6 +1,6 @@
-import { getPosts } from "@/app/(mongodb)/getPosts";
 import { NextResponse } from "next/server";
 import { redirect } from "next/navigation";
+import { getPosts } from "../postDisplay/(mongodb)/getPosts";
 
 
 export async function GET(request: Request, context: { params: { page: number } }) {
