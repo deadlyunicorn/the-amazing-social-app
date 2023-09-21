@@ -2,6 +2,7 @@
 import { MongoClient, Timestamp, ServerApiVersion, InsertOneResult } from "mongodb";
 import { userPost } from "./getPosts";
 import { getSessionDetails, getUserInfo } from "./user";
+import { redirect } from "next/navigation";
 
 
 
@@ -10,7 +11,9 @@ export const postPost = async (content:{textContent:string,imageURL?:string},cli
 
   
     const userDetails = await getSessionDetails();
-    if (!userDetails){throw "Network error"}
+    if (!userDetails){
+      redirect('/login?error=Network error, check if you are logged in');
+    }
 
     const posts = client.db('the-amazing-social-app').collection('posts');
 

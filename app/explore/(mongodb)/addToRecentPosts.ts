@@ -1,5 +1,6 @@
 import { getSessionDetails } from "@/app/(mongodb)/user";
 import { MongoClient, ServerApiVersion, ObjectId, Transaction } from "mongodb";
+import { redirect } from "next/navigation";
 
 export const addToRecentlyPosted = async (
   query: {
@@ -13,7 +14,7 @@ export const addToRecentlyPosted = async (
   const user = await getSessionDetails();
 
   if ( !user ){
-    throw "Network error";
+    redirect('/login?error=Network error, check if you are logged in');
   }
   
   if ( user.latestPosts && user.latestPosts.length > 10 ){
