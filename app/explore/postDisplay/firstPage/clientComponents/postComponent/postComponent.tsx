@@ -14,20 +14,20 @@ export const PostComponent = ({ post, userDetails }: { post: userPostWithAvatar,
 
     <li
       key={postDate.getTime()}
-      className="px-2 my-4">
+      className="px-2 my-4 ">
 
 
       <div className="
         mt-1 mr-2
-        bg-sky-100 rounded-2xl
+        bg-gradient-to-b from-sky-100 to-blue-200
+        drop-shadow-md
+        rounded-2xl
         flex justify-between">
 
+        <div className="
+          flex  gap-x-2
+          flex-row-reverse justify-end">
 
-
-<div className="
-        flex  gap-x-2
-        flex-row-reverse justify-end 
-        ">
 
           <Link
             className="self-end peer"
@@ -64,9 +64,10 @@ export const PostComponent = ({ post, userDetails }: { post: userPostWithAvatar,
 
       <article
         className="
+        drop-shadow-md
         flex flex-col gap-y-4
-        rounded-b-lg
-        bg-sky-100 
+        rounded-b
+        bg-gradient-to-b from-[#d5e7ff] to-blue-300
         pl-4 py-4 mr-6 " tabIndex={0}>
 
         {(post.content.imageURL && post.content.imageURL.length > 0) &&
@@ -108,9 +109,9 @@ export const MockPostComponent = () => {
   const random = Math.random();
 
   return (
-  
-      <div 
-      style={{height:random*100*3}}
+
+    <div
+      style={{ height: random * 100 * 3 }}
       className="
       px-2 my-4
       min-h-[100px]
