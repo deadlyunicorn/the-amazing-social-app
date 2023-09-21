@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { PostComponent, userPostWithAvatar } from "./postComponent/postComponent";
 import { userDetailsClient } from "../page";
 
-export const DisplayPosts = ({ page, canLoadNext, setCanLoadNext,userDetails }: { page: number, setCanLoadNext: any, canLoadNext: boolean,userDetails:userDetailsClient }) => {
+export const DisplayPosts = ({ page, canLoadNext, setCanLoadNext,userDetails }: { page: number, setCanLoadNext: any, canLoadNext: boolean,userDetails:userDetailsClient|null }) => {
 
   const [posts, setPosts] = useState<null | userPostWithAvatar[]>(null);
 
