@@ -4,7 +4,7 @@ import { CreatePostSection } from "./postCreation/postCreationForm";
 import { Suspense } from "react";
 import { FetchPostsServer } from "./postDisplay/firstPage/fetchPostsServer";
 import { getSessionDetails, userObject } from "../(mongodb)/user";
-import { MockPostComponent } from "./postDisplay/postComponent/postComponent";
+import { MockPostComponent } from "./postDisplay/firstPage/clientComponents/postComponent/postComponent";
 
 const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } }) => {
 

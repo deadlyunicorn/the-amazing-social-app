@@ -1,7 +1,7 @@
-"use client"
+"use client" //force use client even if it was child of a server component
 
-import { userDetailsClient } from "../../../page"
-import { likePost } from "../../../(mongodb)/likePost";
+import { userDetailsClient } from "../../../../page"
+import { likePost } from "../../../../(mongodb)/likePost";
 import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 import { UpdateResult } from "mongodb";

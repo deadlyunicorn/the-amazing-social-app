@@ -1,9 +1,9 @@
 import Link from "next/link"
 import Image from "next/image"
-import { formatDate, formatHours } from "../../../(lib)/formatDate"
-import { userPostWithAvatar } from "../(mongodb)/getPosts"
-import { LikeComponent } from "../firstPage/clientComponents/likeComponent"
-import { userDetailsClient } from "../../page"
+import { formatDate, formatHours } from "../../../../../(lib)/formatDate"
+import { userPostWithAvatar } from "../../../(mongodb)/getPosts"
+import { LikeComponent } from "./likeComponent"
+import { userDetailsClient } from "../../../../page"
 
 
 export const PostComponent = ({ post, userDetails }: { post: userPostWithAvatar, userDetails: userDetailsClient | null }) => {
@@ -24,7 +24,7 @@ export const PostComponent = ({ post, userDetails }: { post: userPostWithAvatar,
 
 
 
-        <div className="
+<div className="
         flex  gap-x-2
         flex-row-reverse justify-end 
         ">

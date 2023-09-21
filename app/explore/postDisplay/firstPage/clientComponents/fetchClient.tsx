@@ -1,7 +1,7 @@
-import { PostComponent } from "../../postComponent/postComponent";
+import { PostComponent } from "./postComponent/postComponent";
 import { userDetailsClient } from "../../../page";
-import {  userPostWithAvatar } from "@/app/(mongodb)/getPosts";
 import { useEffect, useState } from "react";
+import { userPostWithAvatar } from "../../(mongodb)/getPosts";
 
 export const FetchPostsClient = ({ page, userDetails,setCanLoadNext }: { page: number, userDetails: userDetailsClient | null,setCanLoadNext:any }) => {
 

@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { PostComponent } from "../../postComponent/postComponent";
+import { PostComponent } from "./postComponent/postComponent";
 import { userDetailsClient } from "../../../page";
 import { FetchPostsClient } from "./fetchClient";
 import { userPostWithAvatar } from "../../(mongodb)/getPosts";
