@@ -54,6 +54,7 @@ export const LikeComponent = ({ postId, likers, userDetails }: { postId: ObjectI
           </g>
         </svg>
       </button>
+      {JSON.stringify(likers)}
       <p>{optimisticLike}</p>
 
     </form>
