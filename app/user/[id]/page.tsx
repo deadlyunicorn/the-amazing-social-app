@@ -33,15 +33,20 @@ const UserProfile = async (
   
   
 
-  const userEmail = await supabase.auth.getUser()
-    .then(({data})=>{
-        return data.user?.email;
-  })
-  // params.id
-  const profileInfo = await getUserInfo({username:String(params.id)});
+  const supabaseUser = (await supabase.auth.getUser()).data.user;
 
-  const ownsProfile = userEmail == profileInfo?.email;
-  
+  // params.id
+  const profileInfo = await getUserInfo({username:String(params.id)})
+    .then(async(res)=>{
+      if (!res){
+          // @ts-ignore
+        return await getUserInfo({_id:String(params.id)});
+      }
+      return res
+  });
+
+
+  const ownsProfile = ( supabaseUser?.email == profileInfo?.email ) || ( supabaseUser?.id == params.id );
 
   return (
     <MultipleRowsWrapper>
@@ -56,7 +61,7 @@ const UserProfile = async (
           ownsProfile={ownsProfile}
           userInfo={profileInfo}/>
           {
-            (profileInfo.email == userEmail) 
+            (profileInfo.email == supabaseUser?.email) 
             && <AccountOptions/>
           }
         </>
@@ -71,7 +76,7 @@ const UserProfile = async (
           <br/>(no pun intended)
 
 
-          <ProfileCreationForm email={String(userEmail)}/>
+          <ProfileCreationForm email={String(supabaseUser)}/>
 
           </section>
           <AccountOptions/>
