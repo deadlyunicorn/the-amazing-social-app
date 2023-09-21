@@ -31,7 +31,7 @@ export const toggleLike = async (formData: FormData) => {
     //@ts-ignore
     const post: userPost = await posts.findOne({ _id: new ObjectId(postId) });
     
-    if (post.likers.some(liker=>liker.equals(user._id))) {
+    if (post.likers.some(liker=>liker&&liker.equals(user._id))) {
 
       await posts.updateOne({ _id: new ObjectId(postId) }, { $pull: { likers:  user._id  } });
 
