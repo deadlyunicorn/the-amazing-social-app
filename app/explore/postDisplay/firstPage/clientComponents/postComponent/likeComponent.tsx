@@ -1,9 +1,7 @@
 "use client" //force use client even if it was child of a server component
 
 import { userDetailsClient } from "../../../../page"
-import { likePost } from "../../../../(mongodb)/likePost";
 import { useEffect, useState } from "react";
-import { redirect } from "next/navigation";
 import { UpdateResult } from "mongodb";
 
 
@@ -68,17 +66,18 @@ export const LikeComponent = ({ postId, initialLikers, userDetails }: { postId: 
 
 
   return (
+      <div className="flex items-center gap-x-2">
       <button
         onClick={() => {
           if (userDetails) {
             toggleLike();
           }
           else {
-            redirect('/login');
+            window.location.assign('/login');
           }
         }}>
         <svg
-          data-pending
+          data-pending={likers.includes(viewerName)}
           className="cursor-pointer stroke-red-600 data-[pending=true]:fill-red-600 fill-transparent"
           xmlns="http://www.w3.org/2000/svg"
           width={30}
@@ -99,6 +98,9 @@ export const LikeComponent = ({ postId, initialLikers, userDetails }: { postId: 
           </g>
         </svg>
       </button>
+
+        <p>{likers.length}</p>
+      </div>
   )
 }
 
