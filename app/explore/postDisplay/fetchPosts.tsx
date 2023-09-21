@@ -2,15 +2,17 @@ import { getPostsPageLimit } from "../../(lib)/postLimit";
 import { getPosts, userPost } from "../../(mongodb)/getPosts";
 import { getUserInfo } from "../../(mongodb)/user";
 import { PostSection } from "./postsSection"
+import { userDetailsClient } from "../page";
 
-export const FetchPosts = async () => {
+export const FetchPosts = async ({userDetails}:{userDetails:userDetailsClient|null}) => {
 
   const firstPagePosts = await PostsToClient(await getPosts({ page: 1 }));
-
   const maxPages = await getPostsPageLimit() || 0;
 
   return (
     <PostSection
+          //@ts-ignore
+          userDetails={userDetailsToClient(userDetails)}
           key={1}
           maxPages={maxPages}
           // @ts-ignore (we can't pass Date to client.)

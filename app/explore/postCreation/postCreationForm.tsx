@@ -1,14 +1,13 @@
 import Link from "next/link";
 import { SubmitButtonClient } from "../../(components)/SubmitButtonClient";
-import { getSessionDetails } from "../../(mongodb)/user";
 import { ImageInputOptional } from "../../user/updateImage/ImageInput";
 import { ResetOnSubmit } from "./ResetOnSubmit";
 import { handleCreatePost } from "./createPost";
+import { userDetailsClient } from "../page";
 
 
-export const CreatePostSection = async () => {
+export const CreatePostSection = async ({userDetails}:{userDetails:userDetailsClient|null}) => {
 
-  const userDetails = await getSessionDetails();
 
   return (
     <section>

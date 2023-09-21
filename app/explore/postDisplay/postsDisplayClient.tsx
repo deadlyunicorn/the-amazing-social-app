@@ -1,11 +1,12 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { PostComponent, userPostComplete } from "./postComponent/postComponent";
+import { PostComponent, userPostWithAvatar } from "./postComponent/postComponent";
+import { userDetailsClient } from "../page";
 
-export const DisplayPosts = ({ page, canLoadNext, setCanLoadNext }: { page: number, setCanLoadNext: any, canLoadNext: boolean }) => {
+export const DisplayPosts = ({ page, canLoadNext, setCanLoadNext,userDetails }: { page: number, setCanLoadNext: any, canLoadNext: boolean,userDetails:userDetailsClient }) => {
 
-  const [posts, setPosts] = useState<null | userPostComplete[]>(null);
+  const [posts, setPosts] = useState<null | userPostWithAvatar[]>(null);
 
   useEffect(() => {
     
@@ -39,6 +40,7 @@ export const DisplayPosts = ({ page, canLoadNext, setCanLoadNext }: { page: numb
         posts.map(
           (post) => (
             <PostComponent
+              userDetails={userDetails}
               key={new Date(post.created_at).getTime()}
               post={post} />
           )

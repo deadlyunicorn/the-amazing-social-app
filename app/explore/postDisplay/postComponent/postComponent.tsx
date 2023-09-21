@@ -3,10 +3,11 @@ import Image from "next/image"
 import { formatDate, formatHours } from "../../../(lib)/formatDate"
 import { userPost } from "../../../(mongodb)/getPosts"
 import { LikeComponent } from "./likeComponent"
+import { userDetailsClient } from "../../page"
 
-export type userPostComplete = userPost & { avatarURL: string }
+export type userPostWithAvatar = userPost & { avatarURL: string }
 
-export const PostComponent = ({ post }: { post: userPostComplete }) => {
+export const PostComponent = ({ post, userDetails }: { post: userPostWithAvatar,userDetails:userDetailsClient|null }) => {
 
   const postDate = new Date(post.created_at);
 
@@ -80,7 +81,7 @@ export const PostComponent = ({ post }: { post: userPostComplete }) => {
 
         <p>{post.content?.textContent}</p>
 
-       
+   
 
 
 

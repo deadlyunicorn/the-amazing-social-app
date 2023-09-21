@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { DisplayPosts } from "./postsDisplayClient";
-import { PostComponent, userPostComplete } from "./postComponent/postComponent";
+import { PostComponent, userPostWithAvatar } from "./postComponent/postComponent";
+import { userDetailsClient } from "../page";
 
-export const PostSection = ({ firstPagePosts,maxPages}: { firstPagePosts: userPostComplete[],maxPages:number }) => {
+export const PostSection = ({ firstPagePosts,maxPages, userDetails}: { firstPagePosts: userPostWithAvatar[],maxPages:number,userDetails:userDetailsClient|null }) => {
 
   const [viewY, setViewY] = useState(0);
   const [edgeY, setEdgeY] = useState(0);
@@ -63,6 +64,7 @@ export const PostSection = ({ firstPagePosts,maxPages}: { firstPagePosts: userPo
         {firstPagePosts && firstPagePosts.map( //server loaded posts
           (post,key) =>
             <PostComponent 
+              userDetails={userDetails}
               key={key}
               post={post} />
         )}
@@ -70,6 +72,7 @@ export const PostSection = ({ firstPagePosts,maxPages}: { firstPagePosts: userPo
 
       {pagesArray.map((page) =>
         <DisplayPosts 
+          userDetails={userDetails}
           key={page}
           canLoadNext={canLoadNext}
           setCanLoadNext={setCanLoadNext}
