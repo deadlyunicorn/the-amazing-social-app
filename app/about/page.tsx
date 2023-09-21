@@ -2,7 +2,7 @@ import About from "@/app/about/about"
 // import UserDetails from "@/app/components/userDetails";
 
 
-const AboutPage = async() => {
+const AboutPage = () => {
 
 
 

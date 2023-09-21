@@ -1,4 +1,4 @@
-const RequestSuccess = async() => (
+const RequestSuccess = () => (
   
   <section className="text-center">
 
