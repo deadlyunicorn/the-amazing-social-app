@@ -1,12 +1,12 @@
 import Link from "next/link"
 import Image from "next/image"
 import { formatDate, formatHours } from "../../../(lib)/formatDate"
-import {  userPostWithAvatar } from "../../../(mongodb)/getPosts"
+import { userPostWithAvatar } from "../(mongodb)/getPosts"
 import { LikeComponent } from "../firstPage/clientComponents/likeComponent"
 import { userDetailsClient } from "../../page"
 
 
-export const PostComponent = ({ post, userDetails }: { post: userPostWithAvatar,userDetails:userDetailsClient|null }) => {
+export const PostComponent = ({ post, userDetails }: { post: userPostWithAvatar, userDetails: userDetailsClient | null }) => {
 
   const postDate = new Date(post.created_at);
 
@@ -82,9 +82,9 @@ export const PostComponent = ({ post, userDetails }: { post: userPostWithAvatar,
 
         <aside className="flex">
 
-          <LikeComponent userDetails={userDetails} postId={post._id} initialLikers={post.likers.map(liker=>String(liker))}/>
+          <LikeComponent userDetails={userDetails} postId={post._id} initialLikers={post.likers.map(liker => String(liker))} />
           {/* <CommentComponent postId={post._id}/> */}
-    
+
 
         </aside>
 
@@ -94,10 +94,29 @@ export const PostComponent = ({ post, userDetails }: { post: userPostWithAvatar,
 
     </li>
   )
-} 
+}
 
 
 
 const CommentComponent = () => (
-  <div>Comments</div> 
+  <div>Comments</div>
 )
+
+
+export const MockPostComponent = () => {
+
+  const random = Math.random();
+
+  return (
+  
+      <div 
+      style={{height:random*100*3}}
+      className="
+      px-2 my-4
+      min-h-[100px]
+      mx-8
+      bg-sky-100 rounded-2xl
+      flex justify-between"/>
+
+  )
+}

@@ -4,6 +4,7 @@ import { CreatePostSection } from "./postCreation/postCreationForm";
 import { Suspense } from "react";
 import { FetchPostsServer } from "./postDisplay/firstPage/fetchPostsServer";
 import { getSessionDetails, userObject } from "../(mongodb)/user";
+import { MockPostComponent } from "./postDisplay/postComponent/postComponent";
 
 const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } }) => {
 
@@ -24,9 +25,9 @@ const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } 
       <CreatePostSection userDetails={userDetails} />
 
       <Suspense fallback={<PostsFallback/>}>
-        
-        <FetchPostsServer userDetails={userDetails}/>
 
+        <FetchPostsServer userDetails={userDetails}/>
+        
       </Suspense>
 
 
@@ -38,18 +39,21 @@ const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } 
 
 const PostsFallback = () => {
 
-  
+  const mockArray = [1,2,3,4,5,6,7,8,9]
 
   return (
 
     <section
-      className="px-2 w-full h-screen animate-pulse">
+      className="
+      overflow-hidden relative
+      px-2 
+      w-full 
+      h-screen animate-pulse">
 
+      {mockArray.map(
+        item=><MockPostComponent/>
 
-      <div className="
-        mt-1 mr-2
-        bg-sky-100 rounded-2xl
-        flex justify-between"/>
+      )}
 
     </section>
   )
