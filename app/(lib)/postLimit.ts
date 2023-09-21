@@ -1,6 +1,6 @@
 import { MongoClient, ServerApiVersion } from "mongodb";
 
-export const postLimit = 10;
+export const postLimit = 5;
 
 export const getPostsPageLimit = async () => {
 

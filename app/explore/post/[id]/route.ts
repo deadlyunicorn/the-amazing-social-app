@@ -12,7 +12,6 @@ export async function POST(request:Request,context:{params:{id:string}}){
 
 
   const mongoRequest = await likePost(postId,hasLiked);
-  console.log(mongoRequest);
   return NextResponse.json( mongoRequest );
 
 }
