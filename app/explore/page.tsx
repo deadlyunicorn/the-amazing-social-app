@@ -51,7 +51,7 @@ const PostsFallback = () => {
       h-screen animate-pulse">
 
       {mockArray.map(
-        item=><MockPostComponent/>
+        item=><MockPostComponent key={item}/>
 
       )}
 

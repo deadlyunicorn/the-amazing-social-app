@@ -4,7 +4,7 @@ import Image from "next/image";
 import { ChangeProfilePicture } from "../updateImage/ImageUploadForm";
 import { UserDescription } from "../description/UserDescription";
 import { Suspense } from "react";
-import { getPosts } from "@/app/(mongodb)/getPosts";
+import { getPosts } from "@/app/explore/postDisplay/(mongodb)/getPosts";
 
 
 export const UserInfoComponent = ({ userInfo, ownsProfile }: { userInfo: userObject, ownsProfile: boolean }) => {
