@@ -1,11 +1,10 @@
 import Link from "next/link"
 import Image from "next/image"
 import { formatDate, formatHours } from "../../../(lib)/formatDate"
-import { userPost } from "../../../(mongodb)/getPosts"
-import { LikeComponent } from "./likeComponent"
+import {  userPostWithAvatar } from "../../../(mongodb)/getPosts"
+import { LikeComponent } from "../firstPage/clientComponents/likeComponent"
 import { userDetailsClient } from "../../page"
 
-export type userPostWithAvatar = userPost & { avatarURL: string }
 
 export const PostComponent = ({ post, userDetails }: { post: userPostWithAvatar,userDetails:userDetailsClient|null }) => {
 
@@ -83,7 +82,7 @@ export const PostComponent = ({ post, userDetails }: { post: userPostWithAvatar,
 
         <aside className="flex">
 
-          <LikeComponent userDetails={userDetails} postId={post._id} likers={post.likers.map(liker=>String(liker))}/>
+          <LikeComponent userDetails={userDetails} postId={post._id} initialLikers={post.likers.map(liker=>String(liker))}/>
           {/* <CommentComponent postId={post._id}/> */}
     
 

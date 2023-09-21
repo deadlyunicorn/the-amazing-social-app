@@ -1,11 +1,12 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { DisplayPosts } from "./postsDisplayClient";
-import { PostComponent, userPostWithAvatar } from "./postComponent/postComponent";
-import { userDetailsClient } from "../page";
+import { PostComponent } from "../../postComponent/postComponent";
+import { userDetailsClient } from "../../../page";
+import { userPostWithAvatar } from "@/app/(mongodb)/getPosts";
+import { FetchPostsClient } from "./fetchClient";
 
-export const PostSection = ({ firstPagePosts,maxPages, userDetails}: { firstPagePosts: userPostWithAvatar[],maxPages:number,userDetails:userDetailsClient|null }) => {
+export const PostSectionWrapperWithViewMonitoring = ({ firstPagePosts,maxPages, userDetails}: { firstPagePosts: userPostWithAvatar[],maxPages:number,userDetails:userDetailsClient|null }) => {
 
   const [viewY, setViewY] = useState(0);
   const [edgeY, setEdgeY] = useState(0);
@@ -70,19 +71,21 @@ export const PostSection = ({ firstPagePosts,maxPages, userDetails}: { firstPage
         )}
       </ul> 
 
-      {pagesArray.map((page) =>
-        <DisplayPosts 
+      {
+      pagesArray.map((page) =>
+        <FetchPostsClient 
+          setCanLoadNext={setCanLoadNext}
           userDetails={userDetails}
           key={page}
-          canLoadNext={canLoadNext}
-          setCanLoadNext={setCanLoadNext}
           page={page} />
-      )} 
+      )
+      }
 
-        {(!canLoadNext && pageNumber < maxPages) 
+      {
+        (!canLoadNext && pageNumber < maxPages) 
         ? <p className="text-center" tabIndex={0}>Loading...</p>
         : pageNumber == maxPages && <p className="text-center" tabIndex={0}>The road ends here O.o</p> 
-        }
+      }
 
     </section>
 

@@ -2,16 +2,14 @@ import { MultipleRowsWrapper } from "../(components)/FormWrapper";
 import { ErrorSection } from "../(components)/ErrorSection";
 import { CreatePostSection } from "./postCreation/postCreationForm";
 import { Suspense } from "react";
-import { FetchPosts } from "./postDisplay/fetchPosts";
+import { FetchPostsServer } from "./postDisplay/firstPage/fetchPostsServer";
 import { getSessionDetails, userObject } from "../(mongodb)/user";
 
 const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } }) => {
 
   const userDetails = userDetailsToClient(await getSessionDetails());
 
-
   return (
-
 
     <MultipleRowsWrapper>
 
@@ -27,7 +25,7 @@ const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } 
 
       <Suspense fallback={<PostsFallback/>}>
         
-        <FetchPosts userDetails={userDetails}/>
+        <FetchPostsServer userDetails={userDetails}/>
 
       </Suspense>
 
