@@ -10,13 +10,14 @@ export const LikeComponent = ({ postId, likers, userDetails }: { postId: ObjectI
     likers.length
   );
 
-  const initialLikeState = likers.includes(String(userDetails?._id));
-  const [like,setLike] = useState(likers.includes(String(userDetails?._id)));
+
+  const initialLikeState = likers.includes(String(userDetails?.username));
+  const [like,setLike] = useState(likers.includes(String(userDetails?.username)));
   
 
   useEffect(()=>{
 
-    setOptimistic(like==initialLikeState?likers.length:like?optimisticLike+1:optimisticLike-1)
+    setOptimistic((like==initialLikeState)? likers.length :(like?optimisticLike+1:optimisticLike-1))
 
 
     const timer = setTimeout(async()=>{
@@ -63,7 +64,7 @@ export const LikeComponent = ({ postId, likers, userDetails }: { postId: ObjectI
         </svg>
       </button>
       {JSON.stringify(likers)}
-      <p>{optimisticLike}</p>
+      <p>{optimisticLike} {like&&"likes" } initial: {initialLikeState+""} {JSON.stringify(likers)},{userDetails?.username}</p>
     </>
   )
 }
