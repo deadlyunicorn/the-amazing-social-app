@@ -6,56 +6,51 @@ import { MongoClient, ObjectId, ServerApiVersion } from "mongodb";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export const toggleLike = async (postId:string) => {
-
-  const client = new MongoClient(process.env.MONGODB_URI!, {
-    serverApi: {
-      version: ServerApiVersion.v1,
-      strict: true,
-      deprecationErrors: true,
-    }
-  });
-
-  const user = await getSessionDetails();
-  if (!user) {redirect('/login?error=Network error, check if you are logged in');}
+export const likePost = async (postId: string, hasLiked: boolean) => {
 
   try {
 
 
-    const posts = client.db('the-amazing-social-app').collection('posts');
+    const client = new MongoClient(process.env.MONGODB_URI!, {
+      serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+      }
+    });
 
-    //@ts-ignore
-    const post: userPost = await posts.findOne({ _id: new ObjectId(postId) });
-    
-    
-    let res; 
+    const user = await getSessionDetails();
+    if (!user) { redirect('/login?error=Network error, check if you are logged in'); }
 
-    if (post.likers.some(liker=>liker&&liker.equals(user._id))) {
+    try {
+      const posts = client.db('the-amazing-social-app').collection('posts');
 
-      res=await posts.updateOne({ _id: new ObjectId(postId) }, { $pull: { likers:  user._id  } });
+      //@ts-ignore
+      const post: userPost = await posts.findOne({ _id: new ObjectId(postId) });
+
+
+      const res = hasLiked
+        ? await posts.updateOne({ _id: new ObjectId(postId) }, { $addToSet: { likers: user._id } })
+        : await posts.updateOne({ _id: new ObjectId(postId) }, { $pull: { likers: user._id } });
+
+        return res;
+
+
+
+
+    }
+    catch (err) {
+      redirect(`/explore?error=${err}`);
+    }
+    finally {
+
+      await client.close();
 
     }
 
-    else {
-
-      res=await posts.updateOne({ _id: new ObjectId(postId) }, { $addToSet: { likers:  user._id  } });
-    
-    }
-
-    revalidatePath('/explore');
-    return res;
-
-
-
-
   }
-  catch(err){
-    redirect(`/explore?error=${err}`);
-  }
-  finally {
-
-    await client.close();
-
+  catch (err) {
+    redirect(`/explore?error=Something went wrong`);
   }
 
 
