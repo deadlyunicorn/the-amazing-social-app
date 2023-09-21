@@ -12,10 +12,10 @@ export const emailRegister = async (formData: FormData) => {
   const email = String(formData.get('email'));
   const password = String(formData.get('password'));
 
-  if (password.length<6){
+  if (password.length < 6) {
     throw 'Password too short';
   }
-  else if (email.length < 12){
+  else if (email.length < 12) {
     throw 'Not a valid email';
   }
 
@@ -82,22 +82,31 @@ export const addUserToMongoDB = async (formData: FormData) => {
   });
 
   const date = new Date();
-  const supabase = createServerActionClient({cookies},supabaseCredentials);
+  const supabase = createServerActionClient({ cookies }, supabaseCredentials);
 
-  
-  const email = String((await supabase.auth.getSession()).data.session?.user.email);
-  if (!email){throw "Not logged in"};
 
   const username = String(formData.get('username'));
-  if (username.length<6){throw 'Username too short'};
 
-
-  const age = date.getFullYear()-Number(formData.get('age'));
-  if (age < 18 || age > 85){throw "Invalid age"};
 
   let success = false;
 
   try {
+
+    const email = String((await supabase.auth.getSession()).data.session?.user.email);
+    if (!email) { throw "Not logged in" };
+
+    const regex = /^[A-Za-z]([A-Za-z0-9\_])\w+/g;
+
+    if (username.length < 6) { throw 'Username too short' }
+    else if ( username.match(regex)?.length!==1 ) {throw 'Invalid username format'};
+
+
+    const age = Number(formData.get('age'));
+    if (age < 18 || age > 85) { throw "Invalid age" };
+    const YOB = date.getFullYear() - age;
+    
+
+
     await client.connect();
 
     const users = client.db('the-amazing-social-app').collection('users');
@@ -105,17 +114,24 @@ export const addUserToMongoDB = async (formData: FormData) => {
     const userObject: userObject = {
       _id: new ObjectId,
       email: email,
-      age: age,
+      age: YOB,
       username: username,
       latestPosts: []
 
     }
 
-    await users.insertOne(userObject)
-      .catch(err => { redirect(`/login?error=${err}`) })
+    await users.insertOne(userObject);
     success = true;
 
-  } finally {
+  }
+  catch(err){
+    if (String(err).includes("dup key")){
+      redirect(`/user?error=Username already taken`)
+    }
+    redirect(`/user?error=${err}`)
+  
+  }
+  finally {
     await client.close();
 
     if (success) {
