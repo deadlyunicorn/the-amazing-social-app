@@ -12,7 +12,7 @@ export const FetchPosts = async ({userDetails}:{userDetails:userDetailsClient|nu
   return (
     <PostSection
           //@ts-ignore
-          userDetails={userDetailsToClient(userDetails)}
+          userDetails={userDetails}
           key={1}
           maxPages={maxPages}
           // @ts-ignore (we can't pass Date to client.)
