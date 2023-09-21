@@ -78,7 +78,7 @@ export type userPost = {
     textContent:string,
     imageURL?:string
   },
-  likers: string[], //username array
+  likers: ObjectId[], //username array
   comments: comment[],
   verified: boolean,
   created_at: Date
@@ -86,7 +86,7 @@ export type userPost = {
 
 type comment = {
   _id:ObjectId,
-  author: string, //username
+  author: ObjectId, //username
   comment: string,
   created_at: Date,
   verified: boolean,
