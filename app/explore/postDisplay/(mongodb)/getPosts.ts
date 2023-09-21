@@ -2,6 +2,7 @@
 import { MongoClient, ServerApiVersion, ObjectId, Collection, AggregationCursor } from "mongodb";
 import { postLimit } from "../../../(lib)/postLimit";
 import { getUserInfo } from "../../../(mongodb)/user";
+import { redirect } from "next/navigation";
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 
 export type userPostWithAvatar = {
@@ -41,6 +42,9 @@ export const getPosts = async (
     { $skip: (query.page - 1) * postLimit },
     { $limit: postLimit }]
 
+  try{
+
+
 
   const client = new MongoClient(process.env.MONGODB_URI!, {
     serverApi: {
@@ -52,52 +56,58 @@ export const getPosts = async (
   });
 
 
-  try {
-    await client.connect();
+    try {
+      await client.connect();
 
-    const posts = client.db('the-amazing-social-app').collection('posts');
+      const posts = client.db('the-amazing-social-app').collection('posts');
 
 
-    // return await 
-    const pipelineResult = posts.aggregate(pipeline) as AggregationCursor<userPost>;
-    const userPosts = [];
+      // return await 
+      const pipelineResult = posts.aggregate(pipeline) as AggregationCursor<userPost>;
+      const userPosts = [];
 
-    for await (const post of pipelineResult) {
-      userPosts.push(post);
+      for await (const post of pipelineResult) {
+        userPosts.push(post);
+      }
+
+      return await Promise.all(userPosts.map(
+        async (post) => {
+
+          const poster = await getUserInfo({ _id: post.created_by });
+          const likers = await Promise.all(
+            post.likers.map(
+              async (likerID) => await getUserInfo({ _id: likerID })
+                .then(user => String(user?.username))
+            )
+          )
+
+
+          return {
+            ...post,
+            _id:post._id.toString(),
+            avatarURL: String(poster?.avatarSrc),
+            created_by: String(poster?.username),
+            likers: likers
+          }
+        }
+      ))
+
+
+
+
+
+    }
+    finally {
+
+      await client.close();
+
     }
 
-    return await Promise.all(userPosts.map(
-      async (post) => {
-
-        const poster = await getUserInfo({ _id: post.created_by });
-        const likers = await Promise.all(
-          post.likers.map(
-            async (likerID) => await getUserInfo({ _id: likerID })
-              .then(user => String(user?.username))
-          )
-        )
-
-
-        return {
-          ...post,
-          _id:post._id.toString(),
-          avatarURL: String(poster?.avatarSrc),
-          created_by: String(poster?.username),
-          likers: likers
-        }
-      }
-    ))
-
-
-
-
-
   }
-  finally {
-
-    await client.close();
-
+  catch(err){
+    redirect('/explore?error=Network error')
   }
+
 }
 
 
