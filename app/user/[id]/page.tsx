@@ -46,7 +46,7 @@ const UserProfile = async (
   });
 
 
-  const ownsProfile = ( supabaseUser?.email == profileInfo?.email ) || ( supabaseUser?.id == params.id );
+  const ownsProfile = supabaseUser && ( supabaseUser?.email == profileInfo?.email ) || ( supabaseUser?.id == params.id );
 
   return (
     <MultipleRowsWrapper>
@@ -70,6 +70,7 @@ const UserProfile = async (
         
         ownsProfile?<>
           <section className="text-center">
+
 
           You have successfully registered your account.
           <br/>Now you can choose a username to start socializing!
