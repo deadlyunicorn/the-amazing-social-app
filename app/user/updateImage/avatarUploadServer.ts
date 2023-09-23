@@ -52,7 +52,9 @@ const AvatarUploadAWS = async(image:File) => {
   const date = new Date();
 
   const fileType = image.type;
-  const fileName = `IMG_${formatDateUTC(date)}_${date.getUTCHours()}h${date.getUTCMinutes()}m${date.getUTCSeconds()}s${date.getUTCMilliseconds()}ms.${image.type.slice(fileType.indexOf('/')+1)}`;
+  const fileExtension = image.type.includes('svg')?'svg':image.type.slice(image.type.indexOf('/')+1);
+
+  const fileName = `IMG_${formatDateUTC(date)}_${date.getUTCHours()}h${date.getUTCMinutes()}m${date.getUTCSeconds()}s${date.getUTCMilliseconds()}ms.${fileExtension}`;
 
   const imageBinary = await getBinaryData(image);
 
