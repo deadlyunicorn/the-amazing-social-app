@@ -1,5 +1,6 @@
 "use client"
 
+import { ReactNode } from "react";
 import { experimental_useFormStatus as useFormStatus } from "react-dom"
 
 export const SubmitButtonClient = () => {
@@ -15,5 +16,4 @@ export const SubmitButtonClient = () => {
     </button>
   )
 }
-
 
