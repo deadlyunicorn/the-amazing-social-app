@@ -30,8 +30,8 @@ export const DisplayComments = ({comments}:{comments:userPostWithAvatar["comment
 
 
           {mockCommentArray.slice(0,howManyToLoad).map(  
-            comment=>
-              <p
+            (comment,key)=>
+              <p key={key}
                 tabIndex={0} 
                 className="bg-black bg-opacity-5 px-2 py-1 rounded-md">&gt; {comment}</p>
           )}
