@@ -42,9 +42,9 @@ export const getPosts = async (
   }
   
 
-  try {
 
-
+    
+    
 
     const client = new MongoClient(process.env.MONGODB_URI!, {
       serverApi: {
@@ -52,11 +52,16 @@ export const getPosts = async (
         strict: true,
         deprecationErrors: true,
       },
-      serverSelectionTimeoutMS: 500,
+      serverSelectionTimeoutMS: 4000,
     });
 
 
     try {
+
+      const timer = setTimeout(()=>{
+        throw "Failed getting posts";
+      },7000)
+
       await client.connect();
 
       const posts = client.db('the-amazing-social-app').collection('posts');
@@ -81,7 +86,8 @@ export const getPosts = async (
             )
           )
 
-
+          
+          clearTimeout(timer);
           return {
             ...post,
             _id: post._id.toString(),
@@ -97,16 +103,13 @@ export const getPosts = async (
 
 
     }
-    finally {
-
-      await client.close();
-
+    catch (err) {
+      redirect('/explore?error=Network error')
     }
-
-  }
-  catch (err) {
-    redirect('/explore?error=Network error')
-  }
+    finally {
+      await client.close();
+    }
+  
 
 }
 

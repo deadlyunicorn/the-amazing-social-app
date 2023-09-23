@@ -6,11 +6,14 @@ import { userPostWithAvatar } from "../../(mongodb)/getPosts";
 export const FetchPostsClient = ({ page, userDetails,setCanLoadNext }: { page: number, userDetails: userDetailsClient | null,setCanLoadNext:any }) => {
 
   const [posts, setPosts] = useState<null | userPostWithAvatar[]>(null);
+  const [error,setError] = useState(false);
 
   useEffect(() => {
 
     setCanLoadNext(false);
     (async () => {
+      try{
+
       await fetch(`/explore/${page}`, { method: "GET" })
         .then( async(res) => await res.json()
         .then( posts => {
@@ -20,6 +23,11 @@ export const FetchPostsClient = ({ page, userDetails,setCanLoadNext }: { page: n
         .finally(()=>{
           setCanLoadNext(true) 
         })
+      }
+      catch(err){
+        setError(true);
+      }
+
     }
     )()
 
@@ -30,7 +38,7 @@ export const FetchPostsClient = ({ page, userDetails,setCanLoadNext }: { page: n
 
     <>
       {
-        (posts && posts.length > 0) &&
+        (posts && posts.length > 0 && !error) &&
         <ul>
           {
             posts.map(
@@ -43,6 +51,11 @@ export const FetchPostsClient = ({ page, userDetails,setCanLoadNext }: { page: n
             )
           }
         </ul>
+      }
+      {
+        error && <p> There was an error </p>
+
+
       }
     </>
   )
