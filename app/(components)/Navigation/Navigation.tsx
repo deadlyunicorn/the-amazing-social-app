@@ -1,9 +1,16 @@
+import { getSessionDetails } from "@/app/(mongodb)/user"
 import Link from "next/link"
 
-const NavigationBar = () => (
+const NavigationBar = async() => {
+
+  const user = await getSessionDetails();
+
+  return(
+
   <nav className="w-full h-16 fixed bottom-0
   backdrop-blur-md flex justify-center
   border-t border-zinc-400 rounded-t-md bg-black bg-opacity-40">
+
 
     <div className="
       max-w-xl w-full
@@ -11,10 +18,11 @@ const NavigationBar = () => (
       <NavItem icon="🏠" link="/"/>
       <NavItem icon="🌊" link="/explore"/>      
       <NavItem icon="💬" link="/chat"/>      
-      <NavItem icon="😶‍🌫️" link="/user"/>     
+      <NavItem icon="😶‍🌫️" link={`/user/${user?user.username:""}`}/>     
     </div> 
   </nav>
-)
+  )
+}
 
 
 const NavItem = (
