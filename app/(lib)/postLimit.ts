@@ -13,6 +13,8 @@ export const getPostsPageLimit = async () => {
   });
 
   try {
+
+    
     await client.connect();
 
     const posts = client.db('the-amazing-social-app').collection('posts');
@@ -20,7 +22,6 @@ export const getPostsPageLimit = async () => {
     const postIterator = await posts.aggregate([
       { $match: { verified:true } }, 
       { $count: "Visible Posts" }])
-    let verifiedPostsCount;
 
     for await (const verifiedPostsCount of postIterator) {
       return Math.ceil(verifiedPostsCount["Visible Posts"]/postLimit)+1;
