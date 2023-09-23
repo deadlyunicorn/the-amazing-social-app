@@ -1,14 +1,20 @@
+"use client" //force use client even if it was child of a server component
+
+
 import Link from "next/link"
 import Image from "next/image"
 import { formatDate, formatHours } from "../../../../../(lib)/formatDate"
 import { userPostWithAvatar } from "../../../(mongodb)/getPosts"
 import { LikeComponent } from "./likeComponent"
 import { userDetailsClient } from "../../../../page"
+import { CommentComponent } from "./comments/commentComponent"
 
 
 export const PostComponent = ({ post, userDetails }: { post: userPostWithAvatar, userDetails: userDetailsClient | null }) => {
 
   const postDate = new Date(post.created_at);
+
+  const imageURL = post.content.imageURL;
 
   return (
 
@@ -19,9 +25,11 @@ export const PostComponent = ({ post, userDetails }: { post: userPostWithAvatar,
 
       <div className="
         mt-1 mr-2
-        bg-gradient-to-b from-sky-100 to-blue-200
+        border-dashed border-t  border-x border-black
+        overflow-hidden
+        bg-gradient-to-b from-slate-50 to-slate-200 
         drop-shadow-md
-        rounded-2xl
+        rounded-r-2xl 
         flex justify-between">
 
         <div className="
@@ -41,9 +49,9 @@ export const PostComponent = ({ post, userDetails }: { post: userPostWithAvatar,
             className="peer hover:brightness-110 peer-hover:brightness-110  "
             href={`user/${post.created_by}`}>
             <Image
-              className="rounded-r-full "
-              width={50}
-              height={50}
+              className="rounded-r-full aspect-square"
+              width={40}
+              height={40}
               src={post.avatarURL || '/favicon.svg'}
               alt={`${post.created_by}'s avatar`} />
 
@@ -60,31 +68,33 @@ export const PostComponent = ({ post, userDetails }: { post: userPostWithAvatar,
       </div>
 
 
-
-
       <article
         className="
+        border-x border-black border-dashed
         drop-shadow-md
         flex flex-col gap-y-4
         rounded-b
-        bg-gradient-to-b from-[#d5e7ff] to-blue-300
-        pl-4 py-4 mr-6 " tabIndex={0}>
+        bg-gradient-to-b from-slate-50 to-slate-200 
+        px-4 py-4 mr-6 " tabIndex={0}>
 
-        {(post.content.imageURL && post.content.imageURL.length > 0) &&
-          <Image
-            className="aspect-square place-self-center"
-            src={post.content.imageURL}
-            alt="No post image description provided"
-            width={200}
-            height={200}
-          />}
+        {(imageURL && imageURL.length > 0) &&
+          <Link className="place-self-center" href={imageURL} target="_blank">
+            <Image
+              className="aspect-auto"
+              src={imageURL}
+              alt="No post image description provided"
+              width={200}
+              height={200}
+            />
+          </Link>
+          }
 
         <p>{post.content?.textContent}</p>
 
-        <aside className="flex">
+        <aside className="flex flex-col">
 
-          <LikeComponent userDetails={userDetails} postId={post._id} initialLikers={post.likers.map(liker => String(liker))} />
-          {/* <CommentComponent postId={post._id}/> */}
+          <LikeComponent userDetails={userDetails} post={post} />
+          <CommentComponent post={post}/>
 
 
         </aside>
@@ -98,10 +108,6 @@ export const PostComponent = ({ post, userDetails }: { post: userPostWithAvatar,
 }
 
 
-
-const CommentComponent = () => (
-  <div>Comments</div>
-)
 
 
 export const MockPostComponent = () => {
