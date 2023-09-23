@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { likePost } from "../../(mongodb)/likePost";
-import { revalidatePath } from "next/cache";
+import { likePost } from "../../../(mongodb)/likePost";
+
 
 export async function POST(request:Request,context:{params:{id:string}}){
 
