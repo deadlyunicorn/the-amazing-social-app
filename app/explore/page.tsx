@@ -70,6 +70,8 @@ export type userDetailsClient =  {
   age: number;
   email: string;
   username: string;
+  avatarSrc?: string;
+  description?: string;
 };
 
 const userDetailsToClient = (userDetails:userObject|null): userDetailsClient|null=> {
