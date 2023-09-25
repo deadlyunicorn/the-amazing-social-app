@@ -2,6 +2,7 @@ import { InsertOneResult, UpdateResult } from "mongodb";
 import { useEffect, useState } from "react";
 
 export const WriteComment = ({postId,setNewComment}:{postId:string,setNewComment:any}) =>{
+  
   const [sendingPost,setSending] = useState(false);
   const [comment,setComment] = useState('');
 
@@ -23,6 +24,7 @@ export const WriteComment = ({postId,setNewComment}:{postId:string,setNewComment
                 throw "Comment was not acknoweledged";
               }
               setNewComment(`${comment}_${mongoResponse.insertedId}_${postId}`);
+              setComment('');
             })
         }
         catch(err){
@@ -62,6 +64,7 @@ export const WriteComment = ({postId,setNewComment}:{postId:string,setNewComment
 
     <p>Write a comment: </p>
     <textarea 
+      value={comment}
       onChange={(e)=>{
         e.target.style.height = `${e.target.scrollHeight}px`;
         setComment(e.target.value);
