@@ -4,13 +4,7 @@ export const postLimit = 5;
 
 export const getPostsPageLimit = async () => {
 
-  const client = new MongoClient(process.env.MONGODB_URI!, {
-    serverApi: {
-      version: ServerApiVersion.v1,
-      strict: true,
-      deprecationErrors: true,
-    }
-  });
+  const client = new MongoClient(process.env.MONGODB_URI!);
 
   try {
 

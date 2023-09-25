@@ -11,13 +11,7 @@ import { InsertOneResult, MongoClient, ServerApiVersion, UpdateResult } from "mo
 
 export const handleCreatePost = async (formData: FormData) => {
 
-  const client = new MongoClient(process.env.MONGODB_URI!, {
-    serverApi: {
-      version: ServerApiVersion.v1,
-      strict: true,
-      deprecationErrors: true,
-    }
-  });
+  const client = new MongoClient(process.env.MONGODB_URI!);
 
 
   const session = client.startSession();

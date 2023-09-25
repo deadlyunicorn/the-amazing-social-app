@@ -7,13 +7,7 @@ const username = argv[2];
 
 export const verifyPosts = async () : Promise<any> => {
 
-  const client = new MongoClient(process.env.MONGODB_URI!, {
-    serverApi: {
-      version: ServerApiVersion.v1,
-      strict: true,
-      deprecationErrors: true,
-    }
-  });
+  const client = new MongoClient(process.env.MONGODB_URI!);
 
 
 
@@ -28,6 +22,8 @@ export const verifyPosts = async () : Promise<any> => {
     const posts = client.db('the-amazing-social-app').collection('posts');
 
     const res = await posts.updateMany({created_by:poster?._id},{$set:{verified:true}});
+
+  
 
     console.log(res);
 
