@@ -23,10 +23,6 @@ export const likePost = async (postId: string, hasLiked: boolean) => {
     try {
       const posts = client.db('the-amazing-social-app').collection('posts');
 
-      //@ts-ignore
-      const post: userPost = await posts.findOne({ _id: new ObjectId(postId) });
-
-
       const res = hasLiked
         ? await posts.updateOne({ _id: new ObjectId(postId) }, { $addToSet: { likers: user._id } })
         : await posts.updateOne({ _id: new ObjectId(postId) }, { $pull: { likers: user._id } });
