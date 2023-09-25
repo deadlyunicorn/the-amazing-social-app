@@ -78,15 +78,36 @@ export const PostComponent = ({ post, userDetails }: { post: userPostWithAvatar,
         px-4 py-4 mr-6 " tabIndex={0}>
 
         {(imageURL && imageURL.length > 0) &&
-          <Link className="place-self-center" href={imageURL} target="_blank">
+          <div className="place-self-center">
             <Image
-              className="aspect-auto"
+              // @ts-ignore
+              onClick={()=>document.getElementById(`${post._id}_modal2`).showModal()}
+              className="aspect-auto cursor-pointer"
               src={imageURL}
               alt="No post image description provided"
               width={200}
               height={200}
             />
-          </Link>
+
+            <dialog id={`${post._id}_modal2`} className="modal">
+              <div className="modal-box bg-stone-900 text-white">
+                <Image
+                  src={imageURL}
+                  alt="No post image description provided"
+                  width={1000}
+                  height={1000}
+                />
+                <form method="dialog" className="mt-4">
+                  <button className="btn capitalize">Close</button>
+                </form>
+
+              </div>
+              <form method="dialog" className="modal-backdrop">
+                <button>close</button>
+              </form>
+            </dialog>
+          </div>
+          
           }
 
         <p>{post.content?.textContent}</p>
