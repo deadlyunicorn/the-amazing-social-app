@@ -88,6 +88,7 @@ export const LikeComponent = ({ post, userDetails }: { post:userPostWithAvatar, 
   return (
       <div className="flex items-center gap-x-2">
       <button
+        aria-label="like button, redirects to login page if not logged in."
         onClick={() => {
           if (userDetails) {
             toggleLike();
