@@ -1,9 +1,12 @@
+'use client'
+
 import Link from "next/link";
 import { SubmitButtonClient } from "../../(components)/SubmitButtonClient";
 import { ImageInputOptional } from "../../user/updateImage/ImageInput";
 import { ResetOnSubmit } from "./ResetOnSubmit";
 import { handleCreatePost } from "./(mongodb)/createPost";
 import { userDetailsClient } from "../page";
+import { useState } from "react";
 
 
 export const CreatePostSection = async ({userDetails}:{userDetails:userDetailsClient|null}) => {
@@ -33,8 +36,23 @@ export const CreatePostSection = async ({userDetails}:{userDetails:userDetailsCl
 const PostCreationForm = () => {
 
   const formId = 'postForm';
+  const [temp, setTemp] = useState<undefined | string>(undefined);
 
-  return (<form
+
+  return (
+  
+  <form
+    onPaste={(e)=>{
+      const file = e.clipboardData.items[0].getAsFile();
+      if (file){
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
+        // @ts-ignore
+        document.getElementById('image').files=dataTransfer.files;
+        setTemp(URL.createObjectURL(file));
+      }
+      
+    }}
     id={formId}
     action={handleCreatePost}
     className="
@@ -45,8 +63,8 @@ const PostCreationForm = () => {
     <label  
       tabIndex={0}
       className="text-link hover:cursor-pointer"
-      htmlFor="image">Add image</label>
-    <ImageInputOptional pixels={200} />
+      htmlFor="image">Insert image</label>
+    <ImageInputOptional pixels={200} setTemp={setTemp} temp={temp} />
 
 
     <ResetOnSubmit formId={formId} />

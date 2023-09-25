@@ -57,9 +57,8 @@ export const ImageInputStandalone = () => {
   )
 }
 
-export const ImageInputOptional = ({pixels}:{pixels:number}) => {
+export const ImageInputOptional = ({pixels,temp,setTemp}:{pixels:number,temp:string|undefined,setTemp:any}) => {
 
-  const [temp, setTemp] = useState<undefined | string>(undefined);
   const {pending} = experimental_useFormStatus();
  
   useEffect(()=>{
@@ -89,7 +88,7 @@ export const ImageInputOptional = ({pixels}:{pixels:number}) => {
       <figure className="my-2">
         <figcaption>Preview</figcaption>
         <Image
-          className="self-center aspect-square object-cover"
+          className="self-center object-cover"
           src={temp}
           width={pixels}
           height={pixels}
