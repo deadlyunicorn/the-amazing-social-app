@@ -5,19 +5,6 @@ import { getUserInfo } from "../../../(mongodb)/user";
 import { redirect } from "next/navigation";
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 
-export type userPostWithAvatar = {
-  _id: string;
-  created_by: string;
-  content: {
-    textContent: string;
-    imageURL?: string;
-  };
-  avatarURL: string
-  likers: string[];
-  comments: comment[];
-  verified: boolean;
-  created_at: Date;
-}
 
 
 
@@ -52,7 +39,6 @@ export const getPosts = async (
         strict: true,
         deprecationErrors: true,
       },
-      serverSelectionTimeoutMS: 4000,
     });
 
 
@@ -75,6 +61,8 @@ export const getPosts = async (
         userPosts.push(post);
       }
 
+      clearTimeout(timer);
+
       return await Promise.all(userPosts.map(
         async (post) => {
 
@@ -85,7 +73,6 @@ export const getPosts = async (
                 .then(user => String(user?.username))
             )
           )
-
           
           clearTimeout(timer);
           return {
@@ -93,7 +80,8 @@ export const getPosts = async (
             _id: post._id.toString(),
             avatarURL: String(poster?.avatarSrc),
             created_by: String(poster?.username),
-            likers: likers
+            likers: likers,
+            comments: [] //we will return comments with a different fetch
           }
         }
       ))
@@ -124,19 +112,47 @@ export type userPost = {
     textContent: string,
     imageURL?: string
   },
-  likers: ObjectId[], //username array
-  comments: comment[],
+  likers: ObjectId[],
+  comments: commentServer[],
   verified: boolean,
   created_at: Date
 }
 
-type comment = {
+export type commentServer = {
   _id: ObjectId,
-  author: ObjectId, //username
-  comment: string,
+  postId: ObjectId,
+  created_by: ObjectId,
+  content: string,
   created_at: Date,
-  verified: boolean,
 }
+
+export type commentClient = {
+  _id: string,
+  postId: string,
+  created_by: {
+    username: string | undefined,
+    avatarSrc: string | undefined
+  },
+  content: string,
+  created_at: Date,
+}
+
+
+export type userPostWithAvatar = {
+  _id: string;
+  created_by: string;
+  content: {
+    textContent: string;
+    imageURL?: string;
+  };
+  avatarURL: string
+  likers: string[];
+  comments: ObjectId[];
+  verified: boolean;
+  created_at: Date;
+}
+
+
 
 
 
