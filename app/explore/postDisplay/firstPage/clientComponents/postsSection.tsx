@@ -12,6 +12,19 @@ export const PostSectionWrapperWithViewMonitoring = ({ firstPagePosts,maxPages, 
   const [edgeY, setEdgeY] = useState(0);
   const [canLoadNext, setCanLoadNext] = useState(true); //being true disallows new page loading  
   const [pageNumber, setPageNumber] = useState(1);
+  const [error,setError] = useState(false);
+
+  useEffect(()=>{
+    if(error){
+      const timer = setTimeout(()=>{
+        setError(false);
+      },5000)
+
+      return ()=>{clearTimeout(timer)}
+    }
+
+  },[error])
+
 
   useEffect(() => {
     onscroll = handlePageMove;
@@ -77,7 +90,9 @@ export const PostSectionWrapperWithViewMonitoring = ({ firstPagePosts,maxPages, 
           setCanLoadNext={setCanLoadNext}
           userDetails={userDetails}
           key={page}
-          page={page} />
+          page={page}
+          error={error}
+          setError={setError} />
       )
       }
 
@@ -85,6 +100,10 @@ export const PostSectionWrapperWithViewMonitoring = ({ firstPagePosts,maxPages, 
         (!canLoadNext && pageNumber < maxPages) 
         ? <p className="text-center" tabIndex={0}>Loading...</p>
         : pageNumber == maxPages && <p className="text-center" tabIndex={0}>The road ends here O.o</p> 
+      }
+
+      {
+        error && <p className="text-center"> There was an error.</p>
       }
 
     </section>

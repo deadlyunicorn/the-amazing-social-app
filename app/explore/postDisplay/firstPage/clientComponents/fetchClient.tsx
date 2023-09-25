@@ -3,10 +3,9 @@ import { userDetailsClient } from "../../../page";
 import { useEffect, useState } from "react";
 import { userPostWithAvatar } from "../../(mongodb)/getPosts";
 
-export const FetchPostsClient = ({ page, userDetails,setCanLoadNext }: { page: number, userDetails: userDetailsClient | null,setCanLoadNext:any }) => {
+export const FetchPostsClient = ({ page, userDetails,setCanLoadNext,setError,error }: { page: number, userDetails: userDetailsClient | null,setCanLoadNext:any,setError:any,error:boolean }) => {
 
   const [posts, setPosts] = useState<null | userPostWithAvatar[]>(null);
-  const [error,setError] = useState(false);
 
   useEffect(() => {
 
@@ -52,11 +51,7 @@ export const FetchPostsClient = ({ page, userDetails,setCanLoadNext }: { page: n
           }
         </ul>
       }
-      {
-        error && <p> There was an error </p>
-
-
-      }
+     
     </>
   )
 }
