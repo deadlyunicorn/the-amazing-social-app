@@ -73,13 +73,7 @@ export const serverActionRegister = async (
 export const addUserToMongoDB = async (formData: FormData) => {
 
 
-  const client = new MongoClient(process.env.MONGODB_URI!, {
-    serverApi: {
-      version: ServerApiVersion.v1,
-      strict: true,
-      deprecationErrors: true,
-    }
-  });
+  const client = new MongoClient(process.env.MONGODB_URI!);
 
   const date = new Date();
   const supabase = createServerActionClient({ cookies }, supabaseCredentials);
