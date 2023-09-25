@@ -8,6 +8,7 @@ import { userPostWithAvatar } from "../../../(mongodb)/getPosts"
 import { LikeComponent } from "./likeComponent"
 import { userDetailsClient } from "../../../../page"
 import { CommentComponent } from "./comments/commentComponent"
+import { ConfirmationDialog } from "@/app/(components)/ConfirmationDialog"
 
 
 export const PostComponent = ({ post, userDetails }: { post: userPostWithAvatar, userDetails: userDetailsClient | null }) => {
@@ -113,7 +114,7 @@ export const PostComponent = ({ post, userDetails }: { post: userPostWithAvatar,
         <p>{post.content?.textContent}</p>
 
         <aside className="flex flex-col">
-
+          {userDetails?.username==post.created_by&&<DeletePost/>}
           <LikeComponent userDetails={userDetails} post={post} />
           <CommentComponent userDetails={userDetails} post={post}/>
 
@@ -125,6 +126,21 @@ export const PostComponent = ({ post, userDetails }: { post: userPostWithAvatar,
       </article>
 
     </li>
+  )
+}
+
+const DeletePost = () =>{
+  
+  return (
+  <>
+  <button
+  // @ts-ignore
+    onClick={()=>{document.getElementById('postid')?.showModal()}} 
+    className="text-end text-error-light-reactive capitalize">delete post</button>
+  <ConfirmationDialog id="postid" textContent="Press 'CONFIRM' to confirm your post's deletion.">
+    <button className="btn text-red-600">Confirm</button>
+  </ConfirmationDialog>
+  </>
   )
 }
 
