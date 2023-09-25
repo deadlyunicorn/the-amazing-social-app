@@ -1,20 +1,34 @@
 import { NextResponse } from "next/server";
-import { likePost } from "../../../(mongodb)/likePost";
+import { commentPost } from "./postComment";
+import { deleteComment } from "./deleteComment";
 
 
-export async function POST(request:Request,context:{params:{id:string}}){
-
-
+export const POST = async (request:Request,context:{params:{id:string}})=>{
   const body: { comment : string} = await request.json();
 
   const postId = context.params.id
   const newComment = body.comment;
 
-  console.log(postId,newComment)
+  if (newComment.length<6){
+    throw "Your comment is too short.";
+  }
 
+  const mongoRequest = await commentPost(postId,newComment);
 
-  // const mongoRequest = await likePost(postId,newComment);
-  // return NextResponse.json( mongoRequest );
-  return NextResponse.json( {comment:newComment} );
+  return NextResponse.json( mongoRequest );
+
+}
+
+export const DELETE = async (request:Request,context:{params:{id:string}})=>{
+  
+  
+  const body: { commentId : string} = await request.json();
+
+  const postId = context.params.id
+  const commentId = body.commentId;
+
+  const mongoRequest = await deleteComment(postId,commentId);
+  
+  return NextResponse.json( mongoRequest );
 
 }
