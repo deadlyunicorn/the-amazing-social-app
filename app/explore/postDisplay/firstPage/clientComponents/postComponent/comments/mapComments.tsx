@@ -1,3 +1,4 @@
+import { ConfirmationDialog } from "@/app/(components)/ConfirmationDialog";
 import { formatDate, formatHours } from "@/app/(lib)/formatDate";
 import { userDetailsClient } from "@/app/explore/page";
 import { commentClient } from "@/app/explore/postDisplay/(mongodb)/getPosts"
@@ -125,77 +126,63 @@ const ConfirmDelete = ({
 
   return (
     <>
-    <dialog id={commentId} className="modal">
-            <div className="modal-box bg-stone-900 text-white">
-              <h3 className="font-bold text-lg text-error-light mb-4">Warning this action is permanent.</h3>
-              <p>Press &apos;Confirm&apos; to permanently delete your comment.</p>
-              <p className="py-4">Press ESC key or click &apos;Close&apos; below to close this menu.</p>
-              <div className="modal-action justify-between">
-                <form method="dialog">
-                  {/* if there is a button in form, it will close the modal */}
-                  <button className="btn capitalize">Close</button>
-                </form>
+    <ConfirmationDialog id={commentId} textContent="Press 'Confirm' to permanently delete your comment.">
+    <button 
+      onClick={()=>{
+        (async()=>{
+          setLoading(true);
+          // @ts-ignore
+          document.getElementById(commentId)?.close();
+          
+          try{
+            await deleteComment(commentId,comment.postId)
+            .then((MongoResult)=>{
+              if ( !MongoResult.acknowledged ){
+                throw "Couldn't remove comment";
+              }
+            })
+            setComments( (previousValue:commentClient[]) => {
+              let keep = true;
+              return previousValue.filter(
+                (commentInState,index)=>{
+                  if (commentInState._id == commentId){
+                    setPage(index+1);
+                    keep=false;
+                  }
+                  return keep;
+                }
+              )
+            });
+            setCommentCount((previousValue:number)=>previousValue-1);
+          }
+          catch(error){
+            setError(true);
+          }
+          finally{
+            setLoading(false);
+          }
+          
+          
+        })()
+        
+        
+      }}
+      className="btn capitalize text-error-light hover:underline">
+        Confirm
+     </button>
+    </ConfirmationDialog>
+    {error && 
+    <p className="
+      disappear
+      absolute py-2
+      text-center
+      bg-red-600 text-white 
+      w-full left-0 px-2 rounded-md">
 
-                <button 
-                  onClick={()=>{
-                    (async()=>{
-                      setLoading(true);
-                      // @ts-ignore
-                      document.getElementById(commentId)?.close();
-                      
-                      try{
-                        await deleteComment(commentId,comment.postId)
-                        .then((MongoResult)=>{
-                          if ( !MongoResult.acknowledged ){
-                            throw "Couldn't remove comment";
-                          }
-                        })
-                        setComments( (previousValue:commentClient[]) => {
-                          
-                          let keep = true;
-                          
-                          return previousValue.filter(
-                            (commentInState,index)=>{
-                              if (commentInState._id == commentId){
-                                setPage(index+1);
-                                keep=false;
-                              }
-                              return keep;
-                            }
-                          )
-                        });
-                        setCommentCount((previousValue:number)=>previousValue-1);
-                      }
-                      catch(error){
-                        setError(true);
-                      }
-                      finally{
-                        setLoading(false);
-                      }
-                      
-                      
-                    })()
-                    
-                    
-                  }}
-                  className="btn capitalize text-error-light hover:underline">
-                  Confirm
-                </button>
-              </div>
-            </div>
-          </dialog>
-      {error && 
-      <p className="
-        disappear
-        absolute py-2
-        text-center
-        bg-red-600 text-white 
-        w-full left-0 px-2 rounded-md">
+      There was an error with your request. 
+      <br/>Please try again.
 
-        There was an error with your request. 
-        <br/>Please try again.
-
-      </p>}
+    </p>}
     </>
   )
 }
