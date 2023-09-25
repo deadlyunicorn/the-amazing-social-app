@@ -128,7 +128,7 @@ const ConfirmDelete = ({
     <dialog id={commentId} className="modal">
             <div className="modal-box bg-stone-900 text-white">
               <h3 className="font-bold text-lg text-error-light mb-4">Warning this action is permanent.</h3>
-              <p>Press 'Confirm' to permanently delete your comment.</p>
+              <p>Press &apos;Confirm&apos; to permanently delete your comment.</p>
               <p className="py-4">Press ESC key or click &apos;Close&apos; below to close this menu.</p>
               <div className="modal-action justify-between">
                 <form method="dialog">
