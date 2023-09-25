@@ -7,7 +7,9 @@ export const UserDescription = ({ description, ownsProfile }: { description: str
 
   const [editing, setEditing] = useState(false);
 
-  useEffect(()=>{setEditing(false)},[description])
+  useEffect(()=>{
+    setEditing(false)
+  },[description])
 
 
   return (
