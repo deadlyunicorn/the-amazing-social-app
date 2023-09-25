@@ -49,9 +49,9 @@ export const PostComponent = ({ post, userDetails }: { post: userPostWithAvatar,
             className="peer hover:brightness-110 peer-hover:brightness-110  "
             href={`user/${post.created_by}`}>
             <Image
-              className="rounded-r-full aspect-square"
-              width={40}
-              height={40}
+              className="rounded-r-full h-[50px] object-cover"
+              width={50}
+              height={50}
               src={post.avatarURL || '/favicon.svg'}
               alt={`${post.created_by}'s avatar`} />
 
@@ -94,7 +94,7 @@ export const PostComponent = ({ post, userDetails }: { post: userPostWithAvatar,
         <aside className="flex flex-col">
 
           <LikeComponent userDetails={userDetails} post={post} />
-          <CommentComponent post={post}/>
+          <CommentComponent userDetails={userDetails} post={post}/>
 
 
         </aside>
@@ -122,7 +122,7 @@ export const MockPostComponent = () => {
       px-2 my-4
       min-h-[100px]
       mx-8
-      bg-sky-100 rounded-2xl
+      bg-slate-200 rounded-2xl
       flex justify-between"/>
 
   )
