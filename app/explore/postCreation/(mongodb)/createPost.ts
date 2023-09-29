@@ -7,11 +7,12 @@ import { getBinaryData } from "../../../(lib)/getBinaryData";
 import { uploadToAwsPosts } from "../../(aws)/images";
 import { formatDateUTC } from "../../../(lib)/formatDate";
 import { addToRecentlyPosted } from "../../(mongodb)/addToRecentPosts";
-import { InsertOneResult, MongoClient, ServerApiVersion, UpdateResult } from "mongodb";
+import { InsertOneResult, MongoClient } from "mongodb";
+import { getMongoClient } from "@/app/(lib)/mongoClient";
 
 export const handleCreatePost = async (formData: FormData) => {
 
-  const client = new MongoClient(process.env.MONGODB_URI!);
+  const client = getMongoClient();
 
 
   const session = client.startSession();

@@ -2,6 +2,7 @@ import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
 import { ServerApiVersion, MongoClient, ObjectId, Timestamp, } from "mongodb";
 import { supabaseCredentials } from "../(supabase)/global";
 import { cookies } from "next/headers";
+import { getMongoClient } from "../(lib)/mongoClient";
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 
 
@@ -17,7 +18,7 @@ export const getUserInfo = async (
 ): Promise<userObject | null> => {
 
 
-  const client = new MongoClient(process.env.MONGODB_URI!);
+  const client = getMongoClient();
 
 
   try {

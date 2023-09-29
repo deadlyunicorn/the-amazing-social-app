@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 import { MongoClient, ObjectId } from "mongodb";
+import { getMongoClient } from "@/app/(lib)/mongoClient";
 
 export const GET = async (request:Request,context:{params:{id:string,page:string}}) =>{
 
   const postId = context.params.id;
 
-  const client = new MongoClient(process.env.MONGODB_URI!);
+  const client = getMongoClient();
   try {
 
     const comments = client.db('the-amazing-social-app').collection('comments');

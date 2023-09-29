@@ -1,12 +1,13 @@
 "use server"
 
+import { getMongoClient } from "@/app/(lib)/mongoClient";
 import { getSessionDetails } from "@/app/(mongodb)/user"
 import { MongoClient, ObjectId } from "mongodb";
 import { redirect } from "next/navigation";
 
 export const deleteComment = async (postIdString: string, commentIdString: string) => {
 
-  const client = new MongoClient(process.env.MONGODB_URI!);
+  const client = getMongoClient();
 
   const user = await getSessionDetails();
   if (!user) { redirect('/login?error=Network error, check if you are logged in'); }

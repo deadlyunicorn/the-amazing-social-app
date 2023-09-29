@@ -3,6 +3,7 @@ import { MongoClient, ServerApiVersion, ObjectId, Collection, AggregationCursor 
 import { postLimit } from "../../../(lib)/postLimit";
 import { getUserInfo } from "../../../(mongodb)/user";
 import { redirect } from "next/navigation";
+import { getMongoClient } from "@/app/(lib)/mongoClient";
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 
 
@@ -33,13 +34,7 @@ export const getPosts = async (
     
     
 
-    const client = new MongoClient(process.env.MONGODB_URI!, {
-      serverApi: {
-        version: ServerApiVersion.v1,
-        strict: true,
-        deprecationErrors: true,
-      },
-    });
+    const client = getMongoClient();
 
 
     try {

@@ -1,7 +1,8 @@
 "use server"
 
+import { getMongoClient } from "@/app/(lib)/mongoClient";
 import { getSessionDetails } from "@/app/(mongodb)/user"
-import { MongoClient, ObjectId, ServerApiVersion } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 import { redirect } from "next/navigation";
 
 export const likePost = async (postId: string, hasLiked: boolean) => {
@@ -9,13 +10,7 @@ export const likePost = async (postId: string, hasLiked: boolean) => {
   try {
 
 
-    const client = new MongoClient(process.env.MONGODB_URI!, {
-      serverApi: {
-        version: ServerApiVersion.v1,
-        strict: true,
-        deprecationErrors: true,
-      }
-    });
+    const client = getMongoClient();
 
     const user = await getSessionDetails();
     if (!user) { redirect('/login?error=Network error, check if you are logged in'); }

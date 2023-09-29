@@ -1,5 +1,6 @@
 "use server"
 
+import { getMongoClient } from "@/app/(lib)/mongoClient";
 import { getSessionDetails, getUserInfo } from "@/app/(mongodb)/user"
 import { commentServer, userPost } from "@/app/explore/postDisplay/(mongodb)/getPosts";
 import { MongoClient, ObjectId, ServerApiVersion } from "mongodb";
@@ -8,7 +9,7 @@ import { redirect } from "next/navigation";
 export const commentPost = async (postId: string, commentContent: string) => {
 
 
-  const client = new MongoClient(process.env.MONGODB_URI!);
+  const client = getMongoClient();
 
   const user = await getSessionDetails();
   if (!user) { redirect('/login?error=Network error, check if you are logged in'); }

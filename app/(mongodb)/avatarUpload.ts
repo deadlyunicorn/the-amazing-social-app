@@ -1,10 +1,11 @@
 import { MongoClient, ObjectId, Timestamp,ServerApiVersion } from "mongodb";
+import { getMongoClient } from "../(lib)/mongoClient";
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 
 
 
 export const setAvatarLink = async( username : string, url : string ) : Promise <void>=>{
-  const client = new MongoClient(process.env.MONGODB_URI!);
+  const client = getMongoClient();
   
   
   try {

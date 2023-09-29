@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 import { supabaseCredentials } from "../(supabase)/global";
 import { redirect } from "next/navigation";
 import { getUserInfo, userObject } from "../(mongodb)/user";
+import { getMongoClient } from "../(lib)/mongoClient";
 
 
 export const emailRegister = async (formData: FormData) => {
@@ -73,7 +74,7 @@ export const serverActionRegister = async (
 export const addUserToMongoDB = async (formData: FormData) => {
 
 
-  const client = new MongoClient(process.env.MONGODB_URI!);
+  const client = getMongoClient();
 
   const date = new Date();
   const supabase = createServerActionClient({ cookies }, supabaseCredentials);
