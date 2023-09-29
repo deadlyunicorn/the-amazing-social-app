@@ -59,6 +59,8 @@ const CommentComponent = ({
     <div className="flex w-full my-2 gap-x-2">
       <Link className="h-fit" href={`/user/${username}`}>
       <Image 
+        placeholder="blur"
+        blurDataURL="/favicon.svg"
         className="max-h-6 rounded-full min-h-6 min-w-[24px]"
         src={comment.created_by.avatarSrc||'/favicon.svg'}
         alt="commenter's avatar"

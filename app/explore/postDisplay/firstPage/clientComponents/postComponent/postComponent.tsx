@@ -50,6 +50,8 @@ export const PostComponent = ({ post, userDetails }: { post: userPostWithAvatar,
             className="peer hover:brightness-110 peer-hover:brightness-110  "
             href={`user/${post.created_by}`}>
             <Image
+              placeholder="blur"
+              blurDataURL="/favicon.svg"
               className="rounded-r-full h-[50px] object-cover"
               width={50}
               height={50}
@@ -81,6 +83,8 @@ export const PostComponent = ({ post, userDetails }: { post: userPostWithAvatar,
         {(imageURL && imageURL.length > 0) &&
           <div className="place-self-center">
             <Image
+              placeholder="blur"
+              blurDataURL="/favicon.svg"
               // @ts-ignore
               onClick={()=>document.getElementById(`${post._id}_modal2`).showModal()}
               className="aspect-auto cursor-pointer"

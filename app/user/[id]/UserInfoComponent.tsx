@@ -19,7 +19,8 @@ export const UserInfoComponent = ({ userInfo, ownsProfile }: { userInfo: userObj
       <section className="grid md:grid-cols-2 gap-x-2 gap-y-4 min-h-[250px]">
         <div className="flex flex-col justify-center">
           <Image
-            blurDataURL="/favicon.svg"
+           placeholder="blur"
+           blurDataURL="/favicon.svg"
             className="
               rounded-full
               self-center aspect-square object-cover"
@@ -124,7 +125,9 @@ const PostsMap = async ({ userInfo }: { userInfo: userObject }) => {
             <article className="flex flex-col w-full">
               
               {post.content.imageURL 
-                && <Image 
+                && <Image
+                  placeholder="blur"
+                  blurDataURL="/favicon.svg"
                   className="place-self-center" 
                   src={post.content.imageURL} 
                   alt="No description provided" 
