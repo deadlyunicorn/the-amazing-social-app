@@ -20,6 +20,7 @@ export const UserDescription = ({ description, ownsProfile }: { description: str
         ?<EditDescription>
           
           <textarea
+              defaultValue={description}
               onKeyDown={handleEnter}
               name="description"
               placeholder = "Type your new description in here.."
