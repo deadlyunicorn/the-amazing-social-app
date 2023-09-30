@@ -1,17 +1,21 @@
 import { formatDate, formatHours } from "@/app/(lib)/formatDate";
-import { userObject } from "@/app/(mongodb)/user";
+import { getSessionDetails, userObject } from "@/app/(mongodb)/user";
 import Image from "next/image";
 import { ChangeProfilePicture } from "../updateImage/ImageUploadForm";
 import { UserDescription } from "../description/UserDescription";
 import { Suspense } from "react";
 import { getPosts } from "@/app/explore/postDisplay/(mongodb)/getPosts";
+import { ImageComponent } from "@/app/explore/postDisplay/firstPage/clientComponents/postComponent/imageComponent";
+import { CreatePostSection } from "@/app/explore/postCreation/postCreationForm";
 
 
-export const UserInfoComponent = ({ userInfo, ownsProfile }: { userInfo: userObject, ownsProfile: boolean }) => {
+export const UserInfoComponent = async({ userInfo, ownsProfile }: { userInfo: userObject, ownsProfile: boolean }) => {
 
   const date = new Date();
   const sampleDescription = "Hello world!";
 
+
+  const userDetails = await getSessionDetails();
 
 
   return (
@@ -44,9 +48,6 @@ export const UserInfoComponent = ({ userInfo, ownsProfile }: { userInfo: userObj
             ownsProfile={ownsProfile}
             description={userInfo.description || sampleDescription} />
 
-
-
-
         </div>
 
 
@@ -54,12 +55,14 @@ export const UserInfoComponent = ({ userInfo, ownsProfile }: { userInfo: userObj
 
       </section>
 
+      {/* <CreatePostSection userDetails={userDetails}/> */}
+
       <section className="max-w-xl">
         <h1>Latest Posts</h1>
         <ul className="mt-2">
           <Suspense fallback={<PostsMapFallback/>}>
             {/* <PostsMapFallback/> */}
-            <PostsMap userInfo={userInfo} />
+            <Posts userInfo={userInfo} />
           </Suspense>
         </ul>
       </section>
@@ -98,7 +101,7 @@ const PostsMapFallback = () => {
 }
 
 
-const PostsMap = async ({ userInfo }: { userInfo: userObject }) => {
+const Posts = async ({ userInfo }: { userInfo: userObject }) => {
 
   const posts = await getPosts({ page: 1, postsToMatch: userInfo.latestPosts,userProfile:true })
 
@@ -124,14 +127,13 @@ const PostsMap = async ({ userInfo }: { userInfo: userObject }) => {
             key={key}>
             <article className="flex flex-col w-full">
               
-              {post.content.imageURL 
-                && <Image
-                  placeholder="blur"
-                  blurDataURL="/favicon.svg"
-                  className="place-self-center" 
-                  src={post.content.imageURL} 
-                  alt="No description provided" 
-                  height={200} width={200}/>
+              {post.content.imageURL &&
+
+                <ImageComponent 
+                  imageURL={post.content.imageURL}
+                  postId={post._id}
+
+                />
               }
               
               
