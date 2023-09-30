@@ -6,7 +6,7 @@ import Link from "next/link"
 import { emailLogin } from "./login"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
-import { LogOutForm } from "../(components)/LogoutForm"
+import { LogOutForm } from "../settings/LogoutForm"
 
 const LoginPage = async(
   { searchParams }: {

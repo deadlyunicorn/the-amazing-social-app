@@ -5,7 +5,7 @@ import { EmailPasswordForm } from "../(components)/EmailPasswordForm";
 import { emailRegister } from "./register";
 import { ErrorSection } from "../(components)/ErrorSection";
 import { MultipleRowsWrapper } from "../(components)/FormWrapper";
-import { LogOutForm } from "../(components)/LogoutForm";
+import { LogOutForm } from "../settings/LogoutForm";
 
 const RegisterPage = async ({ searchParams }: { searchParams: { error: string } }) => {
 
