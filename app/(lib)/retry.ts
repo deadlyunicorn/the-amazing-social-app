@@ -11,7 +11,6 @@ export const withRetry  =
     
     
     try{
-      i > 0 && console.log(`running: ${i}`);
 
       const errorPromise = errorOnTimeout(3000);
       const actualPromise = asyncFunc(...args);
@@ -21,7 +20,8 @@ export const withRetry  =
       return res as T;
     }
     catch(err){
-      console.log("Something happeded inside retry.ts haha");
+      // console.log(err);
+      // console.log("Something happeded inside retry.ts");
     }
 
   }

@@ -11,12 +11,10 @@ export const LoginPageSynced = async () => {
   return (
     session ?
 
-    <section> 
-      <center>
+    <section className="flex flex-col justify-between items-center"> 
         <h2>Hello there!</h2>
         <p>You are logged in with {session.email}.</p>
         <LogOutForm/>
-      </center>
     </section>
     
     : <>
@@ -25,7 +23,7 @@ export const LoginPageSynced = async () => {
         action={emailLogin}
       />
 
-      <section className="text-center">
+      <section className="text-center flex flex-col justify-between">
           <Link 
             tabIndex={0} href="/account/recover">
             I forgot my password :&#40;

@@ -3,7 +3,10 @@ import { ReactNode } from "react";
 
 export const ErrorSection = ({children, path}:{children:ReactNode,path:string}) => (
   <section
-          className="text-error-light text-center relative">
+          className="
+          text-error-light text-center relative 
+          justify-center
+          flex flex-col">
             <Link
               tabIndex={0}
               href={path}

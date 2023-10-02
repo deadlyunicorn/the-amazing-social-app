@@ -2,12 +2,11 @@ import Link from "next/link"
 import { ReactNode } from "react"
 import Time from "./Header_time"
 import "@/app/(styles)/styles.css"
-import { getSessionDetails } from "@/app/(mongodb)/user"
+import {  getSupabaseSession } from "@/app/(mongodb)/user"
 
 export const UserOptions = async () => {
  
-  const user = await getSessionDetails();
-  
+  const supaSession = await getSupabaseSession();
 
   return (
     <div
@@ -24,7 +23,7 @@ export const UserOptions = async () => {
       </div>
 
       {/* If not Signed In show the following else show "Profile Button" */}
-      {!user &&
+      {!supaSession &&
         <div className="animate-appearance">
 
           <Link href="/login">
@@ -38,7 +37,7 @@ export const UserOptions = async () => {
         </div>
       }
 
-      {user &&
+      {supaSession &&
         <div className="animate-appearance">
 
           <Link href="/settings">

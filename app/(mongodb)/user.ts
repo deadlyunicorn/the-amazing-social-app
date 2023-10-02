@@ -67,3 +67,7 @@ export const getSessionDetails = async (): Promise<userObject|null>   => {
 
   return user;
 };
+
+export const getSupabaseSession = async () => (
+  (await createServerActionClient({ cookies }, supabaseCredentials).auth.getSession()).data.session?.user
+)

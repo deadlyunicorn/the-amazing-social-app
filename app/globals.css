@@ -10,6 +10,7 @@ body{
 section{
   background-color: aliceblue;
   width: 100%;
+  min-height: 150px;
   height: fit-content;
   border-radius: 0.5rem/* 8px */;
   padding-block: 16px;

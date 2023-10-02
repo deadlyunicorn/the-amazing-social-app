@@ -4,15 +4,20 @@ import { MultipleRowsWrapper } from "@/app/(components)/FormWrapper"
 import { Suspense } from "react"
 import { LoginPageSynced } from "./AsyncDetails"
 import { LoadingScreen } from "../(components)/Loading/LoadingAnimation"
+import { getSupabaseSession } from "../(mongodb)/user"
+import { redirect } from "next/navigation"
 
-const LoginPage = (
+const LoginPage = async(
   { searchParams }: {
     searchParams: {
       error?: string
     }
   }) => {
 
-
+  const supabaseSession = await getSupabaseSession();
+  if ( supabaseSession?.id ) {
+    redirect(`/user`);
+  }
 
   return (
     <MultipleRowsWrapper>

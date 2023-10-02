@@ -28,6 +28,9 @@ export const DisplayComments = ({postId,newComment,userDetails}:{postId:string,n
             setPage(page+1);
           })
         }
+        catch(err){
+          
+        }
         finally{
           setLoading(false);
         }
@@ -80,13 +83,13 @@ export const DisplayComments = ({postId,newComment,userDetails}:{postId:string,n
       
       <aside>
 
-        <div className="bg-opacity-5 bg-black px-2 py-2 rounded-md">
-          <h3>Comments</h3>
+        <div className="bg-opacity-5 bg-black py-2 rounded-md">
+          <h3 className="my-2 px-2">Comments</h3>
 
           {
             (commentCount > 0 && comments) &&
 
-              <div className="flex flex-col gap-y-4 ">
+              <div className="flex flex-col gap-y-4 my-2">
               
                   <MapComments 
                     userDetails={userDetails} 

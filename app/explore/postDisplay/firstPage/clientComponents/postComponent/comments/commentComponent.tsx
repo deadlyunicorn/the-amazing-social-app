@@ -1,8 +1,8 @@
 "use client"
 import { userDetailsClient } from "@/app/explore/page"
-import {  commentClient, userPostWithAvatar } from "../../../../(mongodb)/getPosts"
+import {  userPostWithAvatar } from "../../../../(mongodb)/getPosts"
 import { DisplayComments } from "./displayComments"
-import { useEffect, useState } from "react"
+import {  useState } from "react"
 import Link from "next/link"
 import { WriteComment } from "./writeComment"
 
@@ -35,7 +35,14 @@ export const CommentComponent = ({post,userDetails}:{post:userPostWithAvatar,use
 const LoginToComment = () => {
 
   return (
-    <p className="text-center my-4"><Link tabIndex={0} href={'/login'}>Login</Link> to write a comment.</p>
+    <p 
+      className="text-center my-4">
+        <Link tabIndex={0} href={'/login'}>
+          Set up your account
+        </Link>
+      <br/> 
+      to write a comment.
+    </p>
   )
 }
 

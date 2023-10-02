@@ -78,8 +78,7 @@ export const getPosts = async (
     }
     catch (err) {
       console.error('getPosts.ts failed');
-      // redirect('/explore?error=Network error')
-      return [];
+      redirect('/explore?error=Network error')
     }
     finally {
       await client.close();

@@ -14,7 +14,8 @@ export const GET = async (request:Request,context:{params:{id:string,page:string
     if (res){
       return await Promise.all(res.map(
         async(comment)=>{
-          const creator = await getUserInfo({_id:comment.created_by});
+          //@ts-ignore
+          const creator = await withRetry(getUserInfo,5,[{_id:comment.created_by}]);
           return {
             ...comment,
             _id:comment._id.toString(),

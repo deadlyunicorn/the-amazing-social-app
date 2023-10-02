@@ -9,11 +9,11 @@ import { userDetailsClient } from "../page";
 import { useState } from "react";
 
 
-export const CreatePostSection = async ({userDetails}:{userDetails:userDetailsClient|null}) => {
+export const CreatePostSection = ({userDetails}:{userDetails:userDetailsClient|null}) => {
 
 
   return (
-    <section>
+    <section className="flex flex-col justify-between">
       <h2>Create a post!</h2>
       {/* add images as well !? */}
 
@@ -107,10 +107,15 @@ const LoginPrompt = () => {
   return (
     <div className="
       flex items-center justify-center
-      w-full">
-      <p><Link 
+      w-full mb-2">
+      <p>
+        <Link 
         tabIndex={0}
-        href="/user">Set up your account</Link> to start posting!</p>
+        href="/user">
+          Set up your account
+        </Link> 
+        &nbsp;to start posting!
+      </p>
     </div>
   )
 }

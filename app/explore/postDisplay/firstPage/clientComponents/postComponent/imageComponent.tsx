@@ -8,20 +8,21 @@ export const ImageComponent = ({imageURL,postId}:{imageURL:string,postId:string}
               blurDataURL="/favicon.svg"
               // @ts-ignore
               onClick={()=>document.getElementById(`${postId}_modal2`).showModal()}
-              className="aspect-auto cursor-pointer"
+              className="max-h-[300px] cursor-pointer"
               src={imageURL}
               alt="No post image description provided"
               width={200}
-              height={200}
+              height={300}
             />
 
             <dialog id={`${postId}_modal2`} className="modal">
               <div className="modal-box bg-stone-900 text-white">
                 <Image
+                  className="max-h-[500px]"
                   src={imageURL}
                   alt="No image description provided"
-                  width={1000}
-                  height={1000}
+                  width={500}
+                  height={500}
                 />
                 <form method="dialog" className="mt-4">
                   <button className="btn capitalize">Close</button>

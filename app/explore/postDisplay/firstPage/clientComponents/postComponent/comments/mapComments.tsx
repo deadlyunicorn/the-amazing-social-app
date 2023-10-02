@@ -45,7 +45,7 @@ const CommentComponent = ({
 
   return ( 
   <li 
-    className="bg-black bg-opacity-5 px-2 py-1 rounded-md relative">
+    className="bg-black bg-opacity-5 px-4 py-1 rounded-md relative">
 
 
     <div className="flex w-full justify-between">

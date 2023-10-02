@@ -125,7 +125,7 @@ const Posts = async ({ userInfo }: { userInfo: userObject }) => {
           rounded-sm
           border border-dashed border-black"
             key={key}>
-            <article className="flex flex-col w-full">
+            <article className="flex flex-col w-full gap-y-4 mt-2">
               
               {post.content.imageURL &&
 
