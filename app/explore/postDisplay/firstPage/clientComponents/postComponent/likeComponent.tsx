@@ -4,27 +4,33 @@ import { userDetailsClient } from "../../../../page"
 import { useEffect, useState } from "react";
 import { UpdateResult } from "mongodb";
 import Link from "next/link";
+import Image from "next/image";
 import { userPostWithAvatar } from "../../../(mongodb)/getPosts";
-
+import { DeletePostComponent } from "./deleteComponent";
 
 export const LikeComponent = ({ post, userDetails }: { post:userPostWithAvatar, userDetails: userDetailsClient | null }) => {
 
-  const initialLikers = post.likers.map(liker => String(liker));
   const postId = post._id;
-  const viewerName = String(userDetails?.username);
+
+  const viewer = {
+    username: userDetails?.username,
+    avatarSrc: userDetails?.avatarSrc,
+  };
+  const viewerName = String( viewer.username );
 
   const [hasMounted, setHasMounted] = useState(false);
 
 
-  const [likers, setLikers] = useState(initialLikers);
+  const [likers, setLikers] = useState<userPostWithAvatar["likers"]> ( post.likers );
+  const likerUsernames = likers.map( liker => liker.username );
 
   const toggleLike = () => {
 
-    if (likers.includes(viewerName)) {
-      setLikers(likers.filter(liker => liker != viewerName))
+    if ( likerUsernames.includes( viewerName )) {
+      setLikers(likers.filter(liker => liker.username != viewerName ))
     }
     else {
-      setLikers([...likers, viewerName]);
+      setLikers( [viewer,...likers]);
     }
 
   }
@@ -32,10 +38,11 @@ export const LikeComponent = ({ post, userDetails }: { post:userPostWithAvatar, 
   useEffect(() => {
 
     if (hasMounted) {
+      
       const timer = setTimeout(() => {
         (async () => {
 
-          likers.includes(viewerName)
+          likerUsernames.includes( viewerName )
             ? await fetch(`/explore/post/${postId}/like`, { method: "POST", body: JSON.stringify({ like: true }) })
             : await fetch(`/explore/post/${postId}/like`, { method: "POST", body: JSON.stringify({ like: false }) })
 
@@ -71,22 +78,26 @@ export const LikeComponent = ({ post, userDetails }: { post:userPostWithAvatar, 
   const likersCount = likers.length;
   const latestLikers = likers
     .slice( 0, Math.min( 3, likersCount ) )
-    .reverse()
-    .map( (liker) => 
-      <Link key={liker} href={`/user/${liker}`}>
-        <span className="text-sm"> 
-          { liker } 
-        </span>
+    .map( ( liker ) => 
+      <Link
+        data-tip={`${liker.username}`}
+        className="tooltip tooltip-primary" 
+        key={liker.username} 
+        href={`/user/${liker.username}`}>
+        <Image
+          height={20}
+          width={20}
+          src={ liker.avatarSrc || "/favicon.svg"}
+          alt={`${liker.username}'s avatar`}
+          className="text-sm aspect-square rounded-full"/> 
       </Link>
     )
 
-  const otherLikers = likersCount > 4
-    ? `and ${likersCount} others` 
-    : likersCount == 4 && `and 1 other`; 
+  const otherLikers = likersCount > 3 && `& ${likersCount-3} more`
 
 
   return (
-      <div className="flex items-center gap-x-2">
+      <div className="flex items-center gap-x-2 relative">
       <button
         aria-label="like button, redirects to login page if not logged in."
         onClick={() => {
@@ -94,11 +105,11 @@ export const LikeComponent = ({ post, userDetails }: { post:userPostWithAvatar, 
             toggleLike();
           }
           else {
-            window.location.assign('/login');
+            document.location = '/login';
           }
         }}>
         <svg
-          data-pending={likers.includes(viewerName)}
+          data-pending={likerUsernames.includes( viewerName )}
           className="cursor-pointer 
           stroke-red-600 data-[pending=true]:fill-red-600 
           fill-transparent"
@@ -106,6 +117,7 @@ export const LikeComponent = ({ post, userDetails }: { post:userPostWithAvatar, 
           width={30}
           version="1.1"
           viewBox="0 0 17.844 15.9">
+
 
           <g transform="translate(-16.078 -18.778)">
             <path
@@ -121,8 +133,16 @@ export const LikeComponent = ({ post, userDetails }: { post:userPostWithAvatar, 
         </svg>
       </button>
 
-        <p className="flex gap-x-1">
-          {likersCount} {latestLikers} {otherLikers}  </p>
+        <p className="flex gap-x-1 h-[25px]">
+          {latestLikers} {otherLikers}  </p>
+
+          { userDetails?.username == post.created_by &&
+            
+            <div className="absolute right-0 bottom-0">
+              <DeletePostComponent postId={postId}/>
+            </div>
+              
+          }
       </div>
   )
 }

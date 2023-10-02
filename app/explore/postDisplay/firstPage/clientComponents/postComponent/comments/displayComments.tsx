@@ -59,10 +59,12 @@ export const DisplayComments = ({postId,newComment,userDetails}:{postId:string,n
 
   useEffect(()=>{
 
-    getCommentCount(postId)
+    (async()=> {
+      await getCommentCount(postId)
     .then(count=>{
       setCommentCount(count);
     })
+    })()
 
   },[comments])
 

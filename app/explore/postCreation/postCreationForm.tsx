@@ -22,11 +22,21 @@ export const CreatePostSection = async ({userDetails}:{userDetails:userDetailsCl
         :<LoginPrompt/>
       }
 
+      { /*
       <aside tabIndex={0} className="text-center">
 
         <p>(Your post needs to be verified by the developer in order to be visible)</p>
-        <p>You can check the functionality however <Link tabIndex={0} href={'https://the-amazing-social-6msv74gbb-deadlyunicorn.vercel.app/explore'}>in some of the past dev deployments.</Link></p>
+        <p>You can check the functionality however 
+          <Link 
+            tabIndex={0} 
+            href={'https://the-amazing-social-6msv74gbb-deadlyunicorn.vercel.app/explore'}>
+              
+            in some of the past dev deployments.
+          </Link>
+        </p>
+        
       </aside>
+      */}
 
 
     </section>
@@ -62,8 +72,12 @@ const PostCreationForm = () => {
 
     <label  
       tabIndex={0}
-      className="text-link hover:cursor-pointer"
-      htmlFor="image">Insert image</label>
+      className="
+      hover:brightness-110
+      border border-dashed border-primary 
+      px-2 py-1 rounded-md
+      text-link hover:cursor-pointer place-self-start"
+      htmlFor="image">📷</label>
     <ImageInputOptional pixels={200} setTemp={setTemp} temp={temp} />
 
 

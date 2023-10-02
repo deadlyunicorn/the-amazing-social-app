@@ -3,6 +3,7 @@ import { ServerApiVersion, MongoClient, ObjectId, Timestamp, } from "mongodb";
 import { supabaseCredentials } from "../(supabase)/global";
 import { cookies } from "next/headers";
 import { getMongoClient } from "../(lib)/mongoClient";
+import { withRetry } from "../(lib)/retry";
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 
 
@@ -22,8 +23,6 @@ export const getUserInfo = async (
 
 
   try {
-    await client.connect();
-
     const users = client.db('the-amazing-social-app').collection('users');
 
     const result: userObject | null = await users.findOne(query)
@@ -38,7 +37,8 @@ export const getUserInfo = async (
     return result;
 
 
-  } finally {
+  }
+  finally {
 
     await client.close();
 
@@ -55,11 +55,15 @@ export type userObject = {
   avatarSrc?: string,
   description?: string,
   latestPosts: Array<ObjectId>
-}
+};
 
-export const getSessionDetails = async () => {
+
+
+export const getSessionDetails = async (): Promise<userObject|null>   => {
   const session = await createServerActionClient({ cookies }, supabaseCredentials).auth.getSession();
-  const userDetails = await getUserInfo({ email: session.data.session?.user.email });
+  
+  //@ts-ignore
+  const user = await withRetry(getUserInfo,5,[{ email: session.data.session?.user.email }]);
 
-  return userDetails;
-}
+  return user;
+};

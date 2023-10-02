@@ -86,7 +86,7 @@ export const WriteComment = ({postId,setNewComment}:{postId:string,setNewComment
 
         <button
           tabIndex={0}
-          data-tip={comment.length<6?"Your comment is too short":undefined}
+          data-tip={ ( comment.length<6 && comment.length !=0) ?"Your comment is too short":undefined}
           disabled={comment.length<6}
           className="
           tooltip tooltip-error

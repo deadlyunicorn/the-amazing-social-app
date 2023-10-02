@@ -16,8 +16,9 @@ export const getPosts = async (
     explore?: boolean,
     userProfile?: boolean,
   })
-  : Promise<userPostWithAvatar[] | null> => {
+  : Promise<userPostWithAvatar[]> => {
 
+ 
 
   const postsToMatch = query.postsToMatch;
 
@@ -28,23 +29,11 @@ export const getPosts = async (
   else if (query.userProfile){
     pipeline = getUserProfilePipeline(postsToMatch || []);
   }
-  
-
-
-    
-    
 
     const client = getMongoClient();
 
 
     try {
-
-      const timer = setTimeout(()=>{
-        throw "Failed getting posts";
-      },7000)
-
-      await client.connect();
-
       const posts = client.db('the-amazing-social-app').collection('posts');
 
 
@@ -56,7 +45,6 @@ export const getPosts = async (
         userPosts.push(post);
       }
 
-      clearTimeout(timer);
 
       return await Promise.all(userPosts.map(
         async (post) => {
@@ -65,17 +53,19 @@ export const getPosts = async (
           const likers = await Promise.all(
             post.likers.map(
               async (likerID) => await getUserInfo({ _id: likerID })
-                .then(user => String(user?.username))
+                .then( user => ({
+                  username: user?.username,
+                  avatarSrc: user?.avatarSrc,
+                }))
             )
           )
           
-          clearTimeout(timer);
           return {
             ...post,
             _id: post._id.toString(),
             avatarURL: String(poster?.avatarSrc),
             created_by: String(poster?.username),
-            likers: likers,
+            likers: likers.reverse(),
             comments: [] //we will return comments with a different fetch
           }
         }
@@ -87,7 +77,9 @@ export const getPosts = async (
 
     }
     catch (err) {
-      redirect('/explore?error=Network error')
+      console.error('getPosts.ts failed');
+      // redirect('/explore?error=Network error')
+      return [];
     }
     finally {
       await client.close();
@@ -141,7 +133,10 @@ export type userPostWithAvatar = {
     imageURL?: string;
   };
   avatarURL: string
-  likers: string[];
+  likers: {
+    username: string | undefined,
+    avatarSrc: string | undefined
+  }[];
   comments: ObjectId[];
   verified: boolean;
   created_at: Date;

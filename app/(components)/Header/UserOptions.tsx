@@ -2,13 +2,12 @@ import Link from "next/link"
 import { ReactNode } from "react"
 import Time from "./Header_time"
 import "@/app/(styles)/styles.css"
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
-import { cookies } from "next/headers"
-import { supabaseCredentials } from "@/app/(supabase)/global"
+import { getSessionDetails } from "@/app/(mongodb)/user"
 
 export const UserOptions = async () => {
-  const supabase = createServerComponentClient({ cookies }, supabaseCredentials);
-  const user = (await supabase.auth.getSession()).data.session?.user;
+ 
+  const user = await getSessionDetails();
+  
 
   return (
     <div

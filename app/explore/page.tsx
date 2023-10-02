@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import { FetchPostsServer } from "./postDisplay/firstPage/fetchPostsServer";
 import { getSessionDetails, userObject } from "../(mongodb)/user";
 import { MockPostComponent } from "./postDisplay/firstPage/clientComponents/postComponent/postComponent";
+import { ReloadPageComponent } from "./reloadComponent";
 
 const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } }) => {
 
@@ -26,7 +27,10 @@ const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } 
 
       <Suspense fallback={<PostsFallback/>}>
 
-        <FetchPostsServer userDetails={userDetails}/>
+        { searchParams.error 
+          ? <ReloadPageComponent/>
+          : <FetchPostsServer userDetails={userDetails}/>
+        }
         
       </Suspense>
 

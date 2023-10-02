@@ -23,10 +23,10 @@ export const getPostsPageLimit = async () => {
     }
 
 
-  } finally {
+  } //Catching happens inside withRetry();
+  finally {
 
     await client.close();
-
     // Ensures that the client will close when you finish/error
 
   }
