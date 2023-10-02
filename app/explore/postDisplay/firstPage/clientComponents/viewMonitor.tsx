@@ -78,6 +78,7 @@ export const PostSectionWrapperWithViewMonitoring = ({ firstPagePosts,maxPages, 
         {firstPagePosts && firstPagePosts.map( //server loaded posts
           (post,key) =>
             <PostComponent 
+              viewY={viewY}
               userDetails={userDetails}
               key={key}
               post={post} />
@@ -87,6 +88,7 @@ export const PostSectionWrapperWithViewMonitoring = ({ firstPagePosts,maxPages, 
       {
       pagesArray.map((page) =>
         <FetchPostsClient 
+          viewY={viewY}
           setCanLoadNext={setCanLoadNext}
           userDetails={userDetails}
           key={page}
