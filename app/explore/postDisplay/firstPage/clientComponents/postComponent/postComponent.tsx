@@ -6,21 +6,36 @@ import { CommentComponent } from "./comments/commentComponent"
 import { ImageComponent } from "./imageComponent"
 import { PosterDetails } from "./posterDetails"
 import { DeletePostComponent } from "./deleteComponent"
+import { useEffect, useState } from "react"
 
 
-export const PostComponent = ({ post, userDetails }: { post: userPostWithAvatar, userDetails: userDetailsClient | null }) => {
+export const PostComponent = ({ post, userDetails, viewY }: { post: userPostWithAvatar, userDetails: userDetailsClient | null, viewY : number }) => {
 
   const postId = post._id;
 
 
   const imageURL = post.content.imageURL;
 
+  const [edgeY,setEdgeY] = useState(0);
+
+  useEffect( ()=> {
+
+    const sectionEnd = document.getElementById(`${postId}_li`);
+    //@ts-ignore
+    setEdgeY(sectionEnd?.getBoundingClientRect().bottom + window.scrollY);
+    
+  },[viewY])
+
+  const isOnView = ! ( ( viewY - edgeY > 900 ) || ( viewY - edgeY < -400 ) );
+  
+
   return (
 
     <li
+      id={`${postId}_li`}
       key={postId}
-      className="px-2 my-4 ">
-
+      className="px-2 my-4 
+      ">
 
       <PosterDetails post={post}/>
 
@@ -34,14 +49,8 @@ export const PostComponent = ({ post, userDetails }: { post: userPostWithAvatar,
         bg-gradient-to-b from-slate-50 to-slate-200 
         px-4 py-4 mr-6 " tabIndex={0}>
 
-        {userDetails?.username}
-        {post.created_by}
 
-        { userDetails?.username == post.created_by &&
-            
-          <DeletePostComponent/>
-            
-        }
+        
 
 
         {(imageURL && imageURL.length > 0) &&
@@ -50,11 +59,13 @@ export const PostComponent = ({ post, userDetails }: { post: userPostWithAvatar,
 
         <p>{post.content?.textContent}</p>
 
-        <aside className="flex flex-col">
+        <aside 
+          className="flex flex-col">
+
           <LikeComponent userDetails={userDetails} post={post} />
           <CommentComponent userDetails={userDetails} post={post}/>
 
-
+          
         </aside>
 
 
@@ -75,7 +86,7 @@ export const MockPostComponent = () => {
   return (
 
     <div
-      style={{ height: random * 100 * 3 }}
+      style={{ height: random * 100 * 5 }}
       className="
       px-2 my-4
       min-h-[100px]
