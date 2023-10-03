@@ -4,6 +4,14 @@ import Image from "next/image"
 export const ImageComponent = ({imageURL,postId}:{imageURL:string,postId:string}) => (
   <div className="place-self-center">
             <Image
+              tabIndex={0}
+              onKeyDown={(e)=>{
+                if (e.key == " "){
+                  // @ts-ignore
+                  document.getElementById(`${postId}_modal2`).showModal()}
+                }
+
+              }
               placeholder="blur"
               blurDataURL="/favicon.svg"
               // @ts-ignore
@@ -15,8 +23,9 @@ export const ImageComponent = ({imageURL,postId}:{imageURL:string,postId:string}
               height={300}
             />
 
-            <dialog id={`${postId}_modal2`} className="modal">
-              <div className="modal-box bg-stone-900 text-white">
+            <dialog 
+              id={`${postId}_modal2`} className="modal group">
+              <div className="group-open:grid modal-box  hidden bg-stone-900 text-white">
                 <Image
                   className="h-[min(400px,80vh)] object-contain"
                   src={imageURL}
@@ -25,12 +34,14 @@ export const ImageComponent = ({imageURL,postId}:{imageURL:string,postId:string}
                   height={500}
                 />
                 <form method="dialog" className="mt-4">
-                  <button className="btn capitalize">Close</button>
+                  <button 
+                    tabIndex={0} className="btn capitalize">Close</button>
                 </form>
 
               </div>
-              <form method="dialog" className="modal-backdrop">
-                <button>close</button>
+              <form 
+                method="dialog" className="modal-backdrop group-open:grid hidden">
+                  <button>close</button>
               </form>
             </dialog>
           </div>
