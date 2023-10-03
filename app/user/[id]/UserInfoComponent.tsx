@@ -8,6 +8,7 @@ import { getPosts } from "@/app/explore/postDisplay/(mongodb)/getPosts";
 import { ImageComponent } from "@/app/explore/postDisplay/firstPage/clientComponents/postComponent/imageComponent";
 import { CreatePostSection } from "@/app/explore/postCreation/postCreationForm";
 import { withRetry } from "@/app/(lib)/retry";
+import { DeletePostComponent } from "@/app/explore/postDisplay/firstPage/clientComponents/postComponent/deleteComponent";
 
 
 export const UserInfoComponent = async({ userInfo, ownsProfile }: { userInfo: userObject, ownsProfile: boolean }) => {
@@ -63,7 +64,9 @@ export const UserInfoComponent = async({ userInfo, ownsProfile }: { userInfo: us
         <ul className="mt-2">
           <Suspense fallback={<PostsMapFallback/>}>
             {/* <PostsMapFallback/> */}
-            <Posts userInfo={userInfo} />
+            <Posts
+              ownsProfile={ownsProfile} 
+              userInfo={userInfo} />
           </Suspense>
         </ul>
       </section>
@@ -102,7 +105,11 @@ const PostsMapFallback = () => {
 }
 
 
-const Posts = async ({ userInfo }: { userInfo: userObject }) => {
+const Posts = async (
+  { userInfo,ownsProfile }: 
+  { userInfo: userObject,
+    ownsProfile: boolean
+  }) => {
 
   // @ts-ignore
   const posts = await withRetry(getPosts,5,[{ page: 1, postsToMatch: userInfo.latestPosts,userProfile:true }]);
@@ -143,6 +150,9 @@ const Posts = async ({ userInfo }: { userInfo: userObject }) => {
             </article>
             <div className="text-xs absolute right-2 top-2">
               {formattedDate}
+            </div>
+            <div className="absolute left-2 top-2">
+              { ownsProfile && <DeletePostComponent postId={post._id}/>}
             </div>
           </li>
         )

@@ -74,17 +74,23 @@ const CommentComponent = ({
     { (username == userDetails?.username) &&
       <div className="w-full flex justify-end">
 
-        <button
-          // @ts-ignore
-          onClick={()=>{document.getElementById(commentId).showModal()}}
-          className="
-            hover:underline
-            justify-self-end
-            text-error-light-reactive">
-              
-              {loading?"Loading...":"delete comment"}
-              
-        </button>
+        {loading
+        
+          ?<button>Loading...</button>
+          
+          :<button
+            // @ts-ignore
+            onClick={()=>{document.getElementById(commentId).showModal()}}
+            className="
+              capitalize
+              hover:underline
+              justify-self-end
+              text-error-light-reactive">
+                
+                delete comment
+                
+          </button>
+        }
         <ConfirmDelete 
           setLoading={setLoading} 
           comment={comment}
@@ -130,6 +136,7 @@ const ConfirmDelete = ({
     <>
     <ConfirmationDialog id={commentId} textContent="Press 'Confirm' to permanently delete your comment.">
     <button 
+      tabIndex={0}
       onClick={()=>{
         (async()=>{
           setLoading(true);

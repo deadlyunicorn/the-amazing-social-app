@@ -8,7 +8,14 @@ import Image from "next/image";
 import { userPostWithAvatar } from "../../../(mongodb)/getPosts";
 import { DeletePostComponent } from "./deleteComponent";
 
-export const LikeComponent = ({ post, userDetails }: { post:userPostWithAvatar, userDetails: userDetailsClient | null }) => {
+export const LikeComponent = (
+  { post, userDetails,
+    setIsDeleted 
+  }: 
+  { 
+    post:userPostWithAvatar, userDetails: userDetailsClient | null,
+    setIsDeleted: (bool:boolean)=>void
+   }) => {
 
   const postId = post._id;
 
@@ -139,7 +146,7 @@ export const LikeComponent = ({ post, userDetails }: { post:userPostWithAvatar, 
           { userDetails?.username == post.created_by &&
             
             <div className="absolute right-0 bottom-0">
-              <DeletePostComponent postId={postId}/>
+              <DeletePostComponent setIsDeleted={setIsDeleted} postId={postId}/>
             </div>
               
           }

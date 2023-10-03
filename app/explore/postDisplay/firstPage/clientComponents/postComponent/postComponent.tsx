@@ -5,7 +5,6 @@ import { userDetailsClient } from "../../../../page"
 import { CommentComponent } from "./comments/commentComponent"
 import { ImageComponent } from "./imageComponent"
 import { PosterDetails } from "./posterDetails"
-import { DeletePostComponent } from "./deleteComponent"
 import { useEffect, useState } from "react"
 
 
@@ -15,7 +14,8 @@ export const PostComponent = ({ post, userDetails, viewY }: { post: userPostWith
 
 
   const imageURL = post.content.imageURL;
-
+  
+  const [isDeleted,setIsDeleted] = useState(false);
   const [edgeY,setEdgeY] = useState(0);
 
   useEffect( ()=> {
@@ -32,11 +32,12 @@ export const PostComponent = ({ post, userDetails, viewY }: { post: userPostWith
   return (
 
     <li
+      data-isdeleted={isDeleted}
       id={`${postId}_li`}
       key={postId}
       className="px-2 my-4 
+      data-[isdeleted=true]:hidden
       ">
-
       <PosterDetails post={post}/>
 
 
@@ -47,22 +48,22 @@ export const PostComponent = ({ post, userDetails, viewY }: { post: userPostWith
         flex flex-col gap-y-4
         rounded-b
         bg-gradient-to-b from-slate-50 to-slate-200 
-        px-4 py-4 mr-6 " tabIndex={0}>
-
-
-        
-
+        px-4 py-4 mr-6 ">
 
         {(imageURL && imageURL.length > 0) &&
           <ImageComponent imageURL={imageURL} postId={postId}/>
         }
 
-        <p>{post.content?.textContent}</p>
+        <p tabIndex={0} aria-label="post content">
+          {post.content?.textContent}
+        </p>
 
         <aside 
           className="flex flex-col">
 
-          <LikeComponent userDetails={userDetails} post={post} />
+          <LikeComponent 
+            setIsDeleted={setIsDeleted}
+            userDetails={userDetails} post={post} />
           <CommentComponent userDetails={userDetails} post={post}/>
 
           
