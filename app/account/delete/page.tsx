@@ -35,6 +35,14 @@ const DeleteAccountSection = async({searchParams}:{searchParams:{error:string}})
             pattern={email}
             type="email"/>
           <SubmitButtonClient/>
+
+          This action should find all comments,chats, posts
+          and delete them. 
+          Maybe replace comments with an id of 000000000000
+          and have the username of that id as "User Deleted"
+          and replace the textContent of the comments as 'comment unaivailable'.
+          Also delete the images. Keep other comments etc. If a post 
+          is by a deleted user we could disable further comments 
         </form>
 
         
