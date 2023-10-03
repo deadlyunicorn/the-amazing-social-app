@@ -6,6 +6,7 @@ import { cookies } from "next/headers"
 import { UserInfoComponent } from "./UserInfoComponent"
 import { ProfileCreationForm } from "./ProfileCreationForm"
 import { ErrorSection } from "@/app/(components)/ErrorSection"
+import { withRetry } from "@/app/(lib)/retry"
 
 export const generateMetadata = ({params}:{params:{id:string}}) =>  {
 
@@ -34,11 +35,12 @@ const UserProfile = async (
   const supabaseUser = (await supabase.auth.getUser()).data.user;
 
   // params.id
-  const profileInfo = await getUserInfo({username:String(params.id)})
+  // @ts-ignore
+  const profileInfo = await withRetry(getUserInfo,5,[{username:String(params.id)}])
     .then(async(res)=>{
       if (!res){
           // @ts-ignore
-        return await getUserInfo({_id:String(params.id)});
+        return await withRetry(getUserInfo,5,[{_id:String(params.id)}]);
       }
       return res
   });

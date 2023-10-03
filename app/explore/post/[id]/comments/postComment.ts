@@ -1,9 +1,9 @@
 "use server"
 
 import { getMongoClient } from "@/app/(lib)/mongoClient";
-import { getSessionDetails, getUserInfo } from "@/app/(mongodb)/user"
-import { commentServer, userPost } from "@/app/explore/postDisplay/(mongodb)/getPosts";
-import { MongoClient, ObjectId, ServerApiVersion } from "mongodb";
+import { getSessionDetails } from "@/app/(mongodb)/user"
+import { commentServer } from "@/app/explore/postDisplay/(mongodb)/getPosts";
+import { ObjectId } from "mongodb";
 import { redirect } from "next/navigation";
 
 export const commentPost = async (postId: string, commentContent: string) => {

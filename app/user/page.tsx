@@ -2,6 +2,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import { getUserInfo } from "../(mongodb)/user"
+import { withRetry } from "../(lib)/retry"
 
 const UserRedirect = async({searchParams}:{searchParams:{error?:string}}) => {
   
@@ -18,7 +19,8 @@ const UserRedirect = async({searchParams}:{searchParams:{error?:string}}) => {
 
   const signedUserEmail = user?.email;
 
-  const userInfo = await getUserInfo(({email:String(signedUserEmail)}));
+  //@ts-ignore
+  const userInfo = await withRetry(getUserInfo,5,[{email:String(signedUserEmail)}]);
 
 
   if (user){

@@ -1,3 +1,4 @@
+import { withRetry } from "@/app/(lib)/retry";
 import { getUserInfo } from "@/app/(mongodb)/user"
 import { NextResponse } from "next/server"
 import { cache } from "react";
@@ -7,7 +8,8 @@ export const revalidate = 1800;
 
 export const GET = cache(async(request:Request,context:{params:{id:string}})=>{
 
-  const user = await getUserInfo({username:context.params.id});
+  // @ts-ignore
+  const user = await withRetry(getUserInfo,5,[{username:context.params.id}]);
 
   return NextResponse.json(
     {
