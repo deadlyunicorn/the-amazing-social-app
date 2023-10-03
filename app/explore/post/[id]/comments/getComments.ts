@@ -57,7 +57,7 @@ export const commentGet = async (postId: string, page: number):Promise<commentSe
 }
 
 
-type commentServer = {
+export type commentServer = {
   _id: ObjectId,
   postId: ObjectId,
   created_by: ObjectId,

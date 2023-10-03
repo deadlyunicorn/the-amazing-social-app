@@ -2,9 +2,9 @@
 
 import { getMongoClient } from "@/app/(lib)/mongoClient";
 import { getSessionDetails } from "@/app/(mongodb)/user"
-import { commentServer } from "@/app/explore/postDisplay/(mongodb)/getPosts";
 import { ObjectId } from "mongodb";
 import { redirect } from "next/navigation";
+import { commentServer } from "./getComments";
 
 export const commentPost = async (postId: string, commentContent: string) => {
 
