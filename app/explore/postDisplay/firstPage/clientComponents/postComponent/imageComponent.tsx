@@ -8,7 +8,7 @@ export const ImageComponent = ({imageURL,postId}:{imageURL:string,postId:string}
               blurDataURL="/favicon.svg"
               // @ts-ignore
               onClick={()=>document.getElementById(`${postId}_modal2`).showModal()}
-              className="max-h-[300px] cursor-pointer"
+              className="max-h-[300px] cursor-pointer object-cover"
               src={imageURL}
               alt="No post image description provided"
               width={200}
