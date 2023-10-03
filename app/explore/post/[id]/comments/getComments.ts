@@ -1,8 +1,7 @@
 "use server"
 
 import { getMongoClient } from "@/app/(lib)/mongoClient";
-import { commentServer } from "@/app/explore/postDisplay/(mongodb)/getPosts";
-import { MongoClient, ObjectId, ServerApiVersion } from "mongodb";
+import { ObjectId } from "mongodb";
 import { redirect } from "next/navigation";
 
 const limit = 1;
@@ -57,3 +56,11 @@ export const commentGet = async (postId: string, page: number):Promise<commentSe
 
 }
 
+
+type commentServer = {
+  _id: ObjectId,
+  postId: ObjectId,
+  created_by: ObjectId,
+  content: string,
+  created_at: Date,
+}
