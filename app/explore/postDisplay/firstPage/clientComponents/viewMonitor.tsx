@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { PostComponent } from "./postComponent/postComponent";
 import { userDetailsClient } from "../../../page";
 import { FetchPostsClient } from "./fetchClient";
@@ -48,46 +48,53 @@ export const PostSectionWrapperWithViewMonitoring = ({ firstPagePosts,maxPages, 
 
   useEffect(()=>{
 
-    const timer = setTimeout(()=>{
-      if (pageNumber < maxPages){
-
-        if (canLoadNext){
-  
+    if ( pageNumber + 1 < maxPages){
+      if (canLoadNext){
+        if (loading == 0){
+          
+          const timer = setTimeout(()=>{
           if (edgeY - 200 < viewY ){
-  
-            if (loading == 0){
+            
               setPageNumber( prev => prev+1 );
             }
+          },200)
+          return ()=>{
+            clearTimeout(timer);
+          }
           }
         }
-        
-      }
-    },1000)
-    
-    return ()=>{
-      clearTimeout(timer);
     }
+    else{
+      setCanLoadNext(false);
+    }
+    
   },[viewY])
 
 
 
+  const [pagesArray,setPagesArray] = useState<ReactNode[]>([]);
+
+  useEffect(()=>{
+    
+    if( pagesArray.length < pageNumber ){
+      setPagesArray( 
+        
+        [...pagesArray,
+
+        <FetchPostsClient 
+        setLoading={setLoading}
+        maxPages={maxPages}
+        viewY={viewY}
+        setCanLoadNext={setCanLoadNext}
+        userDetails={userDetails}
+        key={pageNumber}
+        page={pageNumber}/>]
+      )
+    }
+
+  },[pageNumber])
 
 
-  const pagesArray = [];
-
-  // i == 1 - s o that we start from page 2.
-  for (let i = 2; i < pageNumber; i++) {
-    pagesArray.push( 
-      <FetchPostsClient 
-          setLoading={setLoading}
-          maxPages={maxPages}
-          viewY={viewY}
-          setCanLoadNext={setCanLoadNext}
-          userDetails={userDetails}
-          key={i}
-          page={i}/>
-    );
-  }
 
   return (
     <section
@@ -109,19 +116,25 @@ export const PostSectionWrapperWithViewMonitoring = ({ firstPagePosts,maxPages, 
 
       <div 
         className="self-center">
-      {pageNumber+1 < maxPages
-        && <p className="text-center" tabIndex={0}>
-            {loading == 0
-              ? "Scroll to load more."
-              : "Loading..."
+        
+        <p className="text-center" tabIndex={0}>
+            {loading > 0
+            ? "Loading..."
+            : canLoadNext && "Scroll to load more."
             }
-          </p>
-      }
+        </p>
+
        
       </div>
-
       { //this will never trigger bcz we don't reach max page
-      pageNumber + 1 == maxPages && loading == 0 && <p className="text-center" tabIndex={0}>The road ends here O.o</p> 
+      (pageNumber + 1 >= maxPages) 
+      && ( loading == 0 && !canLoadNext) 
+      && 
+        <p 
+          className="text-center" 
+          tabIndex={0}>
+          The road ends here O.o
+        </p> 
       }
 
     </section>

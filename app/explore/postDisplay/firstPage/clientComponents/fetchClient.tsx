@@ -40,7 +40,9 @@ export const FetchPostsClient = ({
                 .then( posts => {
                   setPosts(posts)
                 }))
-              setCanLoadNext(true) 
+              if( page+1 < maxPages){
+                setCanLoadNext(true) 
+              }
               success=true
             }
             catch(err){
@@ -62,7 +64,7 @@ export const FetchPostsClient = ({
 
     <>
       {
-        (posts && posts.length > 0) &&
+        (posts && posts.length > 0) ?
         <ul>
           {
             posts.map(
@@ -76,6 +78,7 @@ export const FetchPostsClient = ({
             )
           }
         </ul>
+        :<div></div>
       }
 
       
