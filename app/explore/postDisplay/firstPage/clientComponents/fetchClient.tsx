@@ -7,11 +7,11 @@ import { userPostWithAvatar } from "../../(mongodb)/getPosts";
 export const FetchPostsClient = ({ 
   page, userDetails,
   setCanLoadNext, viewY,
-  setError,error }: { 
+  maxPages }: { 
     
   page: number, userDetails: userDetailsClient | null,
   setCanLoadNext:any, viewY: number, 
-  setError:any,error:boolean }) => {
+   maxPages:number }) => {
 
   const [posts, setPosts] = useState<null | userPostWithAvatar[]>(null);
   const [hasMounted, setHasMounted] = useState(false);
@@ -19,27 +19,33 @@ export const FetchPostsClient = ({
   useEffect(() => {
 
     if ( !hasMounted){
-      setHasMounted(true)
+      setHasMounted(true);
       setCanLoadNext(false);
-      (async () => {
-        try{
 
-        await fetch(`/explore/${page}`, { method: "GET" })
-          .then( async(res) => await res.json()
-          .then( posts => {
-            
-            setPosts(posts)
-          }))
-          .finally(()=>{
-            setCanLoadNext(true) 
-          })
-        }
-        catch(err){
-          setError(true);
-        }
+      let success;
 
-      }
-      )()
+
+        (async () => {
+          while( !success ){
+
+            try{
+
+              await fetch(`/explore/${page}`, { method: "GET" })
+                .then( async(res) => await res.json()
+                .then( posts => {
+                  setPosts(posts)
+                }))
+              setCanLoadNext(true) 
+              success=true
+            }
+            catch(err){
+
+            }
+          }
+
+
+        }
+        )()
     }
 
 
@@ -50,7 +56,7 @@ export const FetchPostsClient = ({
 
     <>
       {
-        (posts && posts.length > 0 && !error) &&
+        (posts && posts.length > 0) &&
         <ul>
           {
             posts.map(
@@ -64,6 +70,10 @@ export const FetchPostsClient = ({
             )
           }
         </ul>
+      }
+
+      { //this will never trigger bcz we don't reach max page
+       page == maxPages && <p className="text-center" tabIndex={0}>The road ends here O.o</p> 
       }
      
     </>

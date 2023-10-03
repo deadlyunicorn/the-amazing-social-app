@@ -68,13 +68,12 @@ export const PostSectionWrapperWithViewMonitoring = ({ firstPagePosts,maxPages, 
   for (let i = 2; i < pageNumber; i++) {
     pagesArray.push( 
       <FetchPostsClient 
+          maxPages={maxPages}
           viewY={viewY}
           setCanLoadNext={setCanLoadNext}
           userDetails={userDetails}
           key={i}
-          page={i}
-          error={error}
-          setError={setError} />
+          page={i}/>
     );
   }
 
@@ -99,13 +98,12 @@ export const PostSectionWrapperWithViewMonitoring = ({ firstPagePosts,maxPages, 
       <div 
         className="self-center">
       {pageNumber < maxPages 
-        ? <p className="text-center" tabIndex={0}>
+        && <p className="text-center" tabIndex={0}>
             {canLoadNext
               ?"Scroll to load more."
               :error?"This is taking abnormally long..":"Loading..."
             }
           </p>
-        : pageNumber == maxPages && <p className="text-center" tabIndex={0}>The road ends here O.o</p> 
       }
        
       </div>
