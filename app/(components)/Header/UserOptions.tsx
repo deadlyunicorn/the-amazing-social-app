@@ -23,28 +23,29 @@ export const UserOptions = async () => {
       </div>
 
       {/* If not Signed In show the following else show "Profile Button" */}
-      {!supaSession &&
-        <div className="animate-appearance">
+      <div className="animate-appearance">
+        {supaSession
 
-          <Link href="/login">
-            <HeaderButton>
+        ?<Link href="/login">
+          <HeaderButton>
               Log in
             </HeaderButton>
           </Link>
 
-
-
-        </div>
-      }
-
-      {supaSession &&
-        <div className="animate-appearance">
-
-          <Link href="/settings">
+        :<Link href="/settings">
             <HeaderButton>
               Settings
             </HeaderButton>
           </Link>
+        }
+
+      </div>
+
+
+      {supaSession &&
+        <div className="animate-appearance">
+
+          
 
         </div>
       }

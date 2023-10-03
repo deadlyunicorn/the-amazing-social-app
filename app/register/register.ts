@@ -1,11 +1,12 @@
 "use server"
 import { SupabaseClient, createServerActionClient } from "@supabase/auth-helpers-nextjs";
-import { MongoClient, ObjectId, ServerApiVersion, Timestamp } from "mongodb";
+import { ObjectId } from "mongodb";
 import { cookies } from "next/headers";
 import { supabaseCredentials } from "../(supabase)/global";
 import { redirect } from "next/navigation";
-import { getUserInfo, userObject } from "../(mongodb)/user";
+import {  userObject } from "../(mongodb)/user";
 import { getMongoClient } from "../(lib)/mongoClient";
+import { revalidatePath } from "next/cache";
 
 
 export const emailRegister = async (formData: FormData) => {
@@ -117,6 +118,7 @@ export const addUserToMongoDB = async (formData: FormData) => {
 
     await users.insertOne(userObject);
     success = true;
+    revalidatePath('/');
 
   }
   catch(err){
