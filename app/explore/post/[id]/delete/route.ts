@@ -15,7 +15,7 @@ export const DELETE = async( req: NextRequest)=>{
       throw "Not logged in";
     }
     const request: deletionInfo = await req.json(); 
-    const mongoResponse: DeleteResult|undefined = await mongoPostDelete( userSession, new ObjectId( request.postId) );
+    const mongoResponse = await mongoPostDelete( userSession, new ObjectId( request.postId) );
     
     if ( mongoResponse ){
       if ( mongoResponse.acknowledged ){
@@ -44,15 +44,21 @@ const mongoPostDelete = async( userSession: userObject , postId: ObjectId ) => {
       .collection('posts');
 
 
-    const post = await posts.findOne( { _id: postId} ) as unknown as userPost || null;
-    if ( post ){
+    const deleteResult = await posts.findOneAndDelete( { 
+      _id: postId, 
+      created_by: userSession._id 
+        //the previous way I did this was to 
+        //find the post and compare the created_by ids
+        //and throw a "unauthorized" if they didn't match
+    } );
+    
+    revalidatePath('/');
 
-      if ( post.created_by.equals( userSession?._id) ){
-
-        const mongoDeleteResponse = await posts.deleteOne( { _id: postId} );
-        revalidatePath('/');
-        return mongoDeleteResponse;
-      }
-      else throw "Unauthorized"
-  }
+    if ( deleteResult ){
+      return deleteResult;
+    } 
+    else{
+      throw "Unauthorized or Post doesn't exist"
+    }
+      
 }
