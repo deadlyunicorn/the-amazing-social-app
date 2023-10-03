@@ -23,10 +23,12 @@ export const FetchPostsClient = ({
       setCanLoadNext(false);
 
       let success;
-
+      let i=0;
 
         (async () => {
           while( !success ){
+            i++;
+            if (i > 20){break}
 
             try{
 
