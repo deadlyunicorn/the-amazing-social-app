@@ -65,45 +65,45 @@ export const PostSectionWrapperWithViewMonitoring = ({ firstPagePosts,maxPages, 
   const pagesArray = [];
 
   // i == 1 - s o that we start from page 2.
-  for (let i = 1; i < pageNumber; i++) {
-    pagesArray.push(i + 1);
+  for (let i = 2; i < pageNumber; i++) {
+    pagesArray.push( 
+      <FetchPostsClient 
+          viewY={viewY}
+          setCanLoadNext={setCanLoadNext}
+          userDetails={userDetails}
+          key={i}
+          page={i}
+          error={error}
+          setError={setError} />
+    );
   }
 
   return (
     <section
-      className="animate-none"
+      className="animate-none flex flex-col justify-center"
       id="postSection">
        
       <ul>
         {firstPagePosts && firstPagePosts.map( //server loaded posts
-          (post,key) =>
+          (post) =>
             <PostComponent 
               viewY={viewY}
               userDetails={userDetails}
-              key={key}
+              key={post._id}
               post={post} />
         )}
       </ul> 
 
-      {
-      pagesArray.map((page) =>
-        <FetchPostsClient 
-          viewY={viewY}
-          setCanLoadNext={setCanLoadNext}
-          userDetails={userDetails}
-          key={page}
-          page={page}
-          error={error}
-          setError={setError} />
-      )
-      }
+      {pagesArray}        
 
       <div 
-        className="place-self-end">
-      {
-        (!canLoadNext && pageNumber < maxPages) 
+        className="self-center">
+      {pageNumber < maxPages 
         ? <p className="text-center" tabIndex={0}>
-            {error?"This is taking abnormally long..":"Loading..."}
+            {canLoadNext
+              ?"Scroll to load more."
+              :error?"This is taking abnormally long..":"Loading..."
+            }
           </p>
         : pageNumber == maxPages && <p className="text-center" tabIndex={0}>The road ends here O.o</p> 
       }
