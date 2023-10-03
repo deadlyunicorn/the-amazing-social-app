@@ -26,17 +26,17 @@ export const UserOptions = async () => {
       <div className="animate-appearance">
         {supaSession
 
-        ?<Link href="/login">
+        ?<Link href="/settings">
+          <HeaderButton>
+            Settings
+          </HeaderButton>
+        </Link>
+
+        :<Link href="/login">
           <HeaderButton>
               Log in
-            </HeaderButton>
-          </Link>
-
-        :<Link href="/settings">
-            <HeaderButton>
-              Settings
-            </HeaderButton>
-          </Link>
+          </HeaderButton>
+        </Link>
         }
 
       </div>
