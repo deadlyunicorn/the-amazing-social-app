@@ -4,8 +4,8 @@ import { CreatePostSection } from "./postCreation/postCreationForm";
 import { Suspense } from "react";
 import { PostsServer } from "./postDisplay/firstPage/fetchPostsServer";
 import { getSessionDetails, userObject } from "../(mongodb)/user";
-import { MockPostComponent } from "./postDisplay/firstPage/clientComponents/postComponent/postComponent";
 import { ReloadPageComponent } from "./reloadComponent";
+import { PostsFallback } from "./fallback";
 
 const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } }) => {
 
@@ -39,29 +39,6 @@ const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } 
 
   )
 }
-
-
-export const PostsFallback = () => {
-
-  const mockArray = [1,2,3,4,5,6,7,8,9]
-
-  return (
-
-    <section
-      className="
-      overflow-hidden relative
-      px-2 
-      w-full 
-      h-screen animate-pulse">
-
-      {mockArray.map(
-        item=><MockPostComponent key={item}/>
-
-      )}
-
-    </section>
-  )
-} 
 
 
 export default ExplorePage;

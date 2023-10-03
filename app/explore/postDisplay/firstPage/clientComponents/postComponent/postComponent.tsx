@@ -73,23 +73,3 @@ export const PostComponent = ({ post, userDetails }: { post: userPostWithAvatar,
 }
 
 
-
-
-export const MockPostComponent = () => {
-
-  const random = Math.random();
-
-  return (
-
-    <div
-      style={{ height: random * 100 * 5 }}
-      className="
-      px-2 my-4
-      min-h-[100px]
-      mx-8
-      bg-slate-200 rounded-2xl
-      flex justify-between"/>
-
-  )
-}
-

@@ -1,9 +1,10 @@
 import { getPostsPageLimit } from "../../../(lib)/postLimit";
 import { getPosts } from "../(mongodb)/getPosts";
-import { PostsFallback, userDetailsClient } from "../../page";
+import {  userDetailsClient } from "../../page";
 import { withRetry } from "@/app/(lib)/retry";
 import { PostComponent } from "./clientComponents/postComponent/postComponent";
 import { Suspense } from "react";
+import { PostsFallback } from "../../fallback";
 
 export const PostsServer = async ({userDetails}:{userDetails:userDetailsClient|null}) => {
 
