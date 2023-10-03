@@ -7,10 +7,11 @@ import { userPostWithAvatar } from "../../(mongodb)/getPosts";
 export const FetchPostsClient = ({ 
   page, userDetails,
   setCanLoadNext, viewY,
+  setLoading,
   maxPages }: { 
     
   page: number, userDetails: userDetailsClient | null,
-  setCanLoadNext:any, viewY: number, 
+  setCanLoadNext:any, viewY: number, setLoading: any
    maxPages:number }) => {
 
   const [posts, setPosts] = useState<null | userPostWithAvatar[]>(null);
@@ -19,6 +20,8 @@ export const FetchPostsClient = ({
   useEffect(() => {
 
     if ( !hasMounted){
+
+      setLoading( (prev:number) => prev+1 );
       setHasMounted(true);
       setCanLoadNext(false);
 
@@ -44,6 +47,7 @@ export const FetchPostsClient = ({
 
             }
           }
+          setLoading( (prev:number) => prev - 1);
 
 
         }
@@ -74,9 +78,7 @@ export const FetchPostsClient = ({
         </ul>
       }
 
-      { //this will never trigger bcz we don't reach max page
-       page == maxPages && <p className="text-center" tabIndex={0}>The road ends here O.o</p> 
-      }
+      
      
     </>
   )

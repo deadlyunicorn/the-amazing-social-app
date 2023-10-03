@@ -12,8 +12,10 @@ export const PostSectionWrapperWithViewMonitoring = ({ firstPagePosts,maxPages, 
   const [edgeY, setEdgeY] = useState(0);
   const [canLoadNext, setCanLoadNext] = useState(true); //being true disallows new page loading  
   const [pageNumber, setPageNumber] = useState(1);
-  const [error,setError] = useState(false);
+  // const [error,setError] = useState(false);
+  const [loading,setLoading] = useState(0);
 
+  /*
   useEffect(()=>{
     if(error){
       const timer = setTimeout(()=>{
@@ -24,6 +26,7 @@ export const PostSectionWrapperWithViewMonitoring = ({ firstPagePosts,maxPages, 
     }
 
   },[error])
+  */
 
 
   useEffect(() => {
@@ -45,16 +48,24 @@ export const PostSectionWrapperWithViewMonitoring = ({ firstPagePosts,maxPages, 
 
   useEffect(()=>{
 
-    if (pageNumber < maxPages){
+    const timer = setTimeout(()=>{
+      if (pageNumber < maxPages){
 
-      if (canLoadNext){
-
-        if (edgeY - 200 < viewY ){
-
-          setPageNumber(pageNumber+1);
+        if (canLoadNext){
+  
+          if (edgeY - 200 < viewY ){
+  
+            if (loading == 0){
+              setPageNumber( prev => prev+1 );
+            }
+          }
         }
+        
       }
-      
+    },1000)
+    
+    return ()=>{
+      clearTimeout(timer);
     }
   },[viewY])
 
@@ -68,6 +79,7 @@ export const PostSectionWrapperWithViewMonitoring = ({ firstPagePosts,maxPages, 
   for (let i = 2; i < pageNumber; i++) {
     pagesArray.push( 
       <FetchPostsClient 
+          setLoading={setLoading}
           maxPages={maxPages}
           viewY={viewY}
           setCanLoadNext={setCanLoadNext}
@@ -97,16 +109,20 @@ export const PostSectionWrapperWithViewMonitoring = ({ firstPagePosts,maxPages, 
 
       <div 
         className="self-center">
-      {pageNumber < maxPages 
+      {pageNumber+1 < maxPages
         && <p className="text-center" tabIndex={0}>
-            {canLoadNext
-              ?"Scroll to load more."
-              :error?"This is taking abnormally long..":"Loading..."
+            {loading == 0
+              ? "Scroll to load more."
+              : "Loading..."
             }
           </p>
       }
        
       </div>
+
+      { //this will never trigger bcz we don't reach max page
+      pageNumber + 1 == maxPages && loading == 0 && <p className="text-center" tabIndex={0}>The road ends here O.o</p> 
+      }
 
     </section>
 
