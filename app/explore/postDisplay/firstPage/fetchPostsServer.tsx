@@ -1,6 +1,5 @@
 import { getPostsPageLimit } from "../../../(lib)/postLimit";
 import { getPosts } from "../(mongodb)/getPosts";
-import { PostSectionWrapperWithViewMonitoring } from "./clientComponents/viewMonitor"
 import { PostsFallback, userDetailsClient } from "../../page";
 import { withRetry } from "@/app/(lib)/retry";
 import { PostComponent } from "./clientComponents/postComponent/postComponent";
