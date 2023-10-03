@@ -1,11 +1,15 @@
 'use client'
-import { formatDate } from "@/app/(lib)/formatDate";
-import { userDetailsClient } from "@/app/explore/page";
-import { commentClient, userPostWithAvatar } from "@/app/explore/postDisplay/(mongodb)/getPosts";
 import { useEffect, useState } from "react";
 import { MapComments } from "./mapComments";
 
-export const DisplayComments = ({postId,newComment,userDetails}:{postId:string,newComment:string|undefined,userDetails:userDetailsClient|null}) => {
+export const DisplayComments = (
+  {postId,newComment,
+    userDetails,commentsInitialCount
+  }:{
+    postId:string,newComment:string|undefined,
+    userDetails:userDetailsClient|null,
+    commentsInitialCount:number
+  }) => {
 
 
   const [comments,setComments] = useState<commentClient[]>([]); 
@@ -19,7 +23,7 @@ export const DisplayComments = ({postId,newComment,userDetails}:{postId:string,n
   useEffect(()=>{
 
 
-    if (loading||page<2){
+    if ( ( loading || page < 2 ) && commentsInitialCount > 0 ){
       (async()=>{
         try{
           await getPostComments(postId,page)
@@ -35,6 +39,9 @@ export const DisplayComments = ({postId,newComment,userDetails}:{postId:string,n
           setLoading(false);
         }
       })();
+    }
+    else{
+      setLoading(false)
     }
     
 
@@ -185,3 +192,23 @@ const getCommentCount = async(postId:string) =>{
   })
 
 }
+
+type commentClient = {
+  _id: string,
+  postId: string,
+  created_by: {
+    username: string | undefined,
+    avatarSrc: string | undefined
+  },
+  content: string,
+  created_at: Date,
+}
+
+type userDetailsClient =  {
+  _id: string;
+  age: number;
+  email: string;
+  username: string;
+  avatarSrc?: string;
+  description?: string;
+};

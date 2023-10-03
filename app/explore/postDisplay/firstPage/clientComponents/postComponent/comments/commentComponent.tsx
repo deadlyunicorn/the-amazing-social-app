@@ -25,7 +25,11 @@ export const CommentComponent = ({post,userDetails}:{post:userPostWithAvatar,use
       ?<WriteComment setNewComment={setNewComment}  postId={post._id}/>      
       :<LoginToComment/>
       }
-      <DisplayComments newComment={newComment} postId={post._id} userDetails={userDetails}/>
+      <DisplayComments 
+        newComment={newComment} 
+        postId={post._id} 
+        commentsInitialCount={post.comments.length}
+        userDetails={userDetails}/>
       
 
     </article>

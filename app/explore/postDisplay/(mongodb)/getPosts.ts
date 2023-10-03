@@ -66,7 +66,8 @@ export const getPosts = async (
             avatarURL: String(poster?.avatarSrc),
             created_by: String(poster?.username),
             likers: likers.reverse(),
-            comments: [] //we will return comments with a different fetch
+            comments: post.comments.map(comment=>comment.toString())
+            //we will return comments with a different fetch
           }
         }
       ))
@@ -99,18 +100,11 @@ export type userPost = {
     imageURL?: string
   },
   likers: ObjectId[],
-  comments: commentServer[],
+  comments: ObjectId[],
   verified: boolean,
   created_at: Date
 }
 
-export type commentServer = {
-  _id: ObjectId,
-  postId: ObjectId,
-  created_by: ObjectId,
-  content: string,
-  created_at: Date,
-}
 
 export type commentClient = {
   _id: string,
@@ -136,7 +130,7 @@ export type userPostWithAvatar = {
     username: string | undefined,
     avatarSrc: string | undefined
   }[];
-  comments: ObjectId[];
+  comments: string[];
   verified: boolean;
   created_at: Date;
 }
