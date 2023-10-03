@@ -98,7 +98,8 @@ export const PostSectionWrapperWithViewMonitoring = ({ firstPagePosts,maxPages, 
 
   return (
     <section
-      className="animate-none flex flex-col justify-center"
+      className="animate-none
+      flex flex-col justify-center"
       id="postSection">
        
       <ul>

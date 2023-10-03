@@ -100,7 +100,6 @@ export const LikeComponent = (
       </Link>
     )
 
-  const otherLikers = likersCount > 3 && `& ${likersCount-3} more`
 
 
   return (
@@ -139,17 +138,34 @@ export const LikeComponent = (
           </g>
         </svg>
       </button>
+      
+      <aside className="flex gap-x-2 items-center">
+        <div className="
+          flex
+          xs:[&>*:nth-child(3)]:inline 
+          [&>*:nth-child(3)]:hidden">
+          {latestLikers}
+        </div>
+        
+        { likersCount > 2 && 
+        <p className="text-xs xs:text-base
+        items-center xs:hidden
+        flex gap-x-1 h-[25px]">
+          & {likersCount-2} more
+        </p>
+        }
+        
+        { likersCount > 3 &&
+        
+        <p className="text-xs xs:text-base
+          items-center hidden xs:flex
+          gap-x-1 h-[25px]">
+            & {likersCount-3} more
+          </p>
+        }
+      </aside>
 
-        <p className="flex gap-x-1 h-[25px]">
-          {latestLikers} {otherLikers}  </p>
-
-          { userDetails?.username == post.created_by &&
-            
-            <div className="absolute right-0 bottom-0">
-              <DeletePostComponent setIsDeleted={setIsDeleted} postId={postId}/>
-            </div>
-              
-          }
+          
       </div>
   )
 }

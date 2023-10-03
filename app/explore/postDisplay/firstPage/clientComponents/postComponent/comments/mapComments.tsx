@@ -48,10 +48,10 @@ const CommentComponent = ({
     className="bg-black bg-opacity-5 px-4 py-1 rounded-md relative">
 
 
-    <div className="flex w-full justify-between">
+    <div className="flex w-full justify-between xs:flex-row flex-col items-center">
 
       <Link href={`/user/${username}`}>@{username}</Link>
-      <p className="text-xs">{formattedDate}</p>
+      <time className="text-xs">{formattedDate}</time>
     
     </div>
 

@@ -20,7 +20,7 @@ export const PosterDetails = ({post}:{post:userPostWithAvatar}) => {
       flex justify-between">
 
     <div className="
-      flex  gap-x-2
+      flex  gap-x-2 min-h-[50px]
       flex-row-reverse justify-end">
 
 
@@ -28,12 +28,15 @@ export const PosterDetails = ({post}:{post:userPostWithAvatar}) => {
         className="self-end peer"
         tabIndex={0} href={`user/${post.created_by}`}>
 
-        <p >@{String(post.created_by)}</p>
+        <p className="ml-2 xs:ml-0">@{String(post.created_by)}</p>
 
       </Link>
 
       <Link
-        className="peer hover:brightness-110 peer-hover:brightness-110  "
+        className="
+          peer inline
+          hover:brightness-110 
+          peer-hover:brightness-110 "
         href={`user/${post.created_by}`}>
         <Image
           placeholder="blur"
@@ -49,7 +52,9 @@ export const PosterDetails = ({post}:{post:userPostWithAvatar}) => {
 
     </div>
 
-    <time className="flex justify-end gap-x-2 py-1 px-2 ">
+    <time className="flex justify-end gap-x-2 py-1 px-2 
+    xs:text-base xs:relative
+    text-xs absolute right-2">
       <p>{formatDate(postDate)}</p>
       <p>{formatHours(postDate)}</p>
     </time>

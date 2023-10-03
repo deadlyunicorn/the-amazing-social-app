@@ -6,6 +6,7 @@ import { CommentComponent } from "./comments/commentComponent"
 import { ImageComponent } from "./imageComponent"
 import { PosterDetails } from "./posterDetails"
 import { useEffect, useState } from "react"
+import { DeletePostComponent } from "./deleteComponent"
 
 
 export const PostComponent = ({ post, userDetails, viewY }: { post: userPostWithAvatar, userDetails: userDetailsClient | null, viewY : number }) => {
@@ -35,7 +36,8 @@ export const PostComponent = ({ post, userDetails, viewY }: { post: userPostWith
       data-isdeleted={isDeleted}
       id={`${postId}_li`}
       key={postId}
-      className="px-2 my-4 
+      className="
+      xs:px-2 my-4 
       data-[isdeleted=true]:hidden
       ">
       <PosterDetails post={post}/>
@@ -61,6 +63,13 @@ export const PostComponent = ({ post, userDetails, viewY }: { post: userPostWith
         <aside 
           className="flex flex-col">
 
+          { userDetails?.username == post.created_by &&
+            
+            <div className="place-self-end">
+              <DeletePostComponent setIsDeleted={setIsDeleted} postId={postId}/>
+            </div>
+              
+          }
           <LikeComponent 
             setIsDeleted={setIsDeleted}
             userDetails={userDetails} post={post} />
@@ -89,7 +98,7 @@ export const MockPostComponent = () => {
     <div
       style={{ height: random * 100 * 5 }}
       className="
-      px-2 my-4
+      xs:px-2 my-4
       min-h-[100px]
       mx-8
       bg-slate-200 rounded-2xl
