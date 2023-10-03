@@ -22,9 +22,7 @@ const LoginPage = async(
   return (
     <MultipleRowsWrapper>
 
-      <Suspense fallback={<LoadingScreen height={200} />}>
-        <LoginPageSynced/>
-      </Suspense>
+      <LoginPageSynced/>
       
         {
           searchParams.error &&
