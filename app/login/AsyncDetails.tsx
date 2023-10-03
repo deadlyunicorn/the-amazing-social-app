@@ -2,7 +2,7 @@ import Link from "next/link";
 import { EmailPasswordForm } from "../(components)/EmailPasswordForm";
 import { getSessionDetails } from "../(mongodb)/user"
 import { emailLogin } from "./login";
-import { LogOutForm } from "../settings/LogoutForm";
+import { LogOutForm } from "../account/settings/LogoutForm";
 
 export const LoginPageSynced = async () => {
 

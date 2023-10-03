@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
-import { getSessionDetails, getSupabaseSession } from "../(mongodb)/user";
 import { LogOutForm } from "./LogoutForm";
 import Link from "next/link";
+import { getSessionDetails, getSupabaseSession } from "@/app/(mongodb)/user";
 
 const SettingsPage = async()=>{
 
@@ -23,14 +23,13 @@ const SettingsPage = async()=>{
       <h1 
         className="mb-2 border-none underline decoration-1"> 
         
-        This is your account&apos;s settings page 
+        Account Settings 
         
       </h1>
 
       <div className="flex flex-col">
 
-        <p>Change username</p>
-        <p>Change age</p>
+        
         <AccountOptions/>
       </div>
 
@@ -44,11 +43,26 @@ export default SettingsPage;
 const AccountOptions = () => (
   <aside className="w-fit">
     <section className="flex flex-col gap-y-2 min-h-fit">
+      
+      <Link
+        tabIndex={0}
+        className="capitalize"
+        href={'/account/username'}>
+          Change username
+      </Link>
+      <Link
+        tabIndex={0}
+        className="capitalize"
+        href={'/account/age'}>
+        Change age
+      </Link>
       <LogOutForm/>
       <Link
         tabIndex={0}
         className="capitalize"
-        href={'/account/delete'}>delete account</Link>
+        href={'/account/delete'}>
+          delete account
+      </Link>
 
 
     </section>

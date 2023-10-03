@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
-import { supabaseCredentials } from "../(supabase)/global";
 import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
+import { supabaseCredentials } from "@/app/(supabase)/global";
 
 export const LogOutForm = async() => (
   <form
