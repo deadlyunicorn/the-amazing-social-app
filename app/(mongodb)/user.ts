@@ -54,7 +54,7 @@ export type userObject = {
   username: string,
   avatarSrc?: string,
   description?: string,
-  latestPosts: Array<ObjectId>
+  latestPosts: ObjectId[] | undefined
 };
 
 

@@ -37,5 +37,4 @@ export type userObject={
   age: number,
   email: string,
   username: string,
-  latestPosts: Array<ObjectId>
 }

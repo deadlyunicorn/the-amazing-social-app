@@ -6,42 +6,27 @@ import { revalidatePath } from "next/cache";
 import { getBinaryData } from "../../../(lib)/getBinaryData";
 import { uploadToAwsPosts } from "../../(aws)/images";
 import { formatDateUTC } from "../../../(lib)/formatDate";
-import { addToRecentlyPosted } from "../../(mongodb)/addToRecentPosts";
-import { InsertOneResult, MongoClient } from "mongodb";
+import { MongoClient } from "mongodb";
 import { getMongoClient } from "@/app/(lib)/mongoClient";
 
 export const handleCreatePost = async (formData: FormData) => {
 
   const client = getMongoClient();
-
-
-  const session = client.startSession();
-
-
   const textContent = formData.get('post');
 
   //@ts-ignore
   const image: File | undefined = formData.get('image');
 
-
   try {
 
-    session.startTransaction();
 
     if (!textContent || textContent.length < 6) {
       throw "Post too short";
     }
 
-    const postResult:InsertOneResult = await sendPost(image,String(textContent),client);
-    await addToRecentlyPosted({documentId:postResult.insertedId},client);
-
-    await session.commitTransaction();
-
-   
+    await sendPost(image,String(textContent),client);
 
     revalidatePath('/');
-
-
 
   }
   catch (err) {

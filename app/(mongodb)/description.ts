@@ -36,5 +36,4 @@ export type userObject={
   age: number,
   email: string,
   username: string,
-  latestPosts: Array<{ created_at: Timestamp, postText: string }>
 }

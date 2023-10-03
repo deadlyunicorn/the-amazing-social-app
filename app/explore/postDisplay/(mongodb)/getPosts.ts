@@ -12,22 +12,18 @@ import { getMongoClient } from "@/app/(lib)/mongoClient";
 export const getPosts = async (
   query: {
     page: number,
-    postsToMatch?: ObjectId[],
     explore?: boolean,
     userProfile?: boolean,
+    userId?: ObjectId
   })
   : Promise<userPostWithAvatar[]> => {
-
- 
-
-  const postsToMatch = query.postsToMatch;
 
   let pipeline;
   if (query.explore){
     pipeline = getHomePagePipeline(query.page);
   }
-  else if (query.userProfile){
-    pipeline = getUserProfilePipeline(postsToMatch || []);
+  else if ( query.userProfile && query.userId){
+    pipeline = getUserProfilePipeline(query.userId);
   }
 
     const client = getMongoClient();
@@ -149,10 +145,10 @@ const getHomePagePipeline = (page: number) => ([
   { $skip: (page - 1) * postLimit },
   { $limit: postLimit }])
 
-const getUserProfilePipeline = ( postsToMatch: ObjectId[]) => ([
+const getUserProfilePipeline = ( userId: ObjectId) => ([
   {
     $match: {
-      _id: postsToMatch.length > 0 ? { $in: postsToMatch } : { $exists: false },
+      created_by: userId
     }
   },
   { $sort: { "created_at": -1 } },
