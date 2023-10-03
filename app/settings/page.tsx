@@ -18,7 +18,7 @@ const SettingsPage = async()=>{
   }
 
   return (
-    <section className="text-center flex flex-col">
+    <section className="text-center flex flex-col justify-between items-center">
 
       <h1 
         className="mb-2 border-none underline decoration-1"> 
@@ -27,10 +27,12 @@ const SettingsPage = async()=>{
         
       </h1>
 
-      
-      <p>Change username</p>
-      <p>Change age</p>
-      <AccountOptions/>
+      <div className="flex flex-col">
+
+        <p>Change username</p>
+        <p>Change age</p>
+        <AccountOptions/>
+      </div>
 
     </section>
   )
@@ -40,8 +42,8 @@ export default SettingsPage;
 
 
 const AccountOptions = () => (
-  <aside className="w-fit self-center">
-    <section className="flex flex-col gap-y-2 items-center">
+  <aside className="w-fit">
+    <section className="flex flex-col gap-y-2 min-h-fit">
       <LogOutForm/>
       <Link
         tabIndex={0}
