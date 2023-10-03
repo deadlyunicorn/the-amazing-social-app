@@ -7,6 +7,7 @@ import { Suspense } from "react";
 import { getPosts } from "@/app/explore/postDisplay/(mongodb)/getPosts";
 import { ImageComponent } from "@/app/explore/postDisplay/firstPage/clientComponents/postComponent/imageComponent";
 import { CreatePostSection } from "@/app/explore/postCreation/postCreationForm";
+import { withRetry } from "@/app/(lib)/retry";
 
 
 export const UserInfoComponent = async({ userInfo, ownsProfile }: { userInfo: userObject, ownsProfile: boolean }) => {
@@ -103,7 +104,8 @@ const PostsMapFallback = () => {
 
 const Posts = async ({ userInfo }: { userInfo: userObject }) => {
 
-  const posts = await getPosts({ page: 1, postsToMatch: userInfo.latestPosts,userProfile:true })
+  // @ts-ignore
+  const posts = await withRetry(getPosts,5,[{ page: 1, postsToMatch: userInfo.latestPosts,userProfile:true }]);
 
   return (posts && posts.length > 0)
 

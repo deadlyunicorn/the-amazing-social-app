@@ -14,29 +14,34 @@ export const FetchPostsClient = ({
   setError:any,error:boolean }) => {
 
   const [posts, setPosts] = useState<null | userPostWithAvatar[]>(null);
+  const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
 
-    setCanLoadNext(false);
-    (async () => {
-      try{
+    if ( !hasMounted){
+      setHasMounted(true)
+      setCanLoadNext(false);
+      (async () => {
+        try{
 
-      await fetch(`/explore/${page}`, { method: "GET" })
-        .then( async(res) => await res.json()
-        .then( posts => {
-          
-          setPosts(posts)
-        }))
-        .finally(()=>{
-          setCanLoadNext(true) 
-        })
-      }
-      catch(err){
-        setError(true);
-      }
+        await fetch(`/explore/${page}`, { method: "GET" })
+          .then( async(res) => await res.json()
+          .then( posts => {
+            
+            setPosts(posts)
+          }))
+          .finally(()=>{
+            setCanLoadNext(true) 
+          })
+        }
+        catch(err){
+          setError(true);
+        }
 
+      }
+      )()
     }
-    )()
+
 
   }, [])
 

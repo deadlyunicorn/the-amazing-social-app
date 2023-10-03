@@ -98,15 +98,17 @@ export const PostSectionWrapperWithViewMonitoring = ({ firstPagePosts,maxPages, 
       )
       }
 
+      <div 
+        className="place-self-end">
       {
         (!canLoadNext && pageNumber < maxPages) 
-        ? <p className="text-center" tabIndex={0}>Loading...</p>
+        ? <p className="text-center" tabIndex={0}>
+            {error?"This is taking abnormally long..":"Loading..."}
+          </p>
         : pageNumber == maxPages && <p className="text-center" tabIndex={0}>The road ends here O.o</p> 
       }
-
-      {
-        error && <p className="text-center"> There was an error.</p>
-      }
+       
+      </div>
 
     </section>
 
