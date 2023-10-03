@@ -71,6 +71,7 @@ const PostCreationForm = () => {
         items-center gap-y-4">
 
     <label  
+      aria-label="Attach photos to your post"
       tabIndex={0}
       className="
       hover:brightness-110
@@ -87,6 +88,7 @@ const PostCreationForm = () => {
       required
       minLength={6}
       maxLength={200}
+      aria-label="Type your post's text content here."
       placeholder="Today on my way to work.."
       className="
           px-2 py-1 rounded-sm

@@ -24,7 +24,7 @@ export default function RootLayout({
       </head>
 
       <body className='
-      m-0 p-0
+      m-0 p-0 relative
       bg-gradient-to-b from-zinc-700 to-zinc-900 
       flex flex-col overflow-x-hidden
       items-center

@@ -64,6 +64,7 @@ export const WriteComment = ({postId,setNewComment}:{postId:string,setNewComment
 
     <p>Write a comment: </p>
     <textarea 
+      aria-label="Input field for commenting to the post above."
       value={comment}
       onChange={(e)=>{
         e.target.style.height = `${e.target.scrollHeight}px`;
@@ -81,7 +82,6 @@ export const WriteComment = ({postId,setNewComment}:{postId:string,setNewComment
            
       <div  
         className="
-        
         w-full flex justify-end">
 
         <button
