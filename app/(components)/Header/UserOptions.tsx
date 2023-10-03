@@ -42,13 +42,6 @@ export const UserOptions = async () => {
       </div>
 
 
-      {supaSession &&
-        <div className="animate-appearance">
-
-          
-
-        </div>
-      }
 
       {/*  */}
 
