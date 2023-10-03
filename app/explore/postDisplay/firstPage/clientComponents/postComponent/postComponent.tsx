@@ -5,28 +5,25 @@ import { userDetailsClient } from "../../../../page"
 import { CommentComponent } from "./comments/commentComponent"
 import { ImageComponent } from "./imageComponent"
 import { PosterDetails } from "./posterDetails"
-import { DeletePostComponent } from "./deleteComponent"
-import { useEffect, useState } from "react"
 
-
-export const PostComponent = ({ post, userDetails, viewY }: { post: userPostWithAvatar, userDetails: userDetailsClient | null, viewY : number }) => {
+export const PostComponent = ({ post, userDetails }: { post: userPostWithAvatar, userDetails: userDetailsClient | null }) => {
 
   const postId = post._id;
 
 
   const imageURL = post.content.imageURL;
 
-  const [edgeY,setEdgeY] = useState(0);
+  // const [edgeY,setEdgeY] = useState(0);
 
-  useEffect( ()=> {
+  // useEffect( ()=> {
 
-    const sectionEnd = document.getElementById(`${postId}_li`);
-    //@ts-ignore
-    setEdgeY(sectionEnd?.getBoundingClientRect().bottom + window.scrollY);
+  //   const sectionEnd = document.getElementById(`${postId}_li`);
+  //   //@ts-ignore
+  //   setEdgeY(sectionEnd?.getBoundingClientRect().bottom + window.scrollY);
     
-  },[viewY])
+  // },[viewY])
 
-  const isOnView = ! ( ( viewY - edgeY > 900 ) || ( viewY - edgeY < -400 ) );
+  // const isOnView =  viewY == 0 || ! ( ( viewY - edgeY > 900 ) || ( viewY - edgeY < -400 ) );
   
 
   return (
@@ -34,8 +31,7 @@ export const PostComponent = ({ post, userDetails, viewY }: { post: userPostWith
     <li
       id={`${postId}_li`}
       key={postId}
-      className="px-2 my-4 
-      ">
+      className="px-2 my-4">
 
       <PosterDetails post={post}/>
 

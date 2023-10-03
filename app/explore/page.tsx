@@ -2,7 +2,7 @@ import { MultipleRowsWrapper } from "../(components)/FormWrapper";
 import { ErrorSection } from "../(components)/ErrorSection";
 import { CreatePostSection } from "./postCreation/postCreationForm";
 import { Suspense } from "react";
-import { FetchPostsServer } from "./postDisplay/firstPage/fetchPostsServer";
+import { PostsServer } from "./postDisplay/firstPage/fetchPostsServer";
 import { getSessionDetails, userObject } from "../(mongodb)/user";
 import { MockPostComponent } from "./postDisplay/firstPage/clientComponents/postComponent/postComponent";
 import { ReloadPageComponent } from "./reloadComponent";
@@ -29,7 +29,7 @@ const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } 
 
         { searchParams.error 
           ? <ReloadPageComponent/>
-          : <FetchPostsServer userDetails={userDetails}/>
+          : <PostsServer userDetails={userDetails}/>
         }
         
       </Suspense>
@@ -41,7 +41,7 @@ const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } 
 }
 
 
-const PostsFallback = () => {
+export const PostsFallback = () => {
 
   const mockArray = [1,2,3,4,5,6,7,8,9]
 

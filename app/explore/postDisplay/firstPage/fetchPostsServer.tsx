@@ -1,25 +1,72 @@
 import { getPostsPageLimit } from "../../../(lib)/postLimit";
 import { getPosts } from "../(mongodb)/getPosts";
 import { PostSectionWrapperWithViewMonitoring } from "./clientComponents/viewMonitor"
-import { userDetailsClient } from "../../page";
+import { PostsFallback, userDetailsClient } from "../../page";
 import { withRetry } from "@/app/(lib)/retry";
+import { PostComponent } from "./clientComponents/postComponent/postComponent";
+import { Suspense } from "react";
 
-export const FetchPostsServer = async ({userDetails}:{userDetails:userDetailsClient|null}) => {
+export const PostsServer = async ({userDetails}:{userDetails:userDetailsClient|null}) => {
 
   const maxPages = await withRetry(getPostsPageLimit, 5,[]) || 0;
 
-  //@ts-ignore
-  const firstPagePosts =  maxPages > 0 ? await withRetry(getPosts,5,[{page: 1,explore:true}]) : null;
-
   return (
-    <PostSectionWrapperWithViewMonitoring
-          //@ts-ignore
-          userDetails={userDetails}
-          key={1}
-          maxPages={maxPages}
-          firstPagePosts={firstPagePosts} />
+    <section
+        className="animate-none"
+        id="postSection">
+
+
+    <PageComponent 
+      maxPages={maxPages}
+      pageNumber={1}
+      userDetails={userDetails}
+      />
+        
+
+        
+           
+    </section>
   )
 }
 
+const PageComponent = async(
+  {pageNumber,maxPages,userDetails}:
+  {pageNumber:number,maxPages:number, userDetails:userDetailsClient|null}) => {
+
+  // @ts-ignore
+  const pagePosts =  pageNumber < maxPages ? await withRetry(getPosts,10,[{page: pageNumber,explore:true}]) : null;
+  
+  if ( pagePosts ) {
+
+    return (
+    <>
+    <ul>
+    {pagePosts.map( //server loaded posts
+      post =>
+        <PostComponent 
+          userDetails={userDetails}
+          key={`${post._id}_li`}
+          post={post} />
+    )}
+    </ul>
+
+    <Recurse pageNumber={pageNumber} maxPages={maxPages} userDetails={userDetails}/>
+
+    </>
+    )
+  }
+}
+
+const Recurse = async({pageNumber,maxPages,userDetails}:any)=>{
+
+  return (
+
+    <Suspense fallback={<PostsFallback/>}>
+      <p>hello</p>
+     <PageComponent pageNumber={pageNumber+1} maxPages={maxPages} userDetails={userDetails}/>
+    </Suspense>
+
+  ) 
+}
 
 
