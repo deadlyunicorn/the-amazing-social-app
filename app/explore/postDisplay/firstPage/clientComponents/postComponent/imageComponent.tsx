@@ -18,7 +18,7 @@ export const ImageComponent = ({imageURL,postId}:{imageURL:string,postId:string}
             <dialog id={`${postId}_modal2`} className="modal">
               <div className="modal-box bg-stone-900 text-white">
                 <Image
-                  className="max-h-[500px]"
+                  className="h-[min(400px,80vh)] object-contain"
                   src={imageURL}
                   alt="No image description provided"
                   width={500}
