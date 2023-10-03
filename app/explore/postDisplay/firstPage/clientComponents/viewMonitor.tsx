@@ -11,7 +11,7 @@ export const PostSectionWrapperWithViewMonitoring = ({ firstPagePosts,maxPages, 
   const [viewY, setViewY] = useState(0);
   const [edgeY, setEdgeY] = useState(0);
   const [canLoadNext, setCanLoadNext] = useState(true); //being true disallows new page loading  
-  const [pageNumber, setPageNumber] = useState(1);
+  const [pageNumber, setPageNumber] = useState(2);
   // const [error,setError] = useState(false);
   const [loading,setLoading] = useState(0);
 
