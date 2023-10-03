@@ -22,7 +22,7 @@ export const commentGet = async (postId: string, page: number):Promise<commentSe
       }},
       {
         $sort:{
-          created_at:-1
+          created_at:1
         }
       },
       {
