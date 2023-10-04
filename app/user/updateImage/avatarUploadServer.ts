@@ -4,9 +4,6 @@ import { getSessionDetails } from "../../(mongodb)/user";
 import { revalidatePath } from "next/cache";
 import {  formatDateUTC } from "../../(lib)/formatDate";
 import { setAvatarLink } from "../../(mongodb)/avatarUpload";
-import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
-import { supabaseCredentials } from "../../(supabase)/global";
-import { cookies } from "next/headers";
 import { deleteAvatarAws, uploadToAwsAvatars } from "@/app/(aws)/images";
 import { getBinaryData } from "@/app/(lib)/getBinaryData";
 
