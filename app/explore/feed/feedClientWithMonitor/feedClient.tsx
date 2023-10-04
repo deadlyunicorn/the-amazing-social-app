@@ -35,7 +35,7 @@ export const FeedClient = ({
 
             try{
 
-              await fetch(`${process.env.SERVER_URL}/explore/feed/api/get/${page}`, { method: "GET" })
+              await fetch(`/explore/feed/api/get/${page}`, { method: "GET" })
                 .then( async(res) => await res.json()
                 .then( posts => {
                   setPosts(posts)

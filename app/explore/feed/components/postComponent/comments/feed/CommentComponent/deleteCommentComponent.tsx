@@ -113,7 +113,7 @@ export const DeleteCommentComponent = ({
 
 const deleteComment = async(commentId:string,postId:string) => {
   return await fetch(
-    `${process.env.SERVER_URL}/explore/feed/api/post/${postId}/comments`,{
+    `/explore/feed/api/post/${postId}/comments`,{
       method:'DELETE',
       body:JSON.stringify({commentId:commentId})
     })

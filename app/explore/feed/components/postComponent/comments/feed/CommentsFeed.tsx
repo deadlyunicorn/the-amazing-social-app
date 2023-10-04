@@ -172,7 +172,7 @@ export const CommentsFeed = (
 const getPostComments = async(postId:string,page:number) =>{
 
   return await fetch(
-    `${process.env.SERVER_URL}/explore/feed/api/post/${postId}/comments/${page}`,
+    `/explore/feed/api/post/${postId}/comments/${page}`,
     {method:'GET'}
   )
   .then( async(comments) => {
@@ -185,7 +185,7 @@ const getPostComments = async(postId:string,page:number) =>{
 const getCommentCount = async(postId:string) =>{
 
   return await fetch(
-    `${process.env.SERVER_URL}/explore/feed/api/post/${postId}/comments/count`,
+    `/explore/feed/api/post/${postId}/comments/count`,
     {method:'GET'}
   )
   .then( async(comments) => {

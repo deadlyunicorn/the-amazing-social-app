@@ -47,8 +47,8 @@ export const LikeComponent = (
         (async () => {
 
           likerUsernames.includes( viewerName )
-            ? await fetch(`${process.env.SERVER_URL}/explore/feed/api/post/${postId}/like`, { method: "POST", body: JSON.stringify({ like: true }) })
-            : await fetch(`${process.env.SERVER_URL}/explore/feed/api/post/${postId}/like`, { method: "POST", body: JSON.stringify({ like: false }) })
+            ? await fetch(`/explore/feed/api/post/${postId}/like`, { method: "POST", body: JSON.stringify({ like: true }) })
+            : await fetch(`/explore/feed/api/post/${postId}/like`, { method: "POST", body: JSON.stringify({ like: false }) })
 
               .then(async (response) => {
                 try {

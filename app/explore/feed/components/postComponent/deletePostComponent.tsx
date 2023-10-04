@@ -77,7 +77,7 @@ export const DeletePostComponent = ( { postId, setIsDeleted }: { postId: string,
 
 const deletePost = async( { postId } : { postId : string } ) => {
 
-  const url = `${process.env.SERVER_URL}/explore/feed/api/post/${postId}/delete`;
+  const url = `/explore/feed/api/post/${postId}/delete`;
 
   const deleteRequest = await fetch( url, {
     method: "DELETE",
