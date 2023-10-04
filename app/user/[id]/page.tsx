@@ -1,12 +1,12 @@
-import { MultipleRowsWrapper } from "@/app/(components)/FormWrapper"
-import { getUserInfo } from "@/app/(mongodb)/user"
+import { MultipleRowsWrapper } from "@/app/lib/components/FormWrapper"
 import { supabaseCredentials } from "@/app/(supabase)/global"
 import {  createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
-import { UserInfoComponent } from "./UserInfoComponent"
-import { ProfileCreationForm } from "./ProfileCreationForm"
-import { ErrorSection } from "@/app/(components)/ErrorSection"
-import { withRetry } from "@/app/(lib)/retry"
+import { UserInfoComponent } from "./UserInfo/UserInfoComponent"
+import { ProfileCreationForm } from "./CreateProfile/ProfileCreationForm"
+import { ErrorSection } from "@/app/lib/components/ErrorSection"
+import { withRetry } from "@/app/lib/retry"
+import { getUserInfo } from "@/app/api/mongodb/user"
 
 export const generateMetadata = ({params}:{params:{id:string}}) =>  {
 
@@ -35,7 +35,7 @@ const UserProfile = async (
   const supabaseUser = (await supabase.auth.getUser()).data.user;
 
   // params.id
-  // @ts-ignore
+  //@ts-ignore
   const profileInfo = await withRetry(getUserInfo,5,[{username:String(params.id)}])
     .then(async(res)=>{
       if (!res){

@@ -1,3 +1,0 @@
-Which folders are calls to the database haha
-when there were less it made sense
-now it won't :')

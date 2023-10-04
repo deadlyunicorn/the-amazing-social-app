@@ -1,6 +1,6 @@
-import { ErrorSection } from "@/app/(components)/ErrorSection";
-import { MultipleRowsWrapper } from "@/app/(components)/FormWrapper";
-import { SubmitButtonClient } from "@/app/(components)/SubmitButtonClient";
+import { ErrorSection } from "@/app/lib/components/ErrorSection";
+import { MultipleRowsWrapper } from "@/app/lib/components/FormWrapper";
+import { SubmitButtonClient } from "@/app/lib/components/SubmitButtonClient";
 import { supabaseCredentials } from "@/app/(supabase)/global"
 import { createServerActionClient, createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers";

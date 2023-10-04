@@ -1,9 +1,9 @@
-import { ErrorSection } from "@/app/(components)/ErrorSection";
-import { MultipleRowsWrapper } from "@/app/(components)/FormWrapper";
-import { getSessionDetails, userObject } from "@/app/(mongodb)/user";
+import { ErrorSection } from "@/app/lib/components/ErrorSection";
+import { MultipleRowsWrapper } from "@/app/lib/components/FormWrapper";
 import { redirect } from "next/navigation";
 import { changeUsername } from "./usernameAction";
-import { SubmitButtonClient } from "@/app/(components)/SubmitButtonClient";
+import { SubmitButtonClient } from "@/app/lib/components/SubmitButtonClient";
+import { getSessionDetails } from "@/app/api/mongodb/user";
 
 const ChangeUsernamePage = async({searchParams}:{searchParams:{error:string}}) => {
 
