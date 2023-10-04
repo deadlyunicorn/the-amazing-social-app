@@ -20,7 +20,7 @@ export const PosterDetails = ({post}:{post:userPostWithAvatar}) => {
       flex justify-between">
 
     <div className="
-      flex  gap-x-2 min-h-[50px]
+    flex  gap-x-2 min-h-[50px]
       flex-row-reverse justify-end">
 
 
@@ -44,7 +44,7 @@ export const PosterDetails = ({post}:{post:userPostWithAvatar}) => {
           className="rounded-r-full h-[50px] object-cover"
           width={50}
           height={50}
-          src={post.avatarURL || '/favicon.svg'}
+          src={ post.avatarURL || '/favicon.svg'}
           alt={`${post.created_by}'s avatar`} />
 
       </Link>
@@ -53,7 +53,7 @@ export const PosterDetails = ({post}:{post:userPostWithAvatar}) => {
     </div>
 
     <time className="flex justify-end gap-x-2 py-1 px-2 
-    xs:text-base xs:relative
+    xs:text-base
     text-xs absolute right-2">
       <p>{formatDate(postDate)}</p>
       <p>{formatHours(postDate)}</p>
