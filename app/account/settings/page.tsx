@@ -59,7 +59,7 @@ const AccountOptions = () => (
       <LogOutForm/>
       <Link
         tabIndex={0}
-        className="capitalize"
+        className="capitalize text-error-light-reactive"
         href={'/account/delete'}>
           delete account
       </Link>
