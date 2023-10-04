@@ -1,5 +1,5 @@
-import { getMongoClient } from "@/app/(lib)/mongoClient";
-import { getSessionDetails } from "@/app/(mongodb)/user";
+import { getSessionDetails } from "@/app/api/mongodb/user";
+import { getMongoClient } from "@/app/lib/mongoClient";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import * as zod from "zod"

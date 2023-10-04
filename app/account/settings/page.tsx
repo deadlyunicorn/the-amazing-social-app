@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { LogOutForm } from "./LogoutForm";
 import Link from "next/link";
-import { getSessionDetails, getSupabaseSession } from "@/app/(mongodb)/user";
+import { getSessionDetails, getSupabaseSession } from "@/app/api/mongodb/user";
 
 const SettingsPage = async()=>{
 

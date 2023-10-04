@@ -1,11 +1,9 @@
-import "@/app/(styles)/styles.css"
-import { ErrorSection } from "@/app/(components)/ErrorSection"
-import { MultipleRowsWrapper } from "@/app/(components)/FormWrapper"
-import { Suspense } from "react"
-import { LoginPageSynced } from "./AsyncDetails"
-import { LoadingScreen } from "../(components)/Loading/LoadingAnimation"
-import { getSupabaseSession } from "../(mongodb)/user"
+import "@/app/styles/styles.css"
+import { ErrorSection } from "@/app/lib/components/ErrorSection"
+import { MultipleRowsWrapper } from "@/app/lib/components/FormWrapper"
 import { redirect } from "next/navigation"
+import { LoginForm } from "./loginForm"
+import { getSupabaseSession } from "../api/mongodb/user"
 
 const LoginPage = async(
   { searchParams }: {
@@ -22,7 +20,7 @@ const LoginPage = async(
   return (
     <MultipleRowsWrapper>
 
-      <LoginPageSynced/>
+      <LoginForm/>
       
         {
           searchParams.error &&

@@ -1,10 +1,10 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { supabaseCredentials } from "../(supabase)/global";
 import { cookies } from "next/headers";
-import { EmailPasswordForm } from "../(components)/EmailPasswordForm";
-import { emailRegister } from "./register";
-import { ErrorSection } from "../(components)/ErrorSection";
-import { MultipleRowsWrapper } from "../(components)/FormWrapper";
+import { EmailPasswordForm } from "../lib/components/EmailPasswordForm";
+import { emailRegister } from "./registerAction";
+import { ErrorSection } from "../lib/components/ErrorSection";
+import { MultipleRowsWrapper } from "../lib/components/FormWrapper";
 import { LogOutForm } from "../account/settings/LogoutForm";
 
 const RegisterPage = async ({ searchParams }: { searchParams: { error: string } }) => {
