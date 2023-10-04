@@ -36,11 +36,11 @@ const UserProfile = async (
 
   // params.id
   //@ts-ignore
-  const profileInfo = await withRetry(getUserInfo,5,[{username:String(params.id)}])
+  const profileInfo = await withRetry(getUserInfo,5,[{username:String(params.id)}]).catch(err=>null)
     .then(async(res)=>{
       if (!res){
           // @ts-ignore
-        return await withRetry(getUserInfo,5,[{_id:String(params.id)}]);
+        return await withRetry(getUserInfo,5,[{_id:String(params.id)}]).catch(err=>null);
       }
       return res
   });

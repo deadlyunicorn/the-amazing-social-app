@@ -13,7 +13,7 @@ import { getSessionDetails, userObject } from "../api/mongodb/user";
 const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } }) => {
 
   const userDetails = userDetailsToClient(await getSessionDetails());
-  const maxPages = await withRetry(getPostsPageLimit, 5,[]) || 0;
+  const maxPages = await withRetry(getPostsPageLimit, 5,[]).catch(err=>null) || 0;
 
 
   return (

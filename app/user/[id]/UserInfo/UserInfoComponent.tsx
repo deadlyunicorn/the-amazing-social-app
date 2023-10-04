@@ -108,7 +108,7 @@ const Posts = async (
   }) => {
 
   //@ts-ignore
-  const posts = await withRetry(getPosts,5,[{ page: 1, userProfile:true, userId : userInfo._id }]);
+  const posts = await withRetry(getPosts,5,[{ page: 1, userProfile:true, userId : userInfo._id }]).catch(err=>null);
 
   return (posts && posts.length > 0)
 

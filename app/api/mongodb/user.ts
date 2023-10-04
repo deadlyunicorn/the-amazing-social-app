@@ -64,7 +64,8 @@ export const getSessionDetails = async (): Promise<userObject|null>   => {
   const session = await createServerActionClient({ cookies }, supabaseCredentials).auth.getSession();
   
   //@ts-ignore
-  const user = await withRetry(getUserInfo,5,[{ email: session.data.session?.user.email }]);
+  const user = await withRetry(getUserInfo,5,[{ email: session.data.session?.user.email }])
+  .catch(err=>null);
 
   return user;
 };

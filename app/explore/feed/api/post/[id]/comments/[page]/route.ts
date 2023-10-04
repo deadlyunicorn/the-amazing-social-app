@@ -9,13 +9,13 @@ export const GET = async (request:Request,context:{params:{id:string,page:string
   const page = + context.params.page;
 
   //@ts-ignore
-  const comments = await withRetry(commentGet,5,[postId,page-1])
+  const comments = await withRetry(commentGet,5,[postId,page-1]).catch(err=>null)
   .then(async(res)=>{
     if (res){
       return await Promise.all(res.map(
         async(comment)=>{
           //@ts-ignore
-          const creator = await withRetry(getUserInfo,5,[{_id:comment.created_by}]);
+          const creator = await withRetry(getUserInfo,5,[{_id:comment.created_by}]).catch(err=>null);
           return creator ? {
             ...comment,
             _id:comment._id.toString(),

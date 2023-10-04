@@ -8,7 +8,7 @@ export const GET = async (request:Request,context:{params:{id:string,page:string
   const postId = context.params.id;
 
   //@ts-ignore
-  return NextResponse.json(await withRetry(getCount,5,[postId]))
+  return NextResponse.json(await withRetry(getCount,5,[postId]).catch(err=>null))
   
 
 }

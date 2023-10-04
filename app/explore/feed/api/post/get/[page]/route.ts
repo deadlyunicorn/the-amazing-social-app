@@ -10,7 +10,7 @@ export async function GET(request: Request, context: { params: { page: number } 
   try {
 
     //@ts-ignore
-    const posts = await withRetry(getPosts,5,[{ page: page, explore:true }]);
+    const posts = await withRetry(getPosts,5,[{ page: page, explore:true }]).catch(err=>null);
 
 
     return NextResponse.json(posts);
