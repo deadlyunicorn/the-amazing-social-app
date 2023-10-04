@@ -1,5 +1,5 @@
 import "@/app/(styles)/styles.css"
-import { LoadingScreen } from "@/app/(components)/Loading/LoadingAnimation"
+import { LoadingScreen } from "@/app/lib/components/Loading/LoadingAnimation"
 
 
 export default function Loader(){

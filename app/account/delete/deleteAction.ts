@@ -1,7 +1,7 @@
 "use server"
 
-import { getMongoClient } from "@/app/(lib)/mongoClient";
-import { getSessionDetails } from "@/app/(mongodb)/user";
+import { getSessionDetails } from "@/app/api/mongodb/user";
+import { getMongoClient } from "@/app/lib/mongoClient";
 import { ObjectId } from "mongodb";
 import { redirect } from "next/navigation";
 

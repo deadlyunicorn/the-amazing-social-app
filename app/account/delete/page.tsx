@@ -1,9 +1,9 @@
-import { ErrorSection } from "@/app/(components)/ErrorSection";
-import { MultipleRowsWrapper } from "@/app/(components)/FormWrapper";
-import { SubmitButtonClient } from "@/app/(components)/SubmitButtonClient";
-import { getSessionDetails } from "@/app/(mongodb)/user";
+import { ErrorSection } from "@/app/lib/components/ErrorSection";
+import { MultipleRowsWrapper } from "@/app/lib/components/FormWrapper";
+import { SubmitButtonClient } from "@/app/lib/components/SubmitButtonClient";
 import { redirect } from "next/navigation";
 import { deleteAccountAction } from "./deleteAction";
+import { getSessionDetails } from "@/app/api/mongodb/user";
 
 const DeleteAccountSection = async({searchParams}:{searchParams:{error:string}}) => {
   

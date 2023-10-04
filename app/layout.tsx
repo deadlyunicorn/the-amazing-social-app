@@ -1,5 +1,5 @@
-import Header from './(components)/Header/Header'
-import NavigationBar from './(components)/Navigation/Navigation'
+import Header from './lib/components/Header/Header'
+import NavigationBar from './lib/components/Navigation/Navigation'
 import './globals.css'
 import type { Metadata } from 'next'
 

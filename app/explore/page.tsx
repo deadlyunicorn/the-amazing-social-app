@@ -1,15 +1,20 @@
-import { MultipleRowsWrapper } from "../(components)/FormWrapper";
-import { ErrorSection } from "../(components)/ErrorSection";
-import { CreatePostSection } from "./postCreation/postCreationForm";
+import { MultipleRowsWrapper } from "../lib/components/FormWrapper";
+import { ErrorSection } from "../lib/components/ErrorSection";
+import { CreatePostSection } from "./create/postCreationForm";
 import { Suspense } from "react";
-import { FetchPostsServer } from "./postDisplay/firstPage/fetchPostsServer";
-import { getSessionDetails, userObject } from "../(mongodb)/user";
-import { MockPostComponent } from "./postDisplay/firstPage/clientComponents/postComponent/postComponent";
-import { ReloadPageComponent } from "./reloadComponent";
+import { FeedServer } from "./feed/feedServer/feedServer";
+import { MockPostComponent } from "./feed/components/postComponent/postComponent";
+import { ReloadPageComponent } from "../lib/components/reloadPageComponent";
+import { getPostsPageLimit } from "../lib/postLimit";
+import { withRetry } from "../lib/retry";
+import { FeedClientWithMonitor } from "./feed/feedClientWithMonitor/viewMonitor";
+import { getSessionDetails, userObject } from "../api/mongodb/user";
 
 const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } }) => {
 
   const userDetails = userDetailsToClient(await getSessionDetails());
+  const maxPages = await withRetry(getPostsPageLimit, 5,[]) || 0;
+
 
   return (
 
@@ -28,8 +33,19 @@ const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } 
       <Suspense fallback={<PostsFallback/>}>
 
         { searchParams.error 
-          ? <ReloadPageComponent/>
-          : <FetchPostsServer userDetails={userDetails}/>
+          ? <ReloadPageComponent path="/explore"/>
+          : <section
+              className="animate-none
+              flex flex-col justify-center"
+              id="postSection">
+              <FeedServer userDetails={userDetails}/>
+              <FeedClientWithMonitor 
+                userDetails={userDetails}
+                maxPages={maxPages} />
+              
+            </section>
+
+          
         }
         
       </Suspense>

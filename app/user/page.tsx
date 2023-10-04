@@ -1,8 +1,8 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
-import { getUserInfo } from "../(mongodb)/user"
-import { withRetry } from "../(lib)/retry"
+import { withRetry } from "../lib/retry"
+import { getUserInfo } from "../api/mongodb/user"
 
 const UserRedirect = async({searchParams}:{searchParams:{error?:string}}) => {
   
