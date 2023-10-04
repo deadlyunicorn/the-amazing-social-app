@@ -1,6 +1,6 @@
 import { getSessionDetails, userObject } from "@/app/api/mongodb/user";
 import { getMongoClient } from "@/app/lib/mongoClient";
-import { DeleteResult, ObjectId } from "mongodb";
+import { ObjectId } from "mongodb";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -16,9 +16,7 @@ export const DELETE = async( req: NextRequest)=>{
     const mongoResponse = await mongoPostDelete( userSession, new ObjectId( request.postId) );
     
     if ( mongoResponse ){
-      if ( mongoResponse.acknowledged ){
         return NextResponse.json({ deleted: true });
-      }
     }
     return NextResponse.json({ deleted: false });
 
