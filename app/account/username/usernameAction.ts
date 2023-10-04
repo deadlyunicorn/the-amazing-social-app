@@ -55,6 +55,6 @@ export const changeUsername = async( formData: FormData )=>{
     redirect(`/account/username?error=${"Failed Updating"}`);
   }
   finally{
-    client.close();
+    await client.close();
   }
 }

@@ -26,7 +26,7 @@ const getCount = async( postId:string ) => {
     return commentCount;
   }
   finally{
-    client.close();
+    await client.close();
   }
 
 }

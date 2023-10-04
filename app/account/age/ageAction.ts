@@ -52,6 +52,6 @@ export const changeAge = async( formData: FormData )=>{
     redirect(`/account/age?error=${"Failed Updating"}`);
   }
   finally{
-    client.close();
+    await client.close();
   }
 }
