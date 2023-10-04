@@ -26,7 +26,7 @@ export const UserOptions = async () => {
       <div className="animate-appearance">
         {supaSession
 
-        ?<Link href="/settings">
+        ?<Link href="/account/settings">
           <HeaderButton>
             Settings
           </HeaderButton>
