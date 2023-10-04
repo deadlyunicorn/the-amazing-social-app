@@ -1,4 +1,4 @@
-import "@/app/(styles)/styles.css"
+import "@/app/styles/styles.css"
 import { LoadingScreen } from "@/app/lib/components/Loading/LoadingAnimation"
 
 

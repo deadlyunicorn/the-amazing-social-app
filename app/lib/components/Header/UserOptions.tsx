@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { ReactNode } from "react"
 import Time from "./Header_time"
-import "@/app/(styles)/styles.css"
+import "@/app/styles/styles.css"
 import { getSupabaseSession } from "@/app/api/mongodb/user"
 
 export const UserOptions = async () => {

@@ -1,4 +1,4 @@
-import "@/app/(styles)/styles.css"
+import "@/app/styles/styles.css"
 import { ErrorSection } from "@/app/lib/components/ErrorSection"
 import { MultipleRowsWrapper } from "@/app/lib/components/FormWrapper"
 import { redirect } from "next/navigation"
