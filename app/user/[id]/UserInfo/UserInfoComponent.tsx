@@ -16,9 +16,6 @@ export const UserInfoComponent = async({ userInfo, ownsProfile }: { userInfo: us
   const sampleDescription = "Hello world!";
 
 
-  const userDetails = await getSessionDetails();
-
-
   return (
     <>
       <section className="grid md:grid-cols-2 gap-x-2 gap-y-4 min-h-[250px]">
