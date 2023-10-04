@@ -112,7 +112,8 @@ export const addUserToMongoDB = async (formData: FormData) => {
       email: email,
       age: YOB,
       username: username,
-      latestPosts: []
+      latestPosts: [],
+      lastUsernameUpdate: new Date(0)
     }
 
     await users.insertOne(userObject);
