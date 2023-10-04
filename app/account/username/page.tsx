@@ -1,10 +1,9 @@
 import { ErrorSection } from "@/app/(components)/ErrorSection";
 import { MultipleRowsWrapper } from "@/app/(components)/FormWrapper";
-import { getMongoClient } from "@/app/(lib)/mongoClient";
 import { getSessionDetails, userObject } from "@/app/(mongodb)/user";
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import * as zod from "zod" 
+import { changeUsername } from "./usernameAction";
+import { SubmitButtonClient } from "@/app/(components)/SubmitButtonClient";
 
 const ChangeUsernamePage = async({searchParams}:{searchParams:{error:string}}) => {
 
@@ -22,20 +21,28 @@ const ChangeUsernamePage = async({searchParams}:{searchParams:{error:string}}) =
     </h3>
     
     <form
+      className="flex flex-col items-center gap-y-2 my-2"
       action={changeUsername}>
       
+      <label
+        htmlFor="username">
+          Enter your new username:
+      </label>
       <input
-        pattern="^[A-Za-z][A-Za-z0-9\_]"
+        pattern="/^[A-Za-z]([A-Za-z0-9\_])\w+/g"
         required
-        placeholder="username" 
+        id="username"
+        placeholder="New username" 
         aria-label="insert your new username"
         name="username" 
         minLength={6} maxLength={30}
         />
+        <p className="text-xs text-center">
+          letters, numbers and dashes allowed
+          <br/>must start with letter
+        </p>
 
-      <button>
-        Change your username
-      </button>
+      <SubmitButtonClient/>
     </form>
     
   </section>
@@ -50,58 +57,5 @@ const ChangeUsernamePage = async({searchParams}:{searchParams:{error:string}}) =
 
 }
 
-const changeUsername = async( formData: FormData )=>{
-  "use server"
-
-  const newUsername = await zod
-    .string()
-    .min(6)
-    .max(30)
-    .regex(/^[A-Za-z]([A-Za-z0-9\_])\w+/g)
-    .parseAsync(formData.get('username'))
-    .catch( err=>{
-      redirect(`/account/username?error=${"Invalid Username"}`)
-    })
-
-
-  const client = getMongoClient();
-  const session = await getSessionDetails();
-
-  if ( session?.username == newUsername){
-    redirect(`/account/username?error=${"This is already your username"}`);
-  }
-
-  if ( session?.lastUsernameUpdate && session.lastUsernameUpdate.getTime() > new Date().getTime() - 2000000000){
-    redirect(`/account/username?error=${"You have already updated your username in the past 20 days"}`);
-  }
-  try{
-
-    const users = client.db('the-amazing-social-app').collection('users');
-    await users.findOne({username:newUsername})
-    .then( res => {
-      if (res){
-        throw "username used"
-      }
-    })
-
-    await users.findOneAndUpdate(
-      {_id:session?._id},
-      { $set:{
-        username:newUsername,
-        lastUsernameUpdate: new Date()
-      }}
-    );
-    revalidatePath('/');
-  }
-  catch(error){
-    if (error === "username used"){
-      redirect(`/account/username?error=${"Username is already taken"}`);
-    }
-    redirect(`/account/username?error=${"Failed Updating"}`);
-  }
-  finally{
-    client.close();
-  }
-}
 
 export default ChangeUsernamePage;
