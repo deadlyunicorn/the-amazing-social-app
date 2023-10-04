@@ -63,7 +63,7 @@ export const CommentsFeed = (
         postId:postId
       }
       setCommentCount(commentCount+1);
-      setComments([commentWhole,...comments]);
+      setComments([...comments,commentWhole]);
     }
   },[newComment])
 
