@@ -49,18 +49,24 @@ export const getPosts = async (
           const likers = await Promise.all(
             post.likers.map(
               async (likerID) => await getUserInfo({ _id: likerID })
-                .then( user => ({
-                  username: user?.username,
-                  avatarSrc: user?.avatarSrc,
-                }))
+                .then( user => ( user )
+                  ?({
+                  username: user.username,
+                  avatarSrc: user.avatarSrc,
+                  })
+                  :({
+                    username:"Deleted User",
+                    avatarSrc:undefined
+                  })
+                )
             )
           )
           
           return {
             ...post,
             _id: post._id.toString(),
-            avatarURL: String(poster?.avatarSrc),
-            created_by: String(poster?.username),
+            avatarURL: poster  ? String(poster?.avatarSrc) :undefined,
+            created_by: poster ? String(poster?.username)  :"Deleted User",
             likers: likers.reverse(),
             comments: post.comments.map(comment=>comment.toString())
             //we will return comments with a different fetch
@@ -121,7 +127,7 @@ export type userPostWithAvatar = {
     textContent: string;
     imageURL?: string;
   };
-  avatarURL: string
+  avatarURL: string|undefined;
   likers: {
     username: string | undefined,
     avatarSrc: string | undefined

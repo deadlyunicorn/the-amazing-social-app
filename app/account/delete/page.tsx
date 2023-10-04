@@ -1,18 +1,16 @@
 import { ErrorSection } from "@/app/(components)/ErrorSection";
 import { MultipleRowsWrapper } from "@/app/(components)/FormWrapper";
 import { SubmitButtonClient } from "@/app/(components)/SubmitButtonClient";
-import { supabaseCredentials } from "@/app/(supabase)/global"
-import { createServerActionClient, createServerComponentClient } from "@supabase/auth-helpers-nextjs"
-import { cookies } from "next/headers";
+import { getSessionDetails } from "@/app/(mongodb)/user";
 import { redirect } from "next/navigation";
+import { deleteAccountAction } from "./deleteAction";
 
 const DeleteAccountSection = async({searchParams}:{searchParams:{error:string}}) => {
   
 
 
-  const supabase = createServerComponentClient({cookies},supabaseCredentials);
-  const session = await supabase.auth.getSession();
-  const email = session.data.session?.user.email;
+  const session = await getSessionDetails();
+  const email = session?.email;
 
   if (email) return(
 
@@ -25,7 +23,7 @@ const DeleteAccountSection = async({searchParams}:{searchParams:{error:string}})
           <br/>with the email: <span className="underline">{email}</span>
         </h3>
         <form 
-          action={deleteAccount}
+          action={deleteAccountAction}
           className="flex flex-col gap-y-4 items-center">
           <p >Enter your email to confirm deletion</p>
           <input 
@@ -36,13 +34,6 @@ const DeleteAccountSection = async({searchParams}:{searchParams:{error:string}})
             type="email"/>
           <SubmitButtonClient/>
 
-          This action should find all comments,chats, posts
-          and delete them. 
-          Maybe replace comments with an id of 000000000000
-          {/* and have the username of that id as "User Deleted" */}
-          {/* and replace the textContent of the comments as 'comment unaivailable'. */}
-          Also delete the images. Keep other comments etc. If a post 
-          is by a deleted user we could disable further comments 
         </form>
 
         
@@ -60,51 +51,6 @@ const DeleteAccountSection = async({searchParams}:{searchParams:{error:string}})
   }
 }
 
-const deleteAccount = async() => {
-  "use server"
 
-  const supabase = createServerActionClient({cookies},{supabaseKey:process.env.supabasePrivateKey,supabaseUrl:process.env.supabaseUrl});
-  const id = (await supabase.auth.getSession()).data.session?.user.id;
-
-  if (id){
-
-    let success = false;
-    try{
-      await supabase
-      .auth
-      .admin
-      .deleteUser(id);
-
-      await supabase.auth.signOut()
-      .then(res=>{
-        if (res.error?.message){
-          throw res.error.message; 
-        }}
-      );
-      success =true;
-
-    }
-    catch(err){
-      redirect(`/account/delete?error=${err}`);
-    }
-    finally{
-      if (success){
-       redirect('/account/success')
-      }
-    }
-    
-    
-
-    
-
-
-  }
-  else{
-    redirect('/');
-  }
-
-  
-
-}
 
 export default DeleteAccountSection

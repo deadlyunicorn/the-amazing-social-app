@@ -1,6 +1,5 @@
 import { getMongoClient } from "@/app/(lib)/mongoClient";
-import { userObject } from "@/app/(mongodb)/avatarUpload";
-import { getSessionDetails } from "@/app/(mongodb)/user";
+import { getSessionDetails, userObject } from "@/app/(mongodb)/user";
 import { userPost } from "@/app/explore/postDisplay/(mongodb)/getPosts";
 import { DeleteResult, ObjectId } from "mongodb";
 import { revalidatePath } from "next/cache";

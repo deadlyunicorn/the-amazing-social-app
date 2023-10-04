@@ -38,6 +38,7 @@ export const commentGet = async (postId: string, page: number):Promise<commentSe
 
     for await (const comment of commentIterator){
       const commentServer = comment as unknown as commentServer;
+      
       responseComments.push(commentServer);
     }
 
@@ -50,7 +51,7 @@ export const commentGet = async (postId: string, page: number):Promise<commentSe
     redirect(`/explore?error=${err}`);
   }
   finally {
-    client.close();
+    await client.close();
   }
 
 
