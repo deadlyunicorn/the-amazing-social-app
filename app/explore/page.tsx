@@ -83,7 +83,6 @@ const userDetailsToClient = (userDetails:userObject|null): userDetailsClient|nul
   if (!userDetails){return null}
 
   const userDetailsClient  = {...userDetails,_id:userDetails._id.toString()};
-  const { latestPosts , ...result} = userDetailsClient; 
 
-  return result;
+  return userDetailsClient;
 }

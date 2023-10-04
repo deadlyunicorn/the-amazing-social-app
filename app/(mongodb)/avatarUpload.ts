@@ -31,10 +31,3 @@ export const setAvatarLink = async( username : string, url : string ) : Promise 
 
   }
 }
-
-export type userObject={
-  _id: ObjectId,
-  age: number,
-  email: string,
-  username: string,
-}

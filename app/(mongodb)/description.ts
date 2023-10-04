@@ -30,10 +30,3 @@ export const putDescription = async( username : string, description : string ) :
 
   }
 }
-
-export type userObject={
-  _id: ObjectId,
-  age: number,
-  email: string,
-  username: string,
-}
