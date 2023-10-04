@@ -82,13 +82,12 @@ export const FeedClientWithMonitor = ({ maxPages, userDetails}: { maxPages:numbe
         [...pagesArray,
 
         <FeedClient 
-        setLoading={setLoading}
-        maxPages={maxPages}
-        viewY={viewY}
-        setCanLoadNext={setCanLoadNext}
-        userDetails={userDetails}
-        key={pageNumber}
-        page={pageNumber}/>]
+          setLoading={setLoading}
+          maxPages={maxPages}
+          setCanLoadNext={setCanLoadNext}
+          userDetails={userDetails}
+          key={pageNumber}
+          page={pageNumber}/>]
       )
     }
 

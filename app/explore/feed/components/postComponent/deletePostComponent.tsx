@@ -1,7 +1,7 @@
 'use client'
 
 import { ConfirmationDialog } from "@/app/lib/components/ConfirmationDialog";
-import { useEffect, useState, useTransition } from "react"
+import { useEffect, useState } from "react"
 
 export const DeletePostComponent = ( { postId, setIsDeleted }: { postId: string, setIsDeleted?:(bool:boolean)=>void } ) =>{
 

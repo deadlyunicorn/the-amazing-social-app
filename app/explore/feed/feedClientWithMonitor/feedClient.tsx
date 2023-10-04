@@ -6,12 +6,12 @@ import { userPostWithAvatar } from "../api/mongodb/getPosts";
 
 export const FeedClient = ({ 
   page, userDetails,
-  setCanLoadNext, viewY,
+  setCanLoadNext,
   setLoading,
   maxPages }: { 
     
   page: number, userDetails: userDetailsClient | null,
-  setCanLoadNext:any, viewY: number, setLoading: any
+  setCanLoadNext:any, setLoading: any
    maxPages:number }) => {
 
   const [posts, setPosts] = useState<null | userPostWithAvatar[]>(null);
