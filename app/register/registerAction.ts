@@ -3,7 +3,7 @@ import { ObjectId } from "mongodb";
 import { redirect } from "next/navigation";
 import { getMongoClient } from "../lib/mongoClient";
 import { revalidatePath } from "next/cache";
-import { getAuthSession, userObject } from "../api/mongodb/user";
+import { getAuthSession, userObject } from "../api/mongodb/user/user";
 
 
 export const emailRegister = async (formData: FormData) => {
@@ -106,15 +106,16 @@ export const addUserToMongoDB = async (formData: FormData) => {
     const YOB = date.getFullYear() - age;
     
     await client.connect();
-    const users = client.db('the-amazing-social-app').collection('users');
+    const users = client.db('the-amazing-social-app-v3').collection('users');
 
 
     if ( authSession.email ) {
 
       const user: userObject = {
-        _id: new ObjectId,
+        _id: new ObjectId( authSession.id ),
         email: authSession.email,
         age: YOB,
+        avatarSrc: authSession.image || undefined,
         username: username,
         lastUsernameUpdate: new Date(0),
         ageChanged: false
@@ -135,7 +136,12 @@ export const addUserToMongoDB = async (formData: FormData) => {
   }
   catch(err){
     if (String(err).includes("dup key")){
-      redirect(`/user?error=Username already taken`)
+      redirect("/user?error=Username already taken, \
+      or there is already an account with your email, \
+      but created with a different provider \
+      (e.g. you created you account with Github\
+      and there is an account with the same email\
+      created with Gmail)");
     }
     redirect(`/user?error=${err}`)
   
