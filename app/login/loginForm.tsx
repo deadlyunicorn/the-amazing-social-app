@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { EmailPasswordForm } from "../lib/components/EmailPasswordForm";
+import { CredentialsForm } from "../lib/components/CredentialsForm";
 import { emailLogin } from "./loginAction";
 import { LogOutForm } from "../account/settings/LogoutForm";
-import { getUserDetails } from "../api/mongodb/user";
+import { getUserDetails } from "../api/mongodb/user/user";
 
 export const LoginForm = async () => {
 
@@ -18,11 +18,10 @@ export const LoginForm = async () => {
     </section>
     
     : <>
-      <EmailPasswordForm
+      <CredentialsForm
         formHeader="Login today!"
-        action={emailLogin}
+        // action={emailLogin}
       />
-
       <section className="text-center flex flex-col justify-between">
           <Link 
             tabIndex={0} href="/account/recover">

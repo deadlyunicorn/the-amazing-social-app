@@ -1,7 +1,7 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { supabaseCredentials } from "../(supabase)/global";
 import { cookies } from "next/headers";
-import { EmailPasswordForm } from "../lib/components/EmailPasswordForm";
+import { CredentialsForm } from "../lib/components/CredentialsForm";
 import { emailRegister } from "./registerAction";
 import { ErrorSection } from "../lib/components/ErrorSection";
 import { MultipleRowsWrapper } from "../lib/components/FormWrapper";
@@ -28,7 +28,7 @@ const RegisterPage = async ({ searchParams }: { searchParams: { error: string } 
       :
       <MultipleRowsWrapper>
          
-          <EmailPasswordForm
+          <CredentialsForm
             formHeader="Signup today!"
             action={emailRegister} />
 
