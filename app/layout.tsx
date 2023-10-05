@@ -4,11 +4,9 @@ import './globals.css'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Social App v2',
+  title: 'Social App v3',
   description: 'Social App project by deadlyunicorn!',
 }
-
-export const dynamic = 'force-dynamic'
 
 export default function RootLayout({
   children,
