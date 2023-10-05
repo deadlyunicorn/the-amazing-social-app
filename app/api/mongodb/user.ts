@@ -1,9 +1,9 @@
-import { supabaseCredentials } from "@/app/(supabase)/global";
 import { getMongoClient } from "@/app/lib/mongoClient";
 import { withRetry } from "@/app/lib/retry";
-import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
 import { ObjectId } from "mongodb";
+import { getServerSession } from "next-auth";
 import { cookies } from "next/headers";
+import { authOptions } from "../auth/[...nextauth]/route";
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 
 
@@ -60,16 +60,41 @@ export type userObject = {
 
 
 
-export const getSessionDetails = async (): Promise<userObject|null>   => {
-  const session = await createServerActionClient({ cookies }, supabaseCredentials).auth.getSession();
+export const getUserDetails = async (): Promise<userObject|null>   => {
+
+  //@ts-ignore
+  const session = await getServerSession( authOptions );
+  if ( session && session.user ){
+    if ( session.user.name ){
+
+      //@ts-ignore
+      const user = await withRetry(getUserInfo,5,[{ username: session.user.name }])
+      .catch(err=>null);
+
+      return user;
+
+    }
+    else if ( session.user.email ){
+
+      //@ts-ignore
+      const user = await withRetry(getUserInfo,5,[{ username: session.user.email }])
+      .catch(err=>null);
+
+      return user;
+    }
+  }
+  else {
+    return null;
+  }
   
   //@ts-ignore
-  const user = await withRetry(getUserInfo,5,[{ email: session.data.session?.user.email }])
-  .catch(err=>null);
+  
 
   return user;
 };
 
-export const getSupabaseSession = async () => (
-  (await createServerActionClient({ cookies }, supabaseCredentials).auth.getSession()).data.session?.user
+export const getAuthSession = async () => (
+
+  //@ts-ignore
+  (await getServerSession( authOptions ))?.user
 )

@@ -2,7 +2,7 @@
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { getBinaryData } from "@/app/lib/getBinaryData";
-import { getSessionDetails } from "@/app/api/mongodb/user";
+import { getUserDetails } from "@/app/api/mongodb/user";
 import { setAvatarLink } from "@/app/api/mongodb/avatarUpload";
 import { deleteAvatarAws, uploadToAwsAvatars } from "@/app/api/aws/images";
 import { formatDateUTC } from "@/app/lib/formatDate";
@@ -12,7 +12,7 @@ import { formatDateUTC } from "@/app/lib/formatDate";
 export const handleAvatarForm = async(formData:FormData)=>{
   // const imgSource = URL.createObjectURL(e.target.files[0]);
   
-  const userDetails = await getSessionDetails();
+  const userDetails = await getUserDetails();
 
   const username = String(userDetails?.username);
   const oldAvatarSrc = String(userDetails?.avatarSrc);

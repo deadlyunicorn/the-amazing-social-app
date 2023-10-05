@@ -1,15 +1,16 @@
 import { redirect } from "next/navigation";
 import { LogOutForm } from "./LogoutForm";
 import Link from "next/link";
-import { getSessionDetails, getSupabaseSession } from "@/app/api/mongodb/user";
+import { getUserDetails, getAuthSession } from "@/app/api/mongodb/user";
 
 const SettingsPage = async()=>{
 
-  const session = await getSessionDetails();
-  const supabaseSession = await getSupabaseSession();
+  const user = await getUserDetails();
+  const authSession = await getAuthSession();
 
-  if ( !session?.username ){
-    if ( supabaseSession?.id ){
+  if ( ! ( user && user.username ) ){
+
+    if ( authSession ){
       redirect('/user')
     }
     else{

@@ -1,7 +1,7 @@
 "use server"
 
 
-import { getSessionDetails } from "@/app/api/mongodb/user";
+import { getUserDetails } from "@/app/api/mongodb/user";
 import { getMongoClient } from "@/app/lib/mongoClient";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -23,35 +23,43 @@ export const changeAge = async( formData: FormData )=>{
 
 
   const client = getMongoClient();
-  const session = await getSessionDetails();
+  const user = await getUserDetails();
 
-  if ( session?.age == newAge){
-    redirect(`/account/age?error=${"This is already your age"}`);
-  }
-
-  if ( session?.ageChanged ){
-    redirect(`/account/age?error=${"You can only update your age once. Contact support if there's an issue."}`);
-  }
-  try{
-
-    const users = client.db('the-amazing-social-app').collection('users');
-
-    await users.findOneAndUpdate(
-      {_id:session?._id},
-      { $set:{
-        age: newAge,
-        ageChanged: true
-      }}
-    );
-    revalidatePath('/');
-  }
-  catch(error){
-    if (error === "age used"){
-      redirect(`/account/age?error=${"age is already taken"}`);
+  if ( user ){
+    if ( user.age == newAge){
+      redirect(`/account/age?error=This is already your age`);
     }
-    redirect(`/account/age?error=${"Failed Updating"}`);
+  
+    if ( user.ageChanged ){
+      redirect(`/account/age?error=You can only update your age once. Contact support if there's an issue.`);
+    }
+    try{
+  
+      const users = client.db('the-amazing-social-app').collection('users');
+  
+      await users.findOneAndUpdate(
+        {_id:user._id},
+        { $set:{
+          age: newAge,
+          ageChanged: true
+        }}
+      );
+      revalidatePath('/');
+    }
+    catch(error){
+      if (error === "age used"){
+        redirect(`/account/age?error=age is already taken`);
+      }
+      redirect(`/account/age?error=Failed Updating`);
+    }
+    finally{
+      await client.close();
+    }
+
   }
-  finally{
-    await client.close();
+  else{
+    redirect(`/account/age?error=Unauthorized`)
   }
+
+  
 }

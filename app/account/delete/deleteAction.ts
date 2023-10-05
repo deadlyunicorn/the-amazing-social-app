@@ -1,6 +1,6 @@
 "use server"
 
-import { getSessionDetails } from "@/app/api/mongodb/user";
+import { getUserDetails } from "@/app/api/mongodb/user";
 import { getMongoClient } from "@/app/lib/mongoClient";
 import { ObjectId } from "mongodb";
 import { redirect } from "next/navigation";
@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 
 export const deleteAccountAction = async() => {
 
-  const userId = ( await getSessionDetails() )?._id;
+  const userId = ( await getUserDetails() )?._id;
 
   if ( !userId ){
     redirect('/account/delete?error=Not logged in');

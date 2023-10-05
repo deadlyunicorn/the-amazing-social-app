@@ -3,14 +3,14 @@ import { MultipleRowsWrapper } from "@/app/lib/components/FormWrapper";
 import { SubmitButtonClient } from "@/app/lib/components/SubmitButtonClient";
 import { redirect } from "next/navigation";
 import { deleteAccountAction } from "./deleteAction";
-import { getSessionDetails } from "@/app/api/mongodb/user";
+import { getUserDetails } from "@/app/api/mongodb/user";
 
 const DeleteAccountSection = async({searchParams}:{searchParams:{error:string}}) => {
   
 
 
-  const session = await getSessionDetails();
-  const email = session?.email;
+  const user = await getUserDetails();
+  const email = user?.email;
 
   if (email) return(
 

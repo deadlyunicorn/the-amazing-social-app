@@ -1,12 +1,9 @@
 "use server"
-import { SupabaseClient, createServerActionClient } from "@supabase/auth-helpers-nextjs";
 import { ObjectId } from "mongodb";
-import { cookies } from "next/headers";
-import { supabaseCredentials } from "../(supabase)/global";
 import { redirect } from "next/navigation";
 import { getMongoClient } from "../lib/mongoClient";
 import { revalidatePath } from "next/cache";
-import { userObject } from "../api/mongodb/user";
+import { getAuthSession, userObject } from "../api/mongodb/user";
 
 
 export const emailRegister = async (formData: FormData) => {
@@ -21,10 +18,8 @@ export const emailRegister = async (formData: FormData) => {
     throw 'Not a valid email';
   }
 
-  const supabase = createServerActionClient(
-    { cookies }, supabaseCredentials
-  )
-
+  
+  /*
   await serverActionRegister(supabase, email, password)
     .then(
       async (data) => {
@@ -37,6 +32,7 @@ export const emailRegister = async (formData: FormData) => {
 
       }
     )
+    */
 
 
 }
@@ -44,31 +40,35 @@ export const emailRegister = async (formData: FormData) => {
 
 
 export const serverActionRegister = async (
-  supabaseClient: SupabaseClient<any, "public", any>,
+  supabaseClient: any,//SupabaseClient<any, "public", any>,
   email: string,
   password: string
 
 ) => {
 
-  const supabase = supabaseClient;
+    redirect(`/register?error=${"Not yet implemented"}`)
 
-  return await supabase.auth.signUp({
-    email: email,
-    password: password
-  })
-    .then(data => {
-      if (data.error) {
-        throw data.error.message;
-      }
-      else {
-        return data;
-      }
-    })
-    .catch(
-      err => {
-        redirect(`/register?error=${err}`)
-      }
-    );
+
+  // const supabase = supabaseClient;
+
+  // return await supabase.auth.signUp({
+  //   email: email,
+  //   password: password
+  // })
+  //   .then(data => {
+  //     if (data.error) {
+  //       throw data.error.message;
+  //     }
+  //     else {
+  //       return data;
+  //     }
+  //   })
+  //   .catch(
+  //     err => {
+        // redirect(`/register?error=${er}`)
+
+  //     }
+  //   );
 }
 
 
@@ -78,47 +78,59 @@ export const addUserToMongoDB = async (formData: FormData) => {
   const client = getMongoClient();
 
   const date = new Date();
-  const supabase = createServerActionClient({ cookies }, supabaseCredentials);
-
-
   const username = String(formData.get('username'));
 
-
   let success = false;
+  
+  const authSession = await getAuthSession();
+
 
   try {
 
-    const email = String((await supabase.auth.getSession()).data.session?.user.email);
-    if (!email) { throw "Not logged in" };
 
-    const regex = /^[A-Za-z]([A-Za-z0-9\_])\w+/g;
+    if ( authSession && ( authSession.email || /* authSession.username ;to be implented) */ true) ){
 
-    if (username.length < 6) { throw 'Username too short' }
-    else if ( username.match(regex)?.length!==1 ) {throw 'Invalid username format'};
+        const regex = /^[A-Za-z]([A-Za-z0-9\_])\w+/g;
 
+        if ( username.length < 6) throw 'Username too short';
+        else if ( username.match(regex)?.length!==1 ) throw 'Invalid username format';
 
-    const age = Number(formData.get('age'));
-    if (age < 18 || age > 85) { throw "Invalid age" };
-    const YOB = date.getFullYear() - age;
+    }
+    else{
+      throw "Not logged in";
+    }
     
 
-
+    const age = Number(formData.get('age'));
+    if (age < 18 || age > 110) { throw "Invalid age" };
+    const YOB = date.getFullYear() - age;
+    
     await client.connect();
-
     const users = client.db('the-amazing-social-app').collection('users');
 
-    const user: userObject = {
-      _id: new ObjectId,
-      email: email,
-      age: YOB,
-      username: username,
-      lastUsernameUpdate: new Date(0),
-      ageChanged: false
-    }
 
-    await users.insertOne(user);
-    success = true;
-    revalidatePath('/');
+    if ( authSession.email ) {
+
+      const user: userObject = {
+        _id: new ObjectId,
+        email: authSession.email,
+        age: YOB,
+        username: username,
+        lastUsernameUpdate: new Date(0),
+        ageChanged: false
+      }
+  
+      await users.insertOne(user);
+      success = true;
+      revalidatePath('/');
+
+    }
+//    else if ( authSession.username){
+
+// }
+
+
+    
 
   }
   catch(err){

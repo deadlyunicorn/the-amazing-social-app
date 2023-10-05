@@ -2,18 +2,18 @@ import Link from "next/link";
 import { EmailPasswordForm } from "../lib/components/EmailPasswordForm";
 import { emailLogin } from "./loginAction";
 import { LogOutForm } from "../account/settings/LogoutForm";
-import { getSessionDetails } from "../api/mongodb/user";
+import { getUserDetails } from "../api/mongodb/user";
 
 export const LoginForm = async () => {
 
-  const session = await getSessionDetails();
+  const user = await getUserDetails();
   
   return (
-    session ?
+    user ?
 
     <section className="flex flex-col justify-between items-center"> 
         <h2>Hello there!</h2>
-        <p>You are logged in with {session.email}.</p>
+        <p>You are logged in with {user.email}.</p>
         <LogOutForm/>
     </section>
     

@@ -1,4 +1,4 @@
-import { getSessionDetails, userObject } from "@/app/api/mongodb/user";
+import { getUserDetails, userObject } from "@/app/api/mongodb/user";
 import { getMongoClient } from "@/app/lib/mongoClient";
 import { ObjectId } from "mongodb";
 import { revalidatePath } from "next/cache";
@@ -8,12 +8,12 @@ export const DELETE = async( req: NextRequest)=>{
   
   try{
 
-    const userSession = await getSessionDetails();
-    if ( ! userSession?._id ){
+    const user = await getUserDetails();
+    if ( ! ( user && user._id ) ){
       throw "Not logged in";
     }
     const request: deletionInfo = await req.json(); 
-    const mongoResponse = await mongoPostDelete( userSession, new ObjectId( request.postId) );
+    const mongoResponse = await mongoPostDelete( user, new ObjectId( request.postId) );
     
     if ( mongoResponse ){
         return NextResponse.json({ deleted: true });

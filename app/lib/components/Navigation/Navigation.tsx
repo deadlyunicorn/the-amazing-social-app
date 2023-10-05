@@ -1,9 +1,9 @@
-import { getSessionDetails } from "@/app/api/mongodb/user";
+import { getUserDetails } from "@/app/api/mongodb/user";
 import Link from "next/link"
 
 const NavigationBar = async() => {
 
-  const user = await getSessionDetails();
+  const user = await getUserDetails();
 
   return(
 

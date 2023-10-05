@@ -3,12 +3,12 @@ import { MultipleRowsWrapper } from "@/app/lib/components/FormWrapper";
 import { redirect } from "next/navigation";
 import { SubmitButtonClient } from "@/app/lib/components/SubmitButtonClient";
 import { changeAge } from "./ageAction";
-import { getSessionDetails } from "@/app/api/mongodb/user";
+import { getUserDetails } from "@/app/api/mongodb/user";
 
 const ChangeAgePage = async({searchParams}:{searchParams:{error:string}}) => {
 
-  const sessionDetails = await getSessionDetails();
-  if ( !sessionDetails ){
+  const user = await getUserDetails();
+  if ( !user ){
     redirect('/user');
   }
   
@@ -18,7 +18,7 @@ const ChangeAgePage = async({searchParams}:{searchParams:{error:string}}) => {
   <MultipleRowsWrapper>
   <section>
     <h3 className="text-center">Your current birth year is set to: 
-      <br/>{sessionDetails.age}
+      <br/>{user.age}
     </h3>
     
     <form
