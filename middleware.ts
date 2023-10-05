@@ -1,48 +1,63 @@
 import { NextResponse } from 'next/server'
 import { NextRequest } from 'next/server'
-import { getAuthSession, getUserDetails } from './app/api/mongodb/user';
-import { redirect } from 'next/navigation';
+import { userObject } from './app/api/mongodb/user/user';
+import { headers } from 'next/headers';
+import { authSession } from './app/api/auth/types/session';
 
 export async function middleware(req: NextRequest) {
-  
-  //Account settings page: if user isn't logged in redirect them to /login (if they access any of the /account/[subdomains])
-  //Implement it after you add Auth.js support.
 
-  if( req.nextUrl.pathname == "/" ){
-    return NextResponse.redirect(`${process.env.SERVER_URL}/about`);
-  }
-  else if ( req.nextUrl.pathname == "/user/" ){
+  switch ( req.nextUrl.pathname ){
 
-    //@ts-ignore
-    const authSession = ( await getAuthSession() );
+    case "/":
 
-    if ( authSession ){
-
-      const user = await getUserDetails();
-
+      return NextResponse.redirect(`${process.env.SERVER_URL}/about`);
+      break;
+    // case "/user":
+    case "/user":
       const error = req.nextUrl.searchParams.get("error");
-      if ( user ){
+      const headerList = headers();
 
-        const username = user.username
-        if ( error ){
-          redirect(`/user/${ username }?error=${error}`);
-        }
+      const authHeader   = String(headerList.get('authorization'));
+      const cookieHeader = String(headerList.get('cookie'));
+
+      const authSession = await fetch(`${process.env.SERVER_URL}/api/auth/session`,{
+        headers: [
+          ["cookie", cookieHeader],
+          ["authorization",authHeader]
+        ],
+        cache:"no-store"
+      })
+      .then( async( res ) => (
+        res.ok? await res.json() as authSession :null
+      ));
+
+      if ( authSession ){
+
+        const user: userObject|null = await fetch(`${process.env.SERVER_URL}/api/mongodb/user/${authSession.user.id}`,
+        {cache:"no-store"})
+          .then( async(res)=> res.ok? await res.json() :null );
   
-        redirect(`/user/${ username }`);
+        if ( user ){
+  
+          const username = user.username
+          if ( error ){
+            return NextResponse.redirect(`${process.env.SERVER_URL}/user/${ username }?error=${error}`);
+          }
+          return NextResponse.redirect(`${process.env.SERVER_URL}/user/${ username }`);
+        }
+        else{
+  
+          const id = authSession.user.id;
+          // TODO const username = authSession.username; to be implemented
+          if (error){
+            return NextResponse.redirect(`${process.env.SERVER_URL}/user/${ id /*|| username*/ }?error=${error}`);
+          }
+          return NextResponse.redirect(`${process.env.SERVER_URL}/user/${ id /*|| username*/ }`);
+        }
       }
       else{
-
-        const email = authSession.email;
-        // TODO const username = authSession.username; to be implemented
-        if (error){
-          redirect(`/user/${ email /*|| username*/ }?error=${error}`);
-        }
-        redirect(`/user/${ email /*|| username*/ }`);
+        return NextResponse.redirect(`${process.env.SERVER_URL}/login`);
       }
-    }
-    else{
-      redirect(`/login`);
-    }
+      break;
   }
-
 }
