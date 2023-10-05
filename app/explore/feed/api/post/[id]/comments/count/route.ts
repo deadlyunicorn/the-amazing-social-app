@@ -19,7 +19,7 @@ const getCount = async( postId:string ) => {
   const client = getMongoClient();
   try {
 
-    const comments = client.db('the-amazing-social-app').collection('comments');
+    const comments = client.db('the-amazing-social-app-v3').collection('comments');
 
     const commentCount = await comments.countDocuments({postId: new ObjectId(postId)});
 

@@ -1,4 +1,4 @@
-import { getUserDetails, userObject } from "@/app/api/mongodb/user";
+import { getUserDetails, userObject } from "@/app/api/mongodb/user/user";
 import { getMongoClient } from "@/app/lib/mongoClient";
 import { ObjectId } from "mongodb";
 import { revalidatePath } from "next/cache";
@@ -36,7 +36,7 @@ const mongoPostDelete = async( userSession: userObject , postId: ObjectId ) => {
 
   const client = getMongoClient();
     const posts = client
-      .db('the-amazing-social-app')
+      .db('the-amazing-social-app-v3')
       .collection('posts');
 
 

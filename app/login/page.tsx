@@ -3,7 +3,7 @@ import { ErrorSection } from "@/app/lib/components/ErrorSection"
 import { MultipleRowsWrapper } from "@/app/lib/components/FormWrapper"
 import { redirect } from "next/navigation"
 import { LoginForm } from "./loginForm"
-import { getAuthSession } from "../api/mongodb/user"
+import { getAuthSession } from "../api/mongodb/user/user"
 
 const LoginPage = async(
   { searchParams }: {

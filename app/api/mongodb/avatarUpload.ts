@@ -9,7 +9,7 @@ export const setAvatarLink = async( username : string, url : string ) : Promise 
   try {
     await client.connect();
     
-    const users = client.db('the-amazing-social-app').collection('users');
+    const users = client.db('the-amazing-social-app-v3').collection('users');
 
     await users.updateOne({username:username},{$set:{avatarSrc:url}})
       .then(

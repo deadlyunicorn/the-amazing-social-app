@@ -1,9 +1,9 @@
 "use server"
 
-import { putDescription } from "@/app/api/mongodb/description";
-import { getUserDetails } from "@/app/api/mongodb/user";
+import { getUserDetails } from "@/app/api/mongodb/user/user";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { putDescription } from "./description";
 
 export const handleDescriptionForm = async(formData:FormData) => {
 

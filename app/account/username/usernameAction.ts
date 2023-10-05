@@ -1,4 +1,4 @@
-import { getUserDetails } from "@/app/api/mongodb/user";
+import { getUserDetails } from "@/app/api/mongodb/user/user";
 import { getMongoClient } from "@/app/lib/mongoClient";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -33,7 +33,7 @@ export const changeUsername = async( formData: FormData )=>{
     }
     try{
   
-      const users = client.db('the-amazing-social-app').collection('users');
+      const users = client.db('the-amazing-social-app-v3').collection('users');
       await users.findOne({username:newUsername})
       .then( res => {
         if (res){

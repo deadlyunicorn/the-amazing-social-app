@@ -4,7 +4,7 @@ import { ChangeProfilePicture } from "./ChangeAvatar";
 import { UserDescription } from "./UserDescription";
 import { Suspense } from "react";
 import { withRetry } from "@/app/lib/retry";
-import { userObject } from "@/app/api/mongodb/user";
+import { userObject } from "@/app/api/mongodb/user/user";
 import { getPosts } from "@/app/explore/feed/api/mongodb/getPosts";
 import { ImageComponent } from "@/app/lib/components/ImageComponent";
 import { DeletePostComponent } from "@/app/explore/feed/components/postComponent/deletePostComponent";

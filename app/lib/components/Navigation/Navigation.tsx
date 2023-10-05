@@ -1,4 +1,4 @@
-import { getUserDetails } from "@/app/api/mongodb/user";
+import { getUserDetails } from "@/app/api/mongodb/user/user";
 import Link from "next/link"
 
 const NavigationBar = async() => {

@@ -3,7 +3,7 @@ import { MongoClient, ServerApiVersion, ObjectId, Collection, AggregationCursor 
 import { postLimit } from "../../../../lib/postLimit";
 import { redirect } from "next/navigation";
 import { getMongoClient } from "@/app/lib/mongoClient";
-import { getUserInfo } from "@/app/api/mongodb/user";
+import { getUserInfo } from "@/app/api/mongodb/user/user";
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 
 
@@ -30,7 +30,7 @@ export const getPosts = async (
 
 
     try {
-      const posts = client.db('the-amazing-social-app').collection('posts');
+      const posts = client.db('the-amazing-social-app-v3').collection('posts');
 
 
       // return await 

@@ -3,7 +3,7 @@ import { MultipleRowsWrapper } from "@/app/lib/components/FormWrapper";
 import { SubmitButtonClient } from "@/app/lib/components/SubmitButtonClient";
 import { redirect } from "next/navigation";
 import { deleteAccountAction } from "./deleteAction";
-import { getUserDetails } from "@/app/api/mongodb/user";
+import { getUserDetails } from "@/app/api/mongodb/user/user";
 
 const DeleteAccountSection = async({searchParams}:{searchParams:{error:string}}) => {
   

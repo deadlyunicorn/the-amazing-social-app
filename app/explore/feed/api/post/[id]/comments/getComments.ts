@@ -14,7 +14,7 @@ export const commentGet = async (postId: string, page: number):Promise<commentSe
 
   try {
 
-    const comments = client.db('the-amazing-social-app').collection('comments');
+    const comments = client.db('the-amazing-social-app-v3').collection('comments');
 
     const commentIterator = comments.aggregate([{
         $match:{

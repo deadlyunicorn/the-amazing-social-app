@@ -4,7 +4,7 @@ import { getMongoClient } from "@/app/lib/mongoClient";
 import { ObjectId } from "mongodb";
 import { redirect } from "next/navigation";
 import { commentServer } from "./getComments";
-import { getUserDetails } from "@/app/api/mongodb/user";
+import { getUserDetails } from "@/app/api/mongodb/user/user";
 
 export const commentPost = async (postId: string, commentContent: string) => {
 
@@ -21,8 +21,8 @@ export const commentPost = async (postId: string, commentContent: string) => {
 
     session.startTransaction();
 
-    const posts = client.db('the-amazing-social-app').collection('posts');
-    const comments = client.db('the-amazing-social-app').collection('comments');
+    const posts = client.db('the-amazing-social-app-v3').collection('posts');
+    const comments = client.db('the-amazing-social-app-v3').collection('comments');
 
 
     const commentId = new ObjectId()

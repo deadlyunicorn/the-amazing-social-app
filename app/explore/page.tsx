@@ -8,7 +8,7 @@ import { ReloadPageComponent } from "../lib/components/reloadPageComponent";
 import { getPostsPageLimit } from "../lib/postLimit";
 import { withRetry } from "../lib/retry";
 import { FeedClientWithMonitor } from "./feed/feedClientWithMonitor/viewMonitor";
-import { getUserDetails, userObject } from "../api/mongodb/user";
+import { getUserDetails, userObject } from "../api/mongodb/user/user";
 
 const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } }) => {
 

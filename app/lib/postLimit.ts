@@ -12,7 +12,7 @@ export const getPostsPageLimit = async () => {
     
     await client.connect();
 
-    const posts = client.db('the-amazing-social-app').collection('posts');
+    const posts = client.db('the-amazing-social-app-v3').collection('posts');
 
     const postIterator = posts.aggregate([
       { $match: { verified:true } }, 

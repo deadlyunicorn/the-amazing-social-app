@@ -2,8 +2,8 @@ import { getMongoClient } from "@/app/lib/mongoClient";
 import { withRetry } from "@/app/lib/retry";
 import { ObjectId } from "mongodb";
 import { getServerSession } from "next-auth";
-import { cookies } from "next/headers";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "../../auth/[...nextauth]/route";
+import { authSession } from "../../auth/types/session";
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 
 
@@ -23,7 +23,7 @@ export const getUserInfo = async (
 
 
   try {
-    const users = client.db('the-amazing-social-app').collection('users');
+    const users = client.db('the-amazing-social-app-v3').collection('users');
 
     const result: userObject | null = await users.findOne(query)
       .then(
@@ -63,25 +63,16 @@ export type userObject = {
 export const getUserDetails = async (): Promise<userObject|null>   => {
 
   //@ts-ignore
-  const session = await getServerSession( authOptions );
-  if ( session && session.user ){
-    if ( session.user.name ){
+  const authSession = await getAuthSession();
+  if ( authSession && authSession.id ){
+
 
       //@ts-ignore
-      const user = await withRetry(getUserInfo,5,[{ username: session.user.name }])
-      .catch(err=>null);
+    const user = await withRetry(getUserInfo,5,[{ _id: authSession.id }])
+    .catch(err=>null);
 
-      return user;
-
-    }
-    else if ( session.user.email ){
-
-      //@ts-ignore
-      const user = await withRetry(getUserInfo,5,[{ username: session.user.email }])
-      .catch(err=>null);
-
-      return user;
-    }
+    return user;
+ 
   }
   else {
     return null;
@@ -93,8 +84,9 @@ export const getUserDetails = async (): Promise<userObject|null>   => {
   return user;
 };
 
-export const getAuthSession = async () => (
+export const getAuthSession = async () => {
 
   //@ts-ignore
-  (await getServerSession( authOptions ))?.user
-)
+  const session: authSession = await getServerSession( authOptions );
+  return session?.user;
+}

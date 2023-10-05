@@ -3,7 +3,7 @@ import { MultipleRowsWrapper } from "@/app/lib/components/FormWrapper";
 import { redirect } from "next/navigation";
 import { SubmitButtonClient } from "@/app/lib/components/SubmitButtonClient";
 import { changeAge } from "./ageAction";
-import { getUserDetails } from "@/app/api/mongodb/user";
+import { getUserDetails } from "@/app/api/mongodb/user/user";
 
 const ChangeAgePage = async({searchParams}:{searchParams:{error:string}}) => {
 

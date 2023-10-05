@@ -2,7 +2,7 @@
 import { MongoClient, InsertOneResult } from "mongodb";
 import { userPost } from "../../../feed/api/mongodb/getPosts";
 import { redirect } from "next/navigation";
-import { getUserDetails } from "@/app/api/mongodb/user";
+import { getUserDetails } from "@/app/api/mongodb/user/user";
 
 
 
@@ -15,7 +15,7 @@ export const postPost = async (content:{textContent:string,imageURL?:string},cli
       redirect('/login?error=Network error, check if you are logged in');
     }
 
-    const posts = client.db('the-amazing-social-app').collection('posts');
+    const posts = client.db('the-amazing-social-app-v3').collection('posts');
 
 
     //@ts-ignore _id is generated automatically

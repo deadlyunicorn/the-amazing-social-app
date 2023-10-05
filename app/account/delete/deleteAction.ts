@@ -1,6 +1,6 @@
 "use server"
 
-import { getUserDetails } from "@/app/api/mongodb/user";
+import { getUserDetails } from "@/app/api/mongodb/user/user";
 import { getMongoClient } from "@/app/lib/mongoClient";
 import { ObjectId } from "mongodb";
 import { redirect } from "next/navigation";
@@ -19,7 +19,7 @@ export const deleteAccountAction = async() => {
   const mongoSession = client.startSession();
 
   
-  const database = client.db('the-amazing-social-app');
+  const database = client.db('the-amazing-social-app-v3');
 
   const comments = database.collection('comments');
   const posts = database.collection('posts');

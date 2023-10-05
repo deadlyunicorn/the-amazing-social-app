@@ -2,7 +2,7 @@
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { getBinaryData } from "@/app/lib/getBinaryData";
-import { getUserDetails } from "@/app/api/mongodb/user";
+import { getUserDetails } from "@/app/api/mongodb/user/user";
 import { setAvatarLink } from "@/app/api/mongodb/avatarUpload";
 import { deleteAvatarAws, uploadToAwsAvatars } from "@/app/api/aws/images";
 import { formatDateUTC } from "@/app/lib/formatDate";
