@@ -62,15 +62,13 @@ export default function About(){
 
       </div>
 
-      <h1>Checklist</h1>
-
       <div className="flex justify-center">
         <Link
           className="w-fit"
           target="_blank" rel="noopener noreferrer"
           tabIndex={0}
-          href="https://github.com/deadly-unicorn/mongodb-social-app-1/issues">
-          Github
+          href="https://github.com/deadlyunicorn/the-amazing-social-app">
+          Github Page
         </Link>
       </div>
     </>
