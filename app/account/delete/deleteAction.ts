@@ -1,7 +1,7 @@
 "use server"
 
 import { getUserDetails } from "@/app/api/mongodb/user/user";
-import { getMongoClient } from "@/app/lib/mongoClient";
+import { mongoClient } from "@/app/api/mongodb/client";
 import { ObjectId } from "mongodb";
 import { redirect } from "next/navigation";
 
@@ -15,7 +15,7 @@ export const deleteAccountAction = async() => {
   }
   
 
-  const client = getMongoClient();
+  const client = mongoClient;
   const mongoSession = client.startSession();
 
   
@@ -78,7 +78,6 @@ export const deleteAccountAction = async() => {
     redirect('/account/delete?error=Failed deleting user.');
   }
   finally{
-    await client.close();
     redirect('/');
   }
   

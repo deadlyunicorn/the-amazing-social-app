@@ -1,6 +1,6 @@
 //use bun or deno
 
-import { getMongoClient } from "@/app/lib/mongoClient";
+import { mongoClient } from "@/app/api/mongodb/client";
 import { MongoClient, ServerApiVersion } from "mongodb";
 import { argv } from "process";
 
@@ -8,7 +8,7 @@ const username = argv[2];
 
 export const verifyPosts = async () : Promise<any> => {
 
-  const client = getMongoClient();
+  const client = mongoClient;
 
 
 

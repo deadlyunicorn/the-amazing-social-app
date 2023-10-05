@@ -1,6 +1,6 @@
 "use server"
 
-import { getMongoClient } from "@/app/lib/mongoClient";
+import { mongoClient } from "@/app/api/mongodb/client";
 import { ObjectId } from "mongodb";
 import { redirect } from "next/navigation";
 import { commentServer } from "./getComments";
@@ -9,7 +9,7 @@ import { getUserDetails } from "@/app/api/mongodb/user/user";
 export const commentPost = async (postId: string, commentContent: string) => {
 
 
-  const client = getMongoClient();
+  const client = mongoClient;
 
   const user = await getUserDetails();
   if (!user) { redirect('/login?error=Network error, check if you are logged in'); }
@@ -47,11 +47,7 @@ export const commentPost = async (postId: string, commentContent: string) => {
   catch (err) {
     redirect(`/explore?error=${err}`);
   }
-  finally {
 
-    await client.close();
-
-  }
 
 
 }

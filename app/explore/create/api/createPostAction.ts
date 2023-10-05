@@ -7,13 +7,13 @@ import { getBinaryData } from "../../../lib/getBinaryData";
 import { uploadToAwsPosts } from "../../feed/api/aws/uploadPostImage";
 import { formatDateUTC } from "../../../lib/formatDate";
 import { MongoClient } from "mongodb";
-import { getMongoClient } from "@/app/lib/mongoClient";
+import { mongoClient } from "@/app/api/mongodb/client";
 
 export const handleCreatePost = async (formData: FormData) => { 
 
   //validate 
 
-  const client = getMongoClient();
+  const client = mongoClient;
   const textContent = formData.get('post');
 
   //@ts-ignore
@@ -58,8 +58,6 @@ export const handleCreatePost = async (formData: FormData) => {
   catch (err) {
     redirect(`/explore?error=${err}`);
   }
-  finally{
-    await client.close();
-  }
+  
 
 }

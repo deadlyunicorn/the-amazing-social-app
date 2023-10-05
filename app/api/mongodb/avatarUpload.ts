@@ -1,14 +1,13 @@
-import { getMongoClient } from "@/app/lib/mongoClient";
+import { mongoClient } from "@/app/api/mongodb/client";
+import { redirect } from "next/navigation";
 
 
 
 export const setAvatarLink = async( username : string, url : string ) : Promise <void>=>{
-  const client = getMongoClient();
+  const client = mongoClient;
   
   
   try {
-    await client.connect();
-    
     const users = client.db('the-amazing-social-app-v3').collection('users');
 
     await users.updateOne({username:username},{$set:{avatarSrc:url}})
@@ -21,11 +20,8 @@ export const setAvatarLink = async( username : string, url : string ) : Promise 
       );
 
 
-  } finally {
-
-      await client.close();
-
-    // Ensures that the client will close when you finish/error
-
+  }
+  catch(err){
+    redirect(`/user/${username}?error=${err}`)
   }
 }

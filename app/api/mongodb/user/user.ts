@@ -1,4 +1,4 @@
-import { getMongoClient } from "@/app/lib/mongoClient";
+import { mongoClient } from "@/app/api/mongodb/client";
 import { withRetry } from "@/app/lib/retry";
 import { ObjectId } from "mongodb";
 import { getServerSession } from "next-auth";
@@ -19,32 +19,23 @@ export const getUserInfo = async (
 ): Promise<userObject | null> => {
 
 
-  const client = getMongoClient();
+  const client = mongoClient;
 
 
-  try {
-    const users = client.db('the-amazing-social-app-v3').collection('users');
+  const users = client.db('the-amazing-social-app-v3').collection('users');
 
-    const result: userObject | null = await users.findOne(query)
-      .then(
-        data => {
-          if (data != null) {
-            return data as userObject;
-          }
-          else { return null }
+  const result: userObject | null = await users.findOne(query)
+    .then(
+      data => {
+        if (data != null) {
+          return data as userObject;
         }
-      );
-    return result;
+        else { return null }
+      }
+    );
+  return result;
 
 
-  }
-  finally {
-
-    await client.close();
-
-    // Ensures that the client will close when you finish/error
-
-  }
 }
 
 export type userObject = {

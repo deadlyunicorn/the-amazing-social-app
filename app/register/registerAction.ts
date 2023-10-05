@@ -1,7 +1,6 @@
 "use server"
 import { ObjectId } from "mongodb";
 import { redirect } from "next/navigation";
-import { getMongoClient } from "../lib/mongoClient";
 import { revalidatePath } from "next/cache";
 import { getAuthSession, userObject } from "../api/mongodb/user/user";
 
@@ -75,7 +74,7 @@ export const serverActionRegister = async (
 export const addUserToMongoDB = async (formData: FormData) => {
 
 
-  const client = getMongoClient();
+  const client = mongoClient;
 
   const date = new Date();
   const username = String(formData.get('username'));
@@ -105,7 +104,6 @@ export const addUserToMongoDB = async (formData: FormData) => {
     if (age < 18 || age > 110) { throw "Invalid age" };
     const YOB = date.getFullYear() - age;
     
-    await client.connect();
     const users = client.db('the-amazing-social-app-v3').collection('users');
 
 

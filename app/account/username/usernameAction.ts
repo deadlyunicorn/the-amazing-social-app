@@ -1,5 +1,5 @@
 import { getUserDetails } from "@/app/api/mongodb/user/user";
-import { getMongoClient } from "@/app/lib/mongoClient";
+import { mongoClient } from "@/app/api/mongodb/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import * as zod from "zod"
@@ -19,7 +19,7 @@ export const changeUsername = async( formData: FormData )=>{
     .then( username => username.toLowerCase() );
 
 
-  const client = getMongoClient();
+  const client = mongoClient;
   const user = await getUserDetails();
 
   if ( user ){
@@ -55,9 +55,6 @@ export const changeUsername = async( formData: FormData )=>{
         redirect(`/account/username?error=${"Username is already taken"}`);
       }
       redirect(`/account/username?error=${"Failed Updating"}`);
-    }
-    finally{
-      await client.close();
     }
 
   }

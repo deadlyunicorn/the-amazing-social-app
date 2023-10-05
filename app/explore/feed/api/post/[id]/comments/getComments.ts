@@ -1,6 +1,6 @@
 "use server"
 
-import { getMongoClient } from "@/app/lib/mongoClient";
+import { mongoClient } from "@/app/api/mongodb/client";
 import { ObjectId } from "mongodb";
 import { redirect } from "next/navigation";
 
@@ -9,7 +9,7 @@ const limit = 1;
 export const commentGet = async (postId: string, page: number):Promise<commentServer[] | null> => {
 
 
-  const client = getMongoClient();
+  const client = mongoClient;
 
 
   try {
@@ -50,9 +50,7 @@ export const commentGet = async (postId: string, page: number):Promise<commentSe
   catch (err) {
     redirect(`/explore?error=${err}`);
   }
-  finally {
-    await client.close();
-  }
+
 
 
 }

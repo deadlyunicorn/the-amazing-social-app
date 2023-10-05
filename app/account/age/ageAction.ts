@@ -1,8 +1,8 @@
 "use server"
 
 
+import { mongoClient } from "@/app/api/mongodb/client";
 import { getUserDetails } from "@/app/api/mongodb/user/user";
-import { getMongoClient } from "@/app/lib/mongoClient";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import * as zod from "zod"
@@ -22,7 +22,7 @@ export const changeAge = async( formData: FormData )=>{
     });
 
 
-  const client = getMongoClient();
+  const client = mongoClient;
   const user = await getUserDetails();
 
   if ( user ){
@@ -51,9 +51,6 @@ export const changeAge = async( formData: FormData )=>{
         redirect(`/account/age?error=age is already taken`);
       }
       redirect(`/account/age?error=Failed Updating`);
-    }
-    finally{
-      await client.close();
     }
 
   }
