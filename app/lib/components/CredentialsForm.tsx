@@ -1,6 +1,6 @@
 import { SubmitButtonClient } from "./SubmitButtonClient"
 
-export const EmailPasswordForm = (
+export const CredentialsForm = (
   { action, formHeader }: {
     action: (formData: FormData) => Promise<void>,
     formHeader: string
@@ -19,9 +19,9 @@ export const EmailPasswordForm = (
         className="flex flex-col gap-2 px-3 py-2">
 
         <input
-          name="email"
+          name="username"
           className="py-1 px-2"
-          placeholder="Email" type={"email"} minLength={10} required />
+          placeholder="Username" type={"text"} minLength={6} required />
 
         <input
           name="password"
