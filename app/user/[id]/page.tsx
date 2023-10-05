@@ -1,12 +1,9 @@
 import { MultipleRowsWrapper } from "@/app/lib/components/FormWrapper"
-import { supabaseCredentials } from "@/app/(supabase)/global"
-import {  createServerComponentClient } from "@supabase/auth-helpers-nextjs"
-import { cookies } from "next/headers"
 import { UserInfoComponent } from "./UserInfo/UserInfoComponent"
 import { ProfileCreationForm } from "./CreateProfile/ProfileCreationForm"
 import { ErrorSection } from "@/app/lib/components/ErrorSection"
 import { withRetry } from "@/app/lib/retry"
-import { getUserInfo } from "@/app/api/mongodb/user"
+import { getAuthSession, getUserInfo } from "@/app/api/mongodb/user/user"
 
 export const generateMetadata = ({params}:{params:{id:string}}) =>  {
 
@@ -28,11 +25,7 @@ const UserProfile = async (
 ) => {
 
 
-  const supabase = createServerComponentClient({cookies},supabaseCredentials);
-  
-  
-
-  const supabaseUser = (await supabase.auth.getUser()).data.user;
+  const authSession = await getAuthSession();
 
   // params.id
   //@ts-ignore
@@ -46,7 +39,7 @@ const UserProfile = async (
   });
 
 
-  const ownsProfile = supabaseUser && ( supabaseUser?.email == profileInfo?.email ) || ( supabaseUser?.id == params.id );
+  const ownsProfile = authSession && ( authSession.email == profileInfo?.email ) || ( authSession?.id == params.id );
 
   return (
     <MultipleRowsWrapper>
@@ -80,7 +73,7 @@ const UserProfile = async (
             <br/>(no pun intended)
 
 
-            <ProfileCreationForm email={String(supabaseUser)}/>
+            <ProfileCreationForm email={String(authSession)}/>
 
           </section>
 
