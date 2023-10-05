@@ -9,7 +9,7 @@ export default function About(){
       </h1>
 
       <p>
-        Welcome to the Social Appv2!
+        Welcome to the Social Appv3!
         <br/>A personal project of&nbsp;
         <Link 
           target="_blank"
@@ -47,13 +47,16 @@ export default function About(){
         list-inside list-disc 
         text-left">
           <li>
-            Next.js 13 (React Framework)
+            Next.js
           </li>
           <li>
-            TailwindCSS
+            Auth.js
           </li>
           <li>
-            <s>Realm</s> Supabase
+            MongoDB
+          </li>
+          <li>
+            AWS S3
           </li>
         </ul>
 
