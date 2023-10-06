@@ -78,14 +78,10 @@ export const getUserDetails = async (): Promise<userObject|null>   => {
   */
  
   }
-  else {
-    return null;
-  }
   
   //@ts-ignore
-  
+  return null
 
-  return user;
 };
 
 export const getAuthSession = async () => {
