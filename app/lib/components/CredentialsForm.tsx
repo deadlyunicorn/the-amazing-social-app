@@ -1,3 +1,4 @@
+import { registerAction } from "@/app/api/auth/credentials/register/registerAction";
 import { SubmitButtonClient } from "./SubmitButtonClient";
 
 export const CredentialsForm = async ( { action, csrfToken } : { action: string, csrfToken: string } ) => {
@@ -26,7 +27,7 @@ export const CredentialsForm = async ( { action, csrfToken } : { action: string,
           method="POST"
           action={loginForm
             ?`/api/auth/callback/credentials`
-            :`/api/auth/credentials/register`}
+            :registerAction}
           className="flex flex-col gap-2 px-3 py-2">
 
           <input
@@ -38,6 +39,22 @@ export const CredentialsForm = async ( { action, csrfToken } : { action: string,
             name="password"
             className="py-1 px-2"
             placeholder="Password" type={"password"} minLength={6} maxLength={24} required />
+
+          {!loginForm &&
+          <div className="flex gap-x-2 items-center place-self-center">
+            <label 
+              className="text-white"
+              htmlFor="age">
+              Age:
+            </label>
+            <input
+              id="age"
+              name="age"
+              type="number"
+              className="py-1 px-2 w-16"
+              placeholder="18+" min={18} max={110} required />
+          </div>
+          }
 
           <input
             name="csrfToken"
