@@ -4,7 +4,7 @@ import { getUserDetails } from "@/app/api/mongodb/user/user";
 import { mongoClient } from "@/app/api/mongodb/client";
 import { ObjectId } from "mongodb";
 import { redirect } from "next/navigation";
-
+import { cookies } from "next/headers";
 
 export const deleteAccountAction = async() => {
 
@@ -15,7 +15,6 @@ export const deleteAccountAction = async() => {
   if ( !userId ){
     redirect('/account/delete?error=Not logged in');
   }
-  
 
   const client = mongoClient;
   const mongoSession = client.startSession();
@@ -84,8 +83,12 @@ export const deleteAccountAction = async() => {
     const verificationTokens = authDatabase.collection('verification_tokens');
     await verificationTokens.deleteMany({ identifier: user.email });
     
+    cookies().delete('next-auth.csrf-token'); 
+    cookies().delete('next-auth.session-token'); 
+
     await mongoSession.commitTransaction();
 
+    
   }
   catch( err ){
     redirect('/account/delete?error=Failed deleting user.');
