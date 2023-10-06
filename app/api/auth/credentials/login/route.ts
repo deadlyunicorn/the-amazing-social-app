@@ -44,7 +44,7 @@ export const POST = async ( request: NextRequest ) => {
         const customUser: customUser={
           id: mongoResult._id.toString(),
           username: username,
-        }
+        };
 
         return NextResponse.json( customUser );
       }

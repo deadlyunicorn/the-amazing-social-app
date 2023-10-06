@@ -52,8 +52,9 @@ export const getUserDetails = async (): Promise<userObject|null>   => {
   //@ts-ignore
   const authSession = await getAuthSession();
 
-  if ( authSession && authSession.id  ){
+  if ( authSession   ){
 
+    if ( authSession.id ) {
 
       //@ts-ignore
     const user = await withRetry(getUserInfo,5,[{ _id: new ObjectId(authSession.id) }])
@@ -61,6 +62,20 @@ export const getUserDetails = async (): Promise<userObject|null>   => {
 
 
     return user;
+  }
+  /*
+  else if ( authSession.name ){
+    //@ts-ignore
+    const id = authSession.name.split('^')[1];
+
+    return id //@ts-ignore
+      ? await withRetry(getUserInfo,5,[{ _id: id }])
+        .catch(err=>null)
+      : null;
+
+  }
+
+  */
  
   }
   else {
@@ -77,6 +92,7 @@ export const getAuthSession = async () => {
 
   //@ts-ignore
   const session: authSession = await getServerSession( authOptions );
+  // console.log(session)
   const creds = session?.user.name?.split("^");
   const credsUsername = creds? creds[0] :null;
   const credsId = creds? creds[1] :null;
