@@ -1,6 +1,6 @@
 {
-  "name": "social-app",
-  "version": "0.1.0",
+  "name": "the-amazing-social-app",
+  "version": "3.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
