@@ -4,7 +4,10 @@ const nextConfig = {
     serverActions:true,
   },
   images:{
-    domains:['the-amazing-social-app.s3.eu-central-1.amazonaws.com']
+    domains:[
+      'the-amazing-social-app.s3.eu-central-1.amazonaws.com',
+      'lh3.googleusercontent.com',
+      'avatars.githubusercontent.com']
   }
 }
 

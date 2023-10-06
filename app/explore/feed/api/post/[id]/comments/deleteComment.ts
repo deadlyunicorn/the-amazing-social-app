@@ -1,15 +1,15 @@
 "use server"
 
-import { getSessionDetails } from "@/app/api/mongodb/user";
-import { getMongoClient } from "@/app/lib/mongoClient";
+import { getUserDetails } from "@/app/api/mongodb/user/user";
+import { mongoClient } from "@/app/api/mongodb/client";
 import { ObjectId } from "mongodb";
 import { redirect } from "next/navigation";
 
 export const deleteComment = async (postIdString: string, commentIdString: string) => {
 
-  const client = getMongoClient();
+  const client = mongoClient;
 
-  const user = await getSessionDetails();
+  const user = await getUserDetails();
   if (!user) { redirect('/login?error=Network error, check if you are logged in'); }
 
   const session = client.startSession();
@@ -19,8 +19,8 @@ export const deleteComment = async (postIdString: string, commentIdString: strin
 
     session.startTransaction();
 
-    const posts = client.db('the-amazing-social-app').collection('posts');
-    const comments = client.db('the-amazing-social-app').collection('comments');
+    const posts = client.db('the-amazing-social-app-v3').collection('posts');
+    const comments = client.db('the-amazing-social-app-v3').collection('comments');
 
 
     const commentId = new ObjectId(commentIdString);
@@ -52,11 +52,7 @@ export const deleteComment = async (postIdString: string, commentIdString: strin
   catch (err) {
     redirect(`/explore?error=${err}`);
   }
-  finally {
-
-    await client.close();
-
-  }
+ 
 
 
 }

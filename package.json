@@ -1,6 +1,6 @@
 {
-  "name": "social-app",
-  "version": "0.1.0",
+  "name": "the-amazing-social-app",
+  "version": "3.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,27 +9,30 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth/mongodb-adapter": "^2.0.1",
     "@aws-sdk/client-s3": "^3.412.0",
-    "@supabase/auth-helpers-nextjs": "^0.7.4",
+    "@sendgrid/mail": "^7.7.0",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.15",
+    "bcrypt": "^5.1.1",
     "encoding": "^0.1.13",
     "eslint": "8.49.0",
     "eslint-config-next": "13.4.19",
     "framer-motion": "^10.16.4",
-    "mongodb": "^6.0.0",
-    "next": "^13.5.3",
+    "mongodb": "^6.1.0",
+    "next": "^13.5.4",
+    "next-auth": "^4.23.2",
     "postcss": "8.4.31",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "sass": "^1.66.1",
-    "supabase": "^1.93.0",
     "tailwindcss": "3.3.3",
     "typescript": "5.2.2",
     "zod": "^3.22.3"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/node": "^20.6.0",
     "daisyui": "^3.7.7"
   }

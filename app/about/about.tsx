@@ -9,7 +9,7 @@ export default function About(){
       </h1>
 
       <p>
-        Welcome to the Social Appv2!
+        Welcome to the Social Appv3!
         <br/>A personal project of&nbsp;
         <Link 
           target="_blank"
@@ -47,27 +47,28 @@ export default function About(){
         list-inside list-disc 
         text-left">
           <li>
-            Next.js 13 (React Framework)
+            Next.js
           </li>
           <li>
-            TailwindCSS
+            Auth.js
           </li>
           <li>
-            <s>Realm</s> Supabase
+            MongoDB
+          </li>
+          <li>
+            AWS S3
           </li>
         </ul>
 
       </div>
-
-      <h1>Checklist</h1>
 
       <div className="flex justify-center">
         <Link
           className="w-fit"
           target="_blank" rel="noopener noreferrer"
           tabIndex={0}
-          href="https://github.com/deadly-unicorn/mongodb-social-app-1/issues">
-          Github
+          href="https://github.com/deadlyunicorn/the-amazing-social-app">
+          Github Page
         </Link>
       </div>
     </>

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { commentGet } from "../getComments";
 import { withRetry } from "@/app/lib/retry";
-import { getUserInfo } from "@/app/api/mongodb/user";
+import { getUserInfo } from "@/app/api/mongodb/user/user";
 
 export const GET = async (request:Request,context:{params:{id:string,page:string}}) =>{
 

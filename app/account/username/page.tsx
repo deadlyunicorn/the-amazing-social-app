@@ -3,12 +3,12 @@ import { MultipleRowsWrapper } from "@/app/lib/components/FormWrapper";
 import { redirect } from "next/navigation";
 import { changeUsername } from "./usernameAction";
 import { SubmitButtonClient } from "@/app/lib/components/SubmitButtonClient";
-import { getSessionDetails } from "@/app/api/mongodb/user";
+import { getUserDetails } from "@/app/api/mongodb/user/user";
 
 const ChangeUsernamePage = async({searchParams}:{searchParams:{error:string}}) => {
 
-  const sessionDetails = await getSessionDetails();
-  if ( !sessionDetails ){
+  const user = await getUserDetails();
+  if ( !user ){
     redirect('/user');
   }
   
@@ -17,7 +17,7 @@ const ChangeUsernamePage = async({searchParams}:{searchParams:{error:string}}) =
   <MultipleRowsWrapper>
   <section>
     <h3 className="text-center">Your current username is: 
-      <br/>{sessionDetails.username}
+      <br/>{user.username}
     </h3>
     
     <form

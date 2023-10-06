@@ -8,11 +8,11 @@ import { ReloadPageComponent } from "../lib/components/reloadPageComponent";
 import { getPostsPageLimit } from "../lib/postLimit";
 import { withRetry } from "../lib/retry";
 import { FeedClientWithMonitor } from "./feed/feedClientWithMonitor/viewMonitor";
-import { getSessionDetails, userObject } from "../api/mongodb/user";
+import { getUserDetails, userObject } from "../api/mongodb/user/user";
 
 const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } }) => {
 
-  const userDetails = userDetailsToClient(await getSessionDetails());
+  const userDetails = userDetailsToClient(await getUserDetails());
   const maxPages = await withRetry(getPostsPageLimit, 5,[]).catch(err=>null) || 0;
 
 
@@ -88,7 +88,7 @@ export default ExplorePage;
 export type userDetailsClient =  {
   _id: string;
   age: number;
-  email: string;
+  email: string|undefined;
   username: string;
   avatarSrc?: string;
   description?: string;

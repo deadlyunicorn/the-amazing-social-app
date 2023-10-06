@@ -13,6 +13,8 @@ export const ImageInputStandalone = () => {
   useEffect(()=>{
     if (!pending){
       setTemp(undefined);
+      //@ts-ignore
+      document.getElementById('imgFile').value="";
     }
     
   },[pending])
@@ -28,7 +30,7 @@ export const ImageInputStandalone = () => {
           }
         }}
         required
-        className="hidden"
+        hidden
         id="imgFile"
         accept="image/*"
         name="imgFile"

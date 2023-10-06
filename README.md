@@ -1,19 +1,23 @@
-## Social App made possible with Supabase and MongoDB.
+## The Amazing Social App.
 
-Continuing my **Web dev** journey I am rebuilding some old project using new tools and new knoweledge!
+This project started for fun - as I was testing backend tools for the first time, 
+was put on hold for 4 months and is finally finished with the version 3.
+
+Main Tools used:
++ [NextJS](https://nextjs.org).
 + [MongoDB](https://cloud.mongodb.com).
-+ [Supabase](https://supabase.com).
++ [AuthJS](https://authjs.dev).
 
-This is going to be a social app by the end of it. People will be able to  
-login
-- [ ] Anonymously
-- [ ] With Email
-- [ ] With Google / Facebook
+Deployed with [Vercel](https://vercel.com/).
 
-They will also be able to 
-- [ ] Edit their account info
-- [ ] Logout
-- [ ] Delete their accounts
-- [ ] Add posts
-- [ ] Like and comment to other posts
+This is a mock social app. 
+People can login with OAuth or
+Register and Login with credentials.
+
+They can upload posts, comment, like, delete,
+They can edit their profiles ( Avatar & Description ),
+delete their profiles ( including all of their posts - comments etc.)
+and ( #soon ) chat with other people!
+
+Other tools used: Sendgrid, Bcrypt, TailwindCSS, Typescript, AWS S3, Framer Motion, Zod.
 

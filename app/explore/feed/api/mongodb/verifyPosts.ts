@@ -1,14 +1,13 @@
 //use bun or deno
 
-import { getMongoClient } from "@/app/lib/mongoClient";
-import { MongoClient, ServerApiVersion } from "mongodb";
+import { mongoClient } from "@/app/api/mongodb/client";
 import { argv } from "process";
 
 const username = argv[2];
 
 export const verifyPosts = async () : Promise<any> => {
 
-  const client = getMongoClient();
+  const client = mongoClient;
 
 
 
@@ -16,11 +15,11 @@ export const verifyPosts = async () : Promise<any> => {
   try {
 
 
-    const users = client.db('the-amazing-social-app').collection('users');
+    const users = client.db('the-amazing-social-app-v3').collection('users');
     const poster = await users.findOne({username:username});
     
 
-    const posts = client.db('the-amazing-social-app').collection('posts');
+    const posts = client.db('the-amazing-social-app-v3').collection('posts');
 
     const res = await posts.updateMany({created_by:poster?._id},{$set:{verified:true}});
 

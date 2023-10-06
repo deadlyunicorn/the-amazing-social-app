@@ -1,5 +1,5 @@
-import { getSessionDetails, userObject } from "@/app/api/mongodb/user";
-import { getMongoClient } from "@/app/lib/mongoClient";
+import { getUserDetails, userObject } from "@/app/api/mongodb/user/user";
+import { mongoClient } from "@/app/api/mongodb/client";
 import { ObjectId } from "mongodb";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
@@ -8,12 +8,12 @@ export const DELETE = async( req: NextRequest)=>{
   
   try{
 
-    const userSession = await getSessionDetails();
-    if ( ! userSession?._id ){
+    const user = await getUserDetails();
+    if ( ! ( user && user._id ) ){
       throw "Not logged in";
     }
     const request: deletionInfo = await req.json(); 
-    const mongoResponse = await mongoPostDelete( userSession, new ObjectId( request.postId) );
+    const mongoResponse = await mongoPostDelete( user, new ObjectId( request.postId) );
     
     if ( mongoResponse ){
         return NextResponse.json({ deleted: true });
@@ -34,9 +34,9 @@ type deletionInfo = {
 
 const mongoPostDelete = async( userSession: userObject , postId: ObjectId ) => {
 
-  const client = getMongoClient();
+  const client = mongoClient;
     const posts = client
-      .db('the-amazing-social-app')
+      .db('the-amazing-social-app-v3')
       .collection('posts');
 
 

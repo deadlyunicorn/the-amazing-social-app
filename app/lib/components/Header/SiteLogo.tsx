@@ -20,7 +20,7 @@ export const SiteLogo = () => (
         <span 
           className="
           text-sm absolute">
-            v2</span>
+            v3</span>
         </span>
 
       <svg 

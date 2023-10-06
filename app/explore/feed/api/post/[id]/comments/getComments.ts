@@ -1,6 +1,6 @@
 "use server"
 
-import { getMongoClient } from "@/app/lib/mongoClient";
+import { mongoClient } from "@/app/api/mongodb/client";
 import { ObjectId } from "mongodb";
 import { redirect } from "next/navigation";
 
@@ -9,12 +9,12 @@ const limit = 1;
 export const commentGet = async (postId: string, page: number):Promise<commentServer[] | null> => {
 
 
-  const client = getMongoClient();
+  const client = mongoClient;
 
 
   try {
 
-    const comments = client.db('the-amazing-social-app').collection('comments');
+    const comments = client.db('the-amazing-social-app-v3').collection('comments');
 
     const commentIterator = comments.aggregate([{
         $match:{
@@ -50,9 +50,7 @@ export const commentGet = async (postId: string, page: number):Promise<commentSe
   catch (err) {
     redirect(`/explore?error=${err}`);
   }
-  finally {
-    await client.close();
-  }
+
 
 
 }

@@ -1,13 +1,9 @@
 "use server"
-import { MongoClient, ServerApiVersion, ObjectId, Collection, AggregationCursor } from "mongodb";
+import { ObjectId,  AggregationCursor } from "mongodb";
 import { postLimit } from "../../../../lib/postLimit";
 import { redirect } from "next/navigation";
-import { getMongoClient } from "@/app/lib/mongoClient";
-import { getUserInfo } from "@/app/api/mongodb/user";
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-
-
-
+import { mongoClient } from "@/app/api/mongodb/client";
+import { getUserInfo } from "@/app/api/mongodb/user/user";
 
 export const getPosts = async (
   query: {
@@ -26,11 +22,11 @@ export const getPosts = async (
     pipeline = getUserProfilePipeline(query.userId);
   }
 
-    const client = getMongoClient();
+    const client = mongoClient;
 
 
     try {
-      const posts = client.db('the-amazing-social-app').collection('posts');
+      const posts = client.db('the-amazing-social-app-v3').collection('posts');
 
 
       // return await 
@@ -83,9 +79,7 @@ export const getPosts = async (
       console.error('getPosts.ts failed');
       redirect('/explore?error=Network error')
     }
-    finally {
-      await client.close();
-    }
+  
   
 
 }

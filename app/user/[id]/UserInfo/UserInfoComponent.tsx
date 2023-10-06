@@ -4,10 +4,11 @@ import { ChangeProfilePicture } from "./ChangeAvatar";
 import { UserDescription } from "./UserDescription";
 import { Suspense } from "react";
 import { withRetry } from "@/app/lib/retry";
-import { getSessionDetails, userObject } from "@/app/api/mongodb/user";
+import { userObject } from "@/app/api/mongodb/user/user";
 import { getPosts } from "@/app/explore/feed/api/mongodb/getPosts";
 import { ImageComponent } from "@/app/lib/components/ImageComponent";
 import { DeletePostComponent } from "@/app/explore/feed/components/postComponent/deletePostComponent";
+import { PostUserProfileComponent } from "./PostUserProfileComponent";
 
 
 export const UserInfoComponent = async({ userInfo, ownsProfile }: { userInfo: userObject, ownsProfile: boolean }) => {
@@ -113,46 +114,15 @@ const Posts = async (
   return (posts && posts.length > 0)
 
     ? (posts.map(
-      (post, key) => {
+      (post) => (
 
-        const postDate = post.created_at;
+        <PostUserProfileComponent 
+          key={post._id}  
+          ownsProfile={ownsProfile}
+          post={post}/>
 
-        const formattedDate = `${formatDate(postDate)} ${formatHours(postDate)}`;
-
-
-        return (
-
-          <li
-            className="
-            bg-gradient-to-b from-slate-50 to-slate-200 
-          min-h-[50px] mt-2
-          pt-6 pb-2 px-4 relative
-          rounded-sm
-          border border-dashed border-black"
-            key={key}>
-            <article className="flex flex-col w-full gap-y-4 mt-2">
-              
-              {post.content.imageURL &&
-
-                <ImageComponent 
-                  imageURL={post.content.imageURL}
-                  postId={post._id}
-
-                />
-              }
-              
-              
-              <p tabIndex={0}>&gt; {post.content.textContent}</p>
-            </article>
-            <div className="text-xs absolute right-2 top-2">
-              {formattedDate}
-            </div>
-            <div className="absolute left-2 top-2">
-              { ownsProfile && <DeletePostComponent postId={post._id}/>}
-            </div>
-          </li>
-        )
-      }
+        
+      )
 
     )
     )

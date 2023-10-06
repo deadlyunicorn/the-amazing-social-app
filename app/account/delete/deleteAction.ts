@@ -1,25 +1,26 @@
 "use server"
 
-import { getSessionDetails } from "@/app/api/mongodb/user";
-import { getMongoClient } from "@/app/lib/mongoClient";
+import { getUserDetails } from "@/app/api/mongodb/user/user";
+import { mongoClient } from "@/app/api/mongodb/client";
 import { ObjectId } from "mongodb";
 import { redirect } from "next/navigation";
-
+import { cookies } from "next/headers";
 
 export const deleteAccountAction = async() => {
 
-  const userId = ( await getSessionDetails() )?._id;
+  const user = await getUserDetails();
+  if ( !user ) redirect('/account/delete?error=Unauthrozied');
+  const userId = user._id;
 
   if ( !userId ){
     redirect('/account/delete?error=Not logged in');
   }
-  
 
-  const client = getMongoClient();
+  const client = mongoClient;
   const mongoSession = client.startSession();
 
   
-  const database = client.db('the-amazing-social-app');
+  const database = client.db('the-amazing-social-app-v3');
 
   const comments = database.collection('comments');
   const posts = database.collection('posts');
@@ -69,16 +70,35 @@ export const deleteAccountAction = async() => {
         }
       }
     )
+
+    //Auth database
+    const authDatabase = client.db('the-amazing-social-app-auth');
     
+    const sessions = authDatabase.collection('sessions');
+    await sessions.deleteMany({userId: userId});
+
+    const authUsers = authDatabase.collection('users');
+    await authUsers.deleteMany({_id: userId});
+
+    const verificationTokens = authDatabase.collection('verification_tokens');
+    await verificationTokens.deleteMany({ identifier: user.email });
+
+    const accounts = authDatabase.collection('accounts');
+    await accounts.deleteMany({ _id: user._id });
+
+
+    
+    cookies().delete('next-auth.csrf-token'); 
+    cookies().delete('next-auth.session-token'); 
+
     await mongoSession.commitTransaction();
 
+    
   }
   catch( err ){
-    console.log(err);
     redirect('/account/delete?error=Failed deleting user.');
   }
   finally{
-    await client.close();
     redirect('/');
   }
   
