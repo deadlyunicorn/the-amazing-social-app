@@ -32,6 +32,7 @@
     "zod": "^3.22.3"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/node": "^20.6.0",
     "daisyui": "^3.7.7"
   }
