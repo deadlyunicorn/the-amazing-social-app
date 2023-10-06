@@ -3,13 +3,13 @@ import NextAuth, { Session, User } from "next-auth"
 import { MongoDBAdapter } from "@auth/mongodb-adapter"
 import { credentialsProvider, emailProvider, githubProvider, googleProvider } from "./providers";
 import { ObjectId } from "mongodb";
-import { mongoClient } from "../../mongodb/client";
+import { mongoClientPromise } from "../../mongodb/client";
 
  //pass this like that so that it doesn't create a new client
 //for every auth request.
 
 export const authOptions = {
-  adapter: MongoDBAdapter( mongoClient.connect(), {
+  adapter: MongoDBAdapter( mongoClientPromise, {
     databaseName: "the-amazing-social-app-auth",
   } ),
   callbacks:{
@@ -30,9 +30,11 @@ export const authOptions = {
     }
   },
   providers: [ googleProvider, githubProvider, emailProvider, credentialsProvider],
-  // pages: {
-  //    signIn: '/admin/login' //default is /api/auth/signin
-  //   },
+  pages: {
+     signIn: '/login',
+     signOut: '/account/settings',
+     error:  '/login'
+  },
 }
 
 //@ts-ignore

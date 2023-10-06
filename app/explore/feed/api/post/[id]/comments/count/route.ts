@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { MongoClient, ObjectId } from "mongodb";
+import { ObjectId } from "mongodb";
 import { mongoClient } from "@/app/api/mongodb/client";
 import { withRetry } from "@/app/lib/retry";
 

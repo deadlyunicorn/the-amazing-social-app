@@ -8,14 +8,14 @@ import { User } from "next-auth"
 export const credentialsProvider = CredentialsProvider({
 
   credentials: {
-    login: { label: "username" },
+    username: { label: "username" },
     password: { label: "password", type: "password" }
   },
 
   async authorize(credentials) {
     
     const user//: customUser |null
-    = await fetch ( `${process.env.serverURL}/api/verification`, 
+    = await fetch ( `${process.env.SERVER_URL}/api/auth/credentials/login`, 
     { 
       method: "POST",
       body: JSON.stringify(credentials),
@@ -25,7 +25,6 @@ export const credentialsProvider = CredentialsProvider({
       if (res.ok) return await res.json();
       else return null;
     })
-
     if ( user && user.username) {
 
       const sessionUser: User = {
@@ -37,6 +36,9 @@ export const credentialsProvider = CredentialsProvider({
 
       return sessionUser;
       
+    }
+    else if ( user && user.error ){
+      throw new Error( user.error );
     }
 
     return null;

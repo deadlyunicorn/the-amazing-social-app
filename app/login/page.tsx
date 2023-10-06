@@ -2,7 +2,7 @@ import "@/app/styles/styles.css"
 import { ErrorSection } from "@/app/lib/components/ErrorSection"
 import { MultipleRowsWrapper } from "@/app/lib/components/FormWrapper"
 import { redirect } from "next/navigation"
-import { LoginForm } from "./loginForm"
+import { CredentialsForm } from "../lib/components/CredentialsForm"
 import { getAuthSession } from "../api/mongodb/user/user"
 
 const LoginPage = async(
@@ -20,7 +20,8 @@ const LoginPage = async(
   return (
     <MultipleRowsWrapper>
 
-      <LoginForm/>
+
+      <CredentialsForm action="login"/>
       
         {
           searchParams.error &&
