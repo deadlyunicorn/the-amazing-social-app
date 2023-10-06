@@ -31,21 +31,26 @@ const RegisterPage = async ({ searchParams }: { searchParams: { error: string } 
 
     
       <MultipleRowsWrapper>
+
+          {searchParams.error &&
+
+          <ErrorSection path="/register">
+            {searchParams.error}
+          </ErrorSection>
+          }
          
           <CredentialsForm
             action="register"
             csrfToken={csrfToken} />
 
           <OAuthOptions 
+            //not needed for /register rn
+            //could be used in the future
+            //to log the user in instantly
             csrfToken={csrfToken}/>
 
 
-        {searchParams.error &&
-
-          <ErrorSection path="/register">
-            {searchParams.error}
-          </ErrorSection>
-        }
+        
       </MultipleRowsWrapper>
 
 
