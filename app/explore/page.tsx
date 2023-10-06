@@ -88,7 +88,7 @@ export default ExplorePage;
 export type userDetailsClient =  {
   _id: string;
   age: number;
-  email: string;
+  email: string|undefined;
   username: string;
   avatarSrc?: string;
   description?: string;
