@@ -8,7 +8,9 @@ import { redirect } from "next/navigation";
 
 export const deleteAccountAction = async() => {
 
-  const userId = ( await getUserDetails() )?._id;
+  const user = await getUserDetails();
+  if ( !user ) redirect('/account/delete?error=Unauthrozied');
+  const userId = user._id;
 
   if ( !userId ){
     redirect('/account/delete?error=Not logged in');
@@ -69,12 +71,23 @@ export const deleteAccountAction = async() => {
         }
       }
     )
+
+    //Auth database
+    const authDatabase = client.db('the-amazing-social-app-auth');
+    
+    const sessions = authDatabase.collection('sessions');
+    await sessions.deleteMany({userId: userId});
+
+    const authUsers = authDatabase.collection('users');
+    await authUsers.deleteMany({_id: userId});
+
+    const verificationTokens = authDatabase.collection('verification_tokens');
+    await verificationTokens.deleteMany({ identifier: user.email });
     
     await mongoSession.commitTransaction();
 
   }
   catch( err ){
-    console.log(err);
     redirect('/account/delete?error=Failed deleting user.');
   }
   finally{
