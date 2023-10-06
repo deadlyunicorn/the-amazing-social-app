@@ -35,8 +35,12 @@ export const OAuthOptions = async( {csrfToken} : {csrfToken: string }) => {
           rounded-md px-2 py-1 gap-y-2
           flex flex-col items-center">
           <h3><label htmlFor="email">Magic Link</label></h3>
-          <form className="text-stone-800 flex flex-col gap-y-2">
+          <form
+            method="POST"
+            action={`${process.env.SERVER_URL}/api/auth/signin/magicLink`} 
+            className="text-stone-800 flex flex-col gap-y-2">
             <input
+              required
               placeholder="your@email.com" 
               name="email" type="email" id="email"/>
             <input name="csrfToken" 

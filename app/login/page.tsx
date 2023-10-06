@@ -8,6 +8,8 @@ import Link from "next/link"
 import { SignUpAside } from "./SignUpPromptComponent"
 import { OAuthOptions } from "./OauthComponent"
 import { headers } from "next/headers"
+import { cookies } from "next/headers"
+import { SetCsrfToken } from "./setCsrfCookie"
 
 const LoginPage = async(
   { searchParams }: {
@@ -25,6 +27,8 @@ const LoginPage = async(
   const cookieHeader = String( headerList.get('cookie') );
   const authHeader =   String( headerList.get('authorization') );
 
+  const csrfCookie = cookies().get('next-auth.csrf-token');
+
   const csrfToken = await fetch(`${process.env.SERVER_URL}/api/auth/csrf`,{
     headers:[
       ["cookie",cookieHeader],
@@ -33,10 +37,25 @@ const LoginPage = async(
   })
   .then( async( res ) => await res.json() )
   .then( csrfTokenObject => csrfTokenObject?.csrfToken );
+
+  const error = searchParams.error;
     
 
   return (
     <MultipleRowsWrapper>
+
+      { !csrfCookie && <SetCsrfToken/>}
+
+        {
+           error &&
+
+          <ErrorSection path="/login">
+            {error == "EmailSignin" 
+              ?"Failed sending the verification email. Please try again"
+              :error
+            }
+          </ErrorSection>
+        }
 
       <OAuthOptions csrfToken={csrfToken}/>
       <CredentialsForm action="login" csrfToken={csrfToken}/>
@@ -48,13 +67,7 @@ const LoginPage = async(
         <SignUpAside />
       </section>
       
-        {
-          searchParams.error &&
-
-          <ErrorSection path="/login">
-            {searchParams.error}
-          </ErrorSection>
-        }
+        
       </MultipleRowsWrapper>
   )
 }
