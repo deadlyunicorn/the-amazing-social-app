@@ -1,7 +1,7 @@
+import { addUserToMongoDB } from "@/app/api/mongodb/createUserProfile";
 import { SubmitButtonClient } from "@/app/lib/components/SubmitButtonClient";
-import { addUserToMongoDB } from "@/app/register/registerAction";
 
-export const ProfileCreationForm = ({email}:{email:string}) => (
+export const ProfileCreationForm = () => (
   <form 
     action={addUserToMongoDB}
     className="my-2 flex flex-col gap-y-2 items-center ">
