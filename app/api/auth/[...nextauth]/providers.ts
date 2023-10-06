@@ -24,24 +24,26 @@ export const credentialsProvider = CredentialsProvider({
     .then( async( res ) => { 
       if (res.ok) return await res.json();
       else return null;
-    })
+    });
+
     if ( user && user.username) {
 
       const sessionUser: User = {
         id: user.id,          // required string !!!
-        name: user.username,  // undefined | null | string
+        name: user.username+"^"+user.id,  // undefined | null | string
         email: undefined,     // undefined | null | string
         image: undefined      // undefined | null | string
       }
-
       return sessionUser;
       
     }
     else if ( user && user.error ){
       throw new Error( user.error );
     }
+    else{
+      return null;
+    }
 
-    return null;
 
   },
 });
@@ -126,9 +128,6 @@ export const emailProvider = { //returns only email
       .send(msg)
       .then( () => {
         console.log('Email sent')
-      })
-      .catch((error) => {
-        console.error(error)
       })
   }
 }
