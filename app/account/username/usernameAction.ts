@@ -40,6 +40,9 @@ export const changeUsername = async( formData: FormData )=>{
           throw "username used"
         }
       })
+
+      const session = client.startSession();
+
   
       await users.findOneAndUpdate(
         {_id:user?._id},
@@ -48,6 +51,18 @@ export const changeUsername = async( formData: FormData )=>{
           lastUsernameUpdate: new Date()
         }}
       );
+      
+      const accounts = client.db('the-amazing-social-app-auth').collection('accounts');
+      await accounts.findOneAndUpdate(
+        {_id:user?._id},
+        { $set:{
+          username:newUsername
+        }
+      });
+
+      await session.commitTransaction();
+
+
       revalidatePath('/');
     }
     catch(error){
