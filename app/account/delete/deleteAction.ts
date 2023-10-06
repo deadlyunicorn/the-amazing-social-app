@@ -82,6 +82,11 @@ export const deleteAccountAction = async() => {
 
     const verificationTokens = authDatabase.collection('verification_tokens');
     await verificationTokens.deleteMany({ identifier: user.email });
+
+    const accounts = authDatabase.collection('accounts');
+    await accounts.deleteMany({ _id: user._id });
+
+
     
     cookies().delete('next-auth.csrf-token'); 
     cookies().delete('next-auth.session-token'); 
