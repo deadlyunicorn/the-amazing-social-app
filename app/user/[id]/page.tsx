@@ -29,15 +29,14 @@ const UserProfile = async (
 
   // params.id
   //@ts-ignore
-  const profileInfo = await withRetry(getUserInfo,5,[{username:String(params.id)}]).catch(err=>null)
+  const profileInfo = await withRetry(getUserInfo,2,[{username:String(params.id)}]).catch(err=>null)
     .then(async(res)=>{
       if (!res){
           // @ts-ignore
-        return await withRetry(getUserInfo,5,[{_id:String(params.id)}]).catch(err=>null);
+        return await withRetry(getUserInfo,2,[{_id:String(params.id)}]).catch(err=>null);
       }
       return res
   });
-
 
   const ownsProfile = authSession && ( authSession.email == profileInfo?.email ) || ( authSession?.id == params.id );
 
@@ -73,7 +72,7 @@ const UserProfile = async (
             <br/>(no pun intended)
 
 
-            <ProfileCreationForm email={String(authSession)}/>
+            <ProfileCreationForm/>
 
           </section>
 
