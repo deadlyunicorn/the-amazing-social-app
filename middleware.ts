@@ -31,7 +31,7 @@ export async function middleware(req: NextRequest) {
         res.ok? await res.json() as authSession :null
       ));
 
-      if ( authSession ){
+      if ( authSession && authSession.user && authSession.user.id ){
 
         const user: userObject|null = await fetch(`${process.env.SERVER_URL}/api/mongodb/user/${authSession.user.id}`,
         {cache:"no-store"})
