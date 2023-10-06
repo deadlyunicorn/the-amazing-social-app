@@ -1,29 +1,14 @@
-import Link from "next/link";
 import { SubmitButtonClient } from "./SubmitButtonClient";
-import { headers } from "next/headers";
 
-export const CredentialsForm = async ( { action } : { action: string } ) => {
+export const CredentialsForm = async ( { action, csrfToken } : { action: string, csrfToken: string } ) => {
 
   const loginForm = action == "login";
 
-  const headerList = headers();
-  const cookieHeader = String( headerList.get('cookie') );
-  const authHeader =   String( headerList.get('authorization') );
-
-  const csrfToken = await fetch(`${process.env.SERVER_URL}/api/auth/csrf`,{
-    headers:[
-      ["cookie",cookieHeader],
-      ["authorization", authHeader]
-    ],
-  })
-  .then( async( res ) => await res.json() )
-  .then( csrfTokenObject => csrfTokenObject?.csrfToken );
-    
   
   return (
 
-      <section className=" bg-stone-800 max-w-md">
-
+      <section className=" bg-stone-800 max-w-md flex flex-col gap-y-2">
+        <h1 className="text-white">Credentials</h1>
         <h3 className="
         text-white 
         text-center underline">

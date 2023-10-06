@@ -1,36 +1,43 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { supabaseCredentials } from "../(supabase)/global";
-import { cookies } from "next/headers";
+import { headers } from "next/headers";
 import { CredentialsForm } from "../lib/components/CredentialsForm";
-import { emailRegister } from "./registerAction";
 import { ErrorSection } from "../lib/components/ErrorSection";
 import { MultipleRowsWrapper } from "../lib/components/FormWrapper";
-import { LogOutForm } from "../account/settings/LogoutForm";
+import { getAuthSession } from "../api/mongodb/user/user";
+import { redirect } from "next/navigation";
+import { OAuthOptions } from "../login/OauthComponent";
 
 const RegisterPage = async ({ searchParams }: { searchParams: { error: string } }) => {
 
-  const supabase = createServerComponentClient({ cookies }, supabaseCredentials);
-  const user = (await supabase.auth.getUser()).data.user
+  const authSession = await getAuthSession();
+  if ( authSession ) {
+    redirect(`/account/settings`);
+
+  }
+
+  const headerList = headers();
+  const cookieHeader = String( headerList.get('cookie') );
+  const authHeader =   String( headerList.get('authorization') );
+
+  const csrfToken = await fetch(`${process.env.SERVER_URL}/api/auth/csrf`,{
+    headers:[
+      ["cookie",cookieHeader],
+      ["authorization", authHeader]
+    ],
+  })
+  .then( async( res ) => await res.json() )
+  .then( csrfTokenObject => csrfTokenObject?.csrfToken );
 
   return (
 
-    user
-
-      ? <section className="flex flex-col items-center">
-        <p className="flex">
-          You already have an account!
-        </p>
-        <p className="flex">
-          <div className="w-fit"><LogOutForm /></div >&nbsp;to signup for a new account.</p> 
-
-      </section>
-
-      :
+    
       <MultipleRowsWrapper>
          
           <CredentialsForm
-            formHeader="Signup today!"
-            action={emailRegister} />
+            action="register"
+            csrfToken={csrfToken} />
+
+          <OAuthOptions 
+            csrfToken={csrfToken}/>
 
 
         {searchParams.error &&
