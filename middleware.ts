@@ -31,7 +31,7 @@ export async function middleware(req: NextRequest) {
         res.ok? await res.json() as authSession :null
       ));
 
-      if ( authSession && authSession.user && authSession.user.id ){
+      if ( authSession && authSession.user && ( authSession.user.id || authSession.user.name) ){
 
         const user: userObject|null = await fetch(`${process.env.SERVER_URL}/api/mongodb/user/${authSession.user.id}`,
         {cache:"no-store"})
@@ -48,11 +48,11 @@ export async function middleware(req: NextRequest) {
         else{
   
           const id = authSession.user.id;
-          // TODO const username = authSession.username; to be implemented
+          const username = authSession.user.name?.split('^')[0];
           if (error){
-            return NextResponse.redirect(`${process.env.SERVER_URL}/user/${ id /*|| username*/ }?error=${error}`);
+            return NextResponse.redirect(`${process.env.SERVER_URL}/user/${ id || username }?error=${error}`);
           }
-          return NextResponse.redirect(`${process.env.SERVER_URL}/user/${ id /*|| username*/ }`);
+          return NextResponse.redirect(`${process.env.SERVER_URL}/user/${ id || username }`);
         }
       }
       else{
