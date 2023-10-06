@@ -6,7 +6,6 @@ import { revalidatePath } from "next/cache";
 import { getBinaryData } from "../../../lib/getBinaryData";
 import { uploadToAwsPosts } from "../../feed/api/aws/uploadPostImage";
 import { formatDateUTC } from "../../../lib/formatDate";
-import { MongoClient } from "mongodb";
 import { mongoClient } from "@/app/api/mongodb/client";
 
 export const handleCreatePost = async (formData: FormData) => { 

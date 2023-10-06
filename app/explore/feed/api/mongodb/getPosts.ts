@@ -1,13 +1,9 @@
 "use server"
-import { MongoClient, ServerApiVersion, ObjectId, Collection, AggregationCursor } from "mongodb";
+import { ObjectId,  AggregationCursor } from "mongodb";
 import { postLimit } from "../../../../lib/postLimit";
 import { redirect } from "next/navigation";
 import { mongoClient } from "@/app/api/mongodb/client";
 import { getUserInfo } from "@/app/api/mongodb/user/user";
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-
-
-
 
 export const getPosts = async (
   query: {

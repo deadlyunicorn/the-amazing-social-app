@@ -2,7 +2,6 @@
 
 import { mongoClient } from "@/app/api/mongodb/client";
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
 
 export const putDescription = async( username : string, description : string ) : Promise <void>=>{
   const client = mongoClient;

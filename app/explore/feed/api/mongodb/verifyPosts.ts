@@ -1,7 +1,6 @@
 //use bun or deno
 
 import { mongoClient } from "@/app/api/mongodb/client";
-import { MongoClient, ServerApiVersion } from "mongodb";
 import { argv } from "process";
 
 const username = argv[2];

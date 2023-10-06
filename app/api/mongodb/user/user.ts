@@ -4,10 +4,6 @@ import { ObjectId } from "mongodb";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/route";
 import { authSession } from "../../auth/types/session";
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-
-
-
 
 export const getUserInfo = async (
   query: {

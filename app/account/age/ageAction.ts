@@ -17,7 +17,6 @@ export const changeAge = async( formData: FormData )=>{
     .max( currentYear -  18 )
     .parseAsync( +String( formData.get('age') ) )
     .catch( err=>{
-      console.log(err)
       redirect(`/account/age?error=${"Invalid year"}`)
     });
 
