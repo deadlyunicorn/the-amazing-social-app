@@ -8,8 +8,6 @@ import { z as zod } from "zod";
 export const POST = async ( request: NextRequest ) => {
 
 
-  const client = mongoClient;
-
   try{
 
     const credentials:credentials = await request.json();

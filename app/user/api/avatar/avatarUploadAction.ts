@@ -10,10 +10,8 @@ import { formatDateUTC } from "@/app/lib/formatDate";
 
 
 export const handleAvatarForm = async(formData:FormData)=>{
-  // const imgSource = URL.createObjectURL(e.target.files[0]);
   
   const userDetails = await getUserDetails();
-
   const username = String(userDetails?.username);
   const oldAvatarSrc = String(userDetails?.avatarSrc);
 
@@ -36,7 +34,7 @@ export const handleAvatarForm = async(formData:FormData)=>{
       })
 
 
-      revalidatePath(`/`);
+    revalidatePath(`/`);
   }
   catch(err){
     redirect(`user/${username}?error=${err}`);
