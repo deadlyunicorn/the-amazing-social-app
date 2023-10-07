@@ -27,7 +27,8 @@ const LoginPage = async(
   const cookieHeader = String( headerList.get('cookie') );
   const authHeader =   String( headerList.get('authorization') );
 
-  const csrfCookie = cookies().get('next-auth.csrf-token');
+  //can't get cookie as it is Http only - secure
+  const csrfCookie = cookies().get('next-auth.csrf-token') || cookies().get('auth_consent');
 
   const csrfToken = await fetch(`${process.env.SERVER_URL}/api/auth/csrf`,{
     headers:[
