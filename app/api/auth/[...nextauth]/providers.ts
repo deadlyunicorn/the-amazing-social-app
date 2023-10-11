@@ -181,7 +181,6 @@ const OAuthGetIDandRegister = async ( email:string, provider:string ) => {
       await accounts.insertOne( { 
         _id : id,
         email : email,
-        userId: id,
         provider: provider
       } );
       return id;
