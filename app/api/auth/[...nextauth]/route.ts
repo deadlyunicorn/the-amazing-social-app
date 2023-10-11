@@ -1,9 +1,8 @@
 // import { customUser } from "@/app/api/verification"
 import NextAuth, { Session, User } from "next-auth"
-import { MongoDBAdapter } from "@auth/mongodb-adapter"
 import { credentialsProvider, emailProvider, githubProvider, googleProvider } from "./providers";
-import { ObjectId } from "mongodb";
 import { mongoClient } from "../../mongodb/client";
+import { ObjectId } from "mongodb";
 
  //pass this like that so that it doesn't create a new client
 //for every auth request.
@@ -16,22 +15,40 @@ export const authOptions = {
   callbacks:{
     async session({session, token, user }:{ session: Session|undefined, token: string|undefined, user:User|undefined}){
       
-
       const id =  session?.user?.name?.split('^')[1] || session?.user?.name;
 
-      if ( session && session.user ){
+      if ( session && session.user && id ){
+
+        const accounts = mongoClient.db('the-amazing-social-app-auth').collection('accounts');
+        return await accounts.findOne({_id: new ObjectId( id )})
+        .then ( res => {
+          if ( res ){
+            return { 
+              user :{ 
+                ...session.user,
+                id: id
+              },
+              expires: session.expires
+            }
+          }
+          else return null;
+        });
+        //the above gives us back our sanity after trying to log out the user
+        //after deleting their accounts ( willingly )
+        
+        //it is also a double win, as it automatically logs out the user
+        //if e.g. we delete them for their actions.
+
+        //the only drawback is performance. 
+        //(get the data), hopefully that's fast as we keep the connection open.
 
 
-        return { 
-          user :{ 
-            ...session.user,
-            id: id
-          },
-          expires: session.expires
-        }
+        
+      }
+      else {
+        return null;
       }
 
-      return session;
     },
   },
   providers: [ googleProvider, githubProvider, credentialsProvider,  //emailProvider, 

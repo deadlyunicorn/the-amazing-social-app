@@ -4,7 +4,7 @@ import { getUserDetails } from "@/app/api/mongodb/user/user";
 import { mongoClient } from "@/app/api/mongodb/client";
 import { ObjectId } from "mongodb";
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
+import { revalidatePath } from "next/cache";
 
 export const deleteAccountAction = async() => {
 
@@ -89,11 +89,11 @@ export const deleteAccountAction = async() => {
     await accounts.deleteMany({ _id: user._id });
 
 
-    
-    cookies().delete('next-auth.csrf-token'); 
-    cookies().delete('next-auth.session-token'); 
+      //We can make the user logout if they don't
+      //exist in the accounts database.
 
     await mongoSession.commitTransaction();
+    revalidatePath('/');
 
     
   }
