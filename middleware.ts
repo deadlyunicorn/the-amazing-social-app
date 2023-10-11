@@ -30,10 +30,12 @@ export async function middleware(req: NextRequest) {
         res.ok? await res.json() as authSession :null
       ));
 
-      if ( authSession && authSession.user && ( authSession.user.email || authSession.user.name) ){
 
-        const user: userObject|null = await fetch(`${process.env.SERVER_URL}/api/mongodb/user/${authSession.user.id}`,
-        {cache:"no-store"})
+      if ( authSession && authSession.user && ( authSession.user.email || authSession.user.name) ){
+        
+        const userId = authSession.user.id;
+
+        const user: userObject|null = await fetch(`${process.env.SERVER_URL}/api/mongodb/user/${userId}`)
           .then( async(res)=> res.ok? await res.json() :null );
   
         if ( user ){
@@ -46,12 +48,11 @@ export async function middleware(req: NextRequest) {
         }
         else{
   
-          const id = authSession.user.id;
           const username = authSession.user.name?.split('^')[0];
           if (error){
-            return NextResponse.redirect(`${process.env.SERVER_URL}/user/${ id || username }?error=${error}`);
+            return NextResponse.redirect(`${process.env.SERVER_URL}/user/${ userId || username }?error=${error}`);
           }
-          return NextResponse.redirect(`${process.env.SERVER_URL}/user/${ id || username }`);
+          return NextResponse.redirect(`${process.env.SERVER_URL}/user/${ userId || username }`);
         }
       }
       else{

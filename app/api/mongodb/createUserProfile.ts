@@ -62,7 +62,6 @@ export const addUserToMongoDB = async (formData: FormData) => {
   
       await users.insertOne(user);
       success = true;
-      revalidatePath('/');
 
     }
 
@@ -83,6 +82,7 @@ export const addUserToMongoDB = async (formData: FormData) => {
     await client.close();
 
     if (success) {
+      revalidatePath('/');
       redirect(`/user/${username}`);
     }
 
