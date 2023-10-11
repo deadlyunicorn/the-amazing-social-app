@@ -13,7 +13,7 @@ export const addUserToMongoDB = async (formData: FormData) => {
   const client = mongoClient;
 
   const date = new Date();
-  const username = String(formData.get('username'));
+  const username = String(formData.get('username')).toLowerCase();
 
   let success = false;
   

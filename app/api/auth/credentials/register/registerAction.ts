@@ -17,7 +17,8 @@ export const registerAction = async( formData: FormData)=> {
     .max(24)
     .regex(/^[A-Za-z]([A-Za-z0-9\_])+$/g)
     .parseAsync( formData.get('username') )
-    .catch( () => { throw "Invalid username"});
+    .catch( () => { throw "Invalid username"})
+    .then( res => res.toLowerCase() );
   
     const password = await zod
     .string()
@@ -52,7 +53,6 @@ export const registerAction = async( formData: FormData)=> {
       _id: userId,
       username: username,
       password: password,
-      userId: userId
     });
 
     const users = mongoClient.db('the-amazing-social-app-v3').collection('users');
