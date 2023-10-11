@@ -14,7 +14,8 @@ import { SetCsrfToken } from "./setCsrfCookie"
 const LoginPage = async(
   { searchParams }: {
     searchParams: {
-      error?: string
+      error?: string,
+      callbackUrl?: string
     }
   }) => {
 
@@ -27,7 +28,8 @@ const LoginPage = async(
   const cookieHeader = String( headerList.get('cookie') );
   const authHeader =   String( headerList.get('authorization') );
 
-  const csrfCookie = cookies().get('next-auth.csrf-token');
+  //can't get cookie as it is Http only - secure
+  const csrfCookie = cookies().get('next-auth.csrf-token') || cookies().get('auth_consent');
 
   const csrfToken = await fetch(`${process.env.SERVER_URL}/api/auth/csrf`,{
     headers:[
@@ -39,6 +41,7 @@ const LoginPage = async(
   .then( csrfTokenObject => csrfTokenObject?.csrfToken );
 
   const error = searchParams.error;
+  const callbackURL = searchParams.callbackUrl
     
 
   return (
@@ -50,11 +53,35 @@ const LoginPage = async(
            error &&
 
           <ErrorSection path="/login">
-            {error == "EmailSignin" 
-              ?"Failed sending the verification email. Please try again"
-              :error
+            { (()=>{
+
+              switch (error){
+                case "EmailSignin":
+                  return "Failed sending the verification email. Please try again";
+                case "OAuthSignin": 
+                  return "Username already taken, \
+                  or there is already an account with your email, \
+                  but created with a different provider \
+                  (e.g. you created you account with Github\
+                  and there is an account with the same email\
+                  created with Gmail)";
+                default: 
+                  return error;
+              }
+            })() 
             }
           </ErrorSection>
+        }
+        {
+          callbackURL && 
+            <ErrorSection path="/login">
+              There was an error,
+              please try again. 
+              Maybe there is already an account with your email,
+              but created with a different provider 
+              (e.g. you created you account with Github
+              and there is an account with the same email using Google)
+            </ErrorSection>
         }
 
       <OAuthOptions csrfToken={csrfToken}/>

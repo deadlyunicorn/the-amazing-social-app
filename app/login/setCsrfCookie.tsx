@@ -33,6 +33,7 @@ export const SetCsrfToken = () => {
             (async()=>{
               await getCsrfToken();
               window.location.reload();
+              document.cookie = "auth_consent=yes; path:/"
             })();
           }}>
 

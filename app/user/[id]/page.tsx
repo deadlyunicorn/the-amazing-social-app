@@ -4,6 +4,7 @@ import { ProfileCreationForm } from "./CreateProfile/ProfileCreationForm"
 import { ErrorSection } from "@/app/lib/components/ErrorSection"
 import { withRetry } from "@/app/lib/retry"
 import { getAuthSession, getUserInfo } from "@/app/api/mongodb/user/user"
+import { ObjectId } from "mongodb"
 
 export const generateMetadata = ({params}:{params:{id:string}}) =>  {
 
@@ -27,18 +28,12 @@ const UserProfile = async (
 
   const authSession = await getAuthSession();
 
+
   // params.id
   //@ts-ignore
-  const profileInfo = await withRetry(getUserInfo,2,[{username:String(params.id)}]).catch(err=>null)
-    .then(async(res)=>{
-      if (!res){
-          // @ts-ignore
-        return await withRetry(getUserInfo,2,[{_id:String(params.id)}]).catch(err=>null);
-      }
-      return res
-  });
+  const profileInfo = await withRetry(getUserInfo,2,[{username:String(params.id)}]).catch(err=>null);
 
-  const ownsProfile = authSession && ( authSession.email == profileInfo?.email ) || ( authSession?.id == params.id );
+  const ownsProfile = authSession && ( authSession.id == profileInfo?._id ) || ( authSession?.id == params.id );
 
   return (
     <MultipleRowsWrapper>
@@ -48,7 +43,8 @@ const UserProfile = async (
         <ErrorSection 
           path={`/user/${params.id}`}>
             
-            {searchParams.error}
+            {/* {searchParams.error} */}
+            There was an error.
           
         </ErrorSection>
         

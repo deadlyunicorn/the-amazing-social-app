@@ -16,13 +16,11 @@ export const authOptions = {
   callbacks:{
     async session({session, token, user }:{ session: Session|undefined, token: string|undefined, user:User|undefined}){
       
-      const id = user
-        ? user.id
-        : session?.user?.name?.split('^')[1]
 
-
+      const id =  session?.user?.name?.split('^')[1] || session?.user?.name;
 
       if ( session && session.user ){
+
 
         return { 
           user :{ 
@@ -34,7 +32,7 @@ export const authOptions = {
       }
 
       return session;
-    }
+    },
   },
   providers: [ googleProvider, githubProvider, credentialsProvider,  //emailProvider, 
 ],

@@ -43,11 +43,16 @@ export const addUserToMongoDB = async (formData: FormData) => {
     const users = client.db('the-amazing-social-app-v3').collection('users');
 
 
-    if ( authSession.email ) {
+    //this should only be called when registering with an email.
+    if ( authSession.id && authSession.email  ) {
+
+      await users.findOne( { username: username })
+      .then( mongoRes => {
+        if ( mongoRes ) throw "Username taken";
+      })
 
       const user: userObject = {
         _id: new ObjectId( authSession.id ),
-        email: authSession.email,
         age: YOB,
         avatarSrc: authSession.image || undefined,
         username: username,
@@ -60,12 +65,6 @@ export const addUserToMongoDB = async (formData: FormData) => {
       revalidatePath('/');
 
     }
-//    else if ( authSession.username){
-
-// }
-
-
-    
 
   }
   catch(err){

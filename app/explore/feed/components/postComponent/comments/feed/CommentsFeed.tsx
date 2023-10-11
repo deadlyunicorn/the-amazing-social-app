@@ -209,7 +209,6 @@ type commentClient = {
 type userDetailsClient =  {
   _id: string;
   age: number;
-  email: string|undefined;
   username: string;
   avatarSrc?: string;
   description?: string;
