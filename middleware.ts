@@ -12,8 +12,7 @@ export async function middleware(req: NextRequest) {
 
       return NextResponse.redirect(`${process.env.SERVER_URL}/about`);
       break;
-    // case "/user":
-    case "/user":
+    case "/user": //this will only trigger when we don't specify an id - username
       const error = req.nextUrl.searchParams.get("error");
       const headerList = headers();
 
@@ -31,7 +30,7 @@ export async function middleware(req: NextRequest) {
         res.ok? await res.json() as authSession :null
       ));
 
-      if ( authSession && authSession.user && ( authSession.user.id || authSession.user.name) ){
+      if ( authSession && authSession.user && ( authSession.user.email || authSession.user.name) ){
 
         const user: userObject|null = await fetch(`${process.env.SERVER_URL}/api/mongodb/user/${authSession.user.id}`,
         {cache:"no-store"})

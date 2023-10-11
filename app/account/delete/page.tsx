@@ -3,17 +3,15 @@ import { MultipleRowsWrapper } from "@/app/lib/components/FormWrapper";
 import { SubmitButtonClient } from "@/app/lib/components/SubmitButtonClient";
 import { redirect } from "next/navigation";
 import { deleteAccountAction } from "./deleteAction";
-import { getUserDetails } from "@/app/api/mongodb/user/user";
+import { getAuthSession } from "@/app/api/mongodb/user/user";
 import { headers } from "next/headers";
 
 const DeleteAccountSection = async({searchParams}:{searchParams:{error:string}}) => {
   
 
-
-
-  const user = await getUserDetails();
+  const user = await getAuthSession();
   const email = user?.email;
-  const username =  user?.username;
+  const username =  user?.name;
 
   if ( email || username ) {
 
@@ -48,7 +46,7 @@ const DeleteAccountSection = async({searchParams}:{searchParams:{error:string}})
             placeholder={`Your ${email? "email" :"username"}`}
             title={`Please enter your ${`${email? "email" :"username"}`}.`}
             required
-            pattern={email? email :username}
+            pattern={email? email :username||undefined}
             type={email? "email": "text"}/>
           <input 
             name="csrfToken"

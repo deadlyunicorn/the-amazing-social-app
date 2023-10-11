@@ -74,6 +74,7 @@ export const deleteAccountAction = async() => {
     //Auth database
     const authDatabase = client.db('the-amazing-social-app-auth');
     
+    /* Self configured database - no longer needed.
     const sessions = authDatabase.collection('sessions');
     await sessions.deleteMany({userId: userId});
 
@@ -82,6 +83,7 @@ export const deleteAccountAction = async() => {
 
     const verificationTokens = authDatabase.collection('verification_tokens');
     await verificationTokens.deleteMany({ identifier: user.email });
+    */
 
     const accounts = authDatabase.collection('accounts');
     await accounts.deleteMany({ _id: user._id });

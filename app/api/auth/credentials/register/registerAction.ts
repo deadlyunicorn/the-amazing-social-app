@@ -58,7 +58,6 @@ export const registerAction = async( formData: FormData)=> {
     const users = mongoClient.db('the-amazing-social-app-v3').collection('users');
     const user: userObject = {
       _id: userId,
-      email: undefined,
       age: YOB,
       avatarSrc: undefined,
       username: username,

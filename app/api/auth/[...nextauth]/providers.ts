@@ -3,6 +3,8 @@ import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 import * as sgMail from "@sendgrid/mail"
 import { User } from "next-auth"
+import { mongoClient } from "../../mongodb/client"
+import { ObjectId } from "mongodb"
 
 
 export const credentialsProvider = CredentialsProvider({
@@ -50,12 +52,43 @@ export const credentialsProvider = CredentialsProvider({
 
 export const googleProvider = GoogleProvider({
   clientId: process.env.GOOGLE_CLIENT_ID!,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET!
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+  async profile ( profile ){
+
+    const email = profile.email;
+    
+  
+      const id = await OAuthGetIDandRegister( String( profile.email ), "gmail" );
+
+      const sessionUser: User = {
+        id: String(id),          // required string !!!
+        name: String(id),  // undefined | null | string
+        email: email,     // undefined | null | string
+        image: profile.avatar_url      // undefined | null | string
+      }
+      return sessionUser;
+    }
 });
 
 export const githubProvider = GithubProvider({
   clientId: process.env.GITHUB_CLIENT_ID!,
-  clientSecret: process.env.GITHUB_CLIENT_SECRET!
+  clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+  async profile ( profile ){
+
+  const email = profile.email;
+  
+
+    const id = await OAuthGetIDandRegister( String( profile.email ), "github" );
+
+    const sessionUser: User = {
+      id: String(id),          // required string !!!
+      name: String(id),  // undefined | null | string
+      email: email,     // undefined | null | string
+      image: profile.avatar_url      // undefined | null | string
+    }
+    return sessionUser;
+  }
+
 });
 
 export const emailProvider = { //returns only email
@@ -130,4 +163,29 @@ export const emailProvider = { //returns only email
         console.log('Email sent')
       })
   }
+}
+
+const OAuthGetIDandRegister = async ( email:string, provider:string ) => {
+  
+  const accounts = mongoClient.db('the-amazing-social-app-auth').collection('accounts');
+  return await accounts.findOne( { email: email} )
+  .then( async( mongoRes ) => { 
+     if ( mongoRes ){
+      if ( mongoRes.provider !== provider ){
+        throw "dupe key";
+      }
+      return mongoRes._id
+     }
+     else{
+      const id = new ObjectId();
+      await accounts.insertOne( { 
+        _id : id,
+        email : email,
+        userId: id,
+        provider: provider
+      } );
+      return id;
+     }
+    
+    })
 }
