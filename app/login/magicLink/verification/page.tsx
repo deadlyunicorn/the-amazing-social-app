@@ -2,6 +2,7 @@ import { MultipleRowsWrapper } from "@/app/lib/components/FormWrapper";
 import { CustomSubmitButtonClient } from "@/app/lib/components/SubmitButtonClient"
 import { cookies, headers } from "next/headers";
 import { SetCsrfToken } from "../../setCsrfCookie";
+import { redirect } from "next/navigation";
 
 const MagicLinkLoginPage = async( 
     { searchParams }: {
@@ -10,6 +11,10 @@ const MagicLinkLoginPage = async(
         tokenValue: string
       }
     } ) => {
+
+      if ( !searchParams.email || !searchParams.tokenValue ){
+        redirect('/login?error=Invalid token');
+      }
 
       const headerList = headers();
       const cookieHeader = String( headerList.get('cookie') );
