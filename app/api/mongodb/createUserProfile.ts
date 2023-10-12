@@ -82,6 +82,8 @@ export const addUserToMongoDB = async (formData: FormData) => {
     await client.close();
 
     if (success) {
+
+      //we need success, as finally's redirect overrides the catch's
       revalidatePath('/');
       redirect(`/user/${username}`);
     }

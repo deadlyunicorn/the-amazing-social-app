@@ -1,6 +1,6 @@
 // import { customUser } from "@/app/api/verification"
 import NextAuth, { Session, User } from "next-auth"
-import { credentialsProvider, emailProvider, githubProvider, googleProvider } from "./providers";
+import { credentialsProvider, githubProvider, googleProvider } from "./providers";
 import { mongoClient } from "../../mongodb/client";
 import { ObjectId } from "mongodb";
 

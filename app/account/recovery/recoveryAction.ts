@@ -2,7 +2,6 @@
 import * as zod from "zod"
 import * as sgMail from "@sendgrid/mail"
 import { redirect } from "next/navigation"
-import { NextResponse } from "next/server"
 
 export const RecoveryAction = async( formData: FormData)=> {
 

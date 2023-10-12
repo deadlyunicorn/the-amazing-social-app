@@ -1,3 +1,6 @@
+import { CustomSubmitButtonClient } from "../lib/components/SubmitButtonClient"
+import { magicLinkAction } from "./MagicLinkAction"
+
 export const OAuthOptions = async( {csrfToken} : {csrfToken: string }) => {
 
   return (
@@ -52,25 +55,15 @@ export const OAuthOptions = async( {csrfToken} : {csrfToken: string }) => {
           flex flex-col items-center">
           <h3><label htmlFor="email">Magic Link</label></h3>
           <form
-            
-            method="POST"
-            action={`${process.env.SERVER_URL}/api/auth/signin/magicLink`} 
+            action={magicLinkAction} 
             className="text-stone-800 flex flex-col gap-y-2">
-            <div 
-            data-tip="Temporary disabled"
-            className="hover:tooltip-warning hover:tooltip-top hover:tooltip">
               <input
-                className="cursor-not-allowed"
-                disabled
                 required
                 placeholder="your@email.com" 
                 name="email" type="email" id="email"/>
-              <input name="csrfToken" 
-                hidden  readOnly required value={csrfToken}/>
-              {/* <SubmitButtonClient/> */}
-            </div>
-
-            
+              <CustomSubmitButtonClient>
+                Send Email
+              </CustomSubmitButtonClient>
           </form>
         </li>
       </ul>

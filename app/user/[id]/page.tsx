@@ -27,8 +27,6 @@ const UserProfile = async (
 
 
   const authSession = await getAuthSession();
-
-
   // params.id
   //@ts-ignore
   const profileInfo = await withRetry(getUserInfo,2,[{username:String(params.id)}]).catch(err=>null);

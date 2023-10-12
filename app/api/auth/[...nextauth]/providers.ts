@@ -30,10 +30,12 @@ export const credentialsProvider = CredentialsProvider({
 
     if ( user && user.username) {
 
+      const magicLinkEmail = user.username.includes('@');
+
       const sessionUser: User = {
         id: user.id,          // required string !!!
         name: user.username+"^"+user.id,  // undefined | null | string
-        email: undefined,     // undefined | null | string
+        email: magicLinkEmail? user.username :undefined,     // undefined | null | string
         image: undefined      // undefined | null | string
       }
       return sessionUser;
@@ -91,6 +93,7 @@ export const githubProvider = GithubProvider({
 
 });
 
+/*
 export const emailProvider = { //returns only email
   id: "magicLink", 
   type: "email",
@@ -164,6 +167,11 @@ export const emailProvider = { //returns only email
       })
   }
 }
+
+  Not used as we could use credentials with DB.
+  Not removed for legacy/reference reasons.
+
+*/
 
 const OAuthGetIDandRegister = async ( email:string, provider:string ) => {
   
