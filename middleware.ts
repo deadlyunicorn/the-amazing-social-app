@@ -11,7 +11,6 @@ export async function middleware(req: NextRequest) {
     case "/":
 
       return NextResponse.redirect(`${process.env.SERVER_URL}/about`);
-      break;
     case "/user": //this will only trigger when we don't specify an id - username
       const error = req.nextUrl.searchParams.get("error");
       const headerList = headers();
@@ -58,6 +57,28 @@ export async function middleware(req: NextRequest) {
       else{
         return NextResponse.redirect(`${process.env.SERVER_URL}/login`);
       }
-      break;
+    
+  }
+
+  if ( req.nextUrl.pathname.startsWith('/chat') && req.nextUrl.pathname.length !== 5 ){
+
+    const headerList = headers();
+
+      const authHeader   = String(headerList.get('authorization'));
+      const cookieHeader = String(headerList.get('cookie'));
+
+      const authSession = await fetch(`${process.env.SERVER_URL}/api/auth/session`,{
+        headers: [
+          ["cookie", cookieHeader],
+          ["authorization",authHeader]
+        ],
+        cache:"no-store"
+      })
+      .then( async( res ) => (
+        res.ok? await res.json() as authSession :null
+      ));
+      if ( !authSession || !authSession.user ){
+        return NextResponse.redirect(`${process.env.SERVER_URL}/chat`);
+      }
   }
 }
