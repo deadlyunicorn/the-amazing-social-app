@@ -76,7 +76,7 @@ const UserProfile = async (
 
 
           :
-            <section>
+            <section className="flex items-center justify-center">
               The user you are looking for doesn&apos;t exist.
             </section>
         }
