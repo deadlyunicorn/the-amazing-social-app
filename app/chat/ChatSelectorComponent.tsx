@@ -42,7 +42,7 @@ export const ChatSelectorComponent = ( {availableUsers}: {availableUsers: userOb
       </li>
     )}
     </ul>
-    Change ui so that its vertical on desktop and on the left side of the screen.
+    Change ui so that its vertical on desktop and on the left side of the screen.<br/>
     Select one of the available users to select a chat!
 
   </section>

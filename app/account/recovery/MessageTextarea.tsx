@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 export const MessageTextarea = () => {
   
   return (

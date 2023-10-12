@@ -1,7 +1,7 @@
 import { MongoClient } from "mongodb";
 
 export const mongoClient = new MongoClient(process.env.MONGODB_URI!,{
-  maxPoolSize: 10,
+  maxPoolSize: 100,
 });
 
 // (async()=>{
