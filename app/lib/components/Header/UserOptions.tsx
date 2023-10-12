@@ -11,6 +11,8 @@ export const UserOptions = async () => {
   return (
     <div
       className="w-full bg-neutral-800 
+    bg-opacity-80 backdrop-blur-md
+
     flex justify-between gap-2 
     py-2 px-2 border-t border-zinc-400
     ">

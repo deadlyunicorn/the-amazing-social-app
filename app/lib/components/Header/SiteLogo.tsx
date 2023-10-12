@@ -8,7 +8,7 @@ const neucha = Neucha({ subsets: ['latin'], weight: "400" })
 export const SiteLogo = () => (
 
   <div className=" flex justify-center
-  
+  bg-opacity-80 backdrop-blur-md
   bg-neutral-800 p-2">
   <Link tabIndex={0} href="/" className='
   text-3xl group
