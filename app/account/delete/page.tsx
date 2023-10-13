@@ -1,10 +1,10 @@
 import { ErrorSection } from "@/app/lib/components/ErrorSection";
-import { MultipleRowsWrapper } from "@/app/lib/components/FormWrapper";
 import { SubmitButtonClient } from "@/app/lib/components/SubmitButtonClient";
 import { redirect } from "next/navigation";
 import { deleteAccountAction } from "./deleteAction";
 import { getAuthSession } from "@/app/api/mongodb/user/user";
 import { headers } from "next/headers";
+import { SimpleMultipleRowsWrapper } from "@/app/lib/components/FormWrapper";
 
 const DeleteAccountSection = async({searchParams}:{searchParams:{error:string}}) => {
   
@@ -30,7 +30,8 @@ const DeleteAccountSection = async({searchParams}:{searchParams:{error:string}})
       
     return(
 
-     <MultipleRowsWrapper>
+    <SimpleMultipleRowsWrapper>
+
     
       <section>
         <h1>Account deletion</h1>
@@ -65,8 +66,7 @@ const DeleteAccountSection = async({searchParams}:{searchParams:{error:string}})
         <ErrorSection path="/account/delete">{searchParams.error}</ErrorSection>
       }
 
-    </MultipleRowsWrapper>
-
+    </SimpleMultipleRowsWrapper>
     )
   }
   else {

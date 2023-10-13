@@ -1,4 +1,4 @@
-import { MultipleRowsWrapper } from "@/app/lib/components/FormWrapper";
+import { SimpleMultipleRowsWrapper } from "@/app/lib/components/FormWrapper";
 import { CustomSubmitButtonClient } from "@/app/lib/components/SubmitButtonClient"
 import { cookies, headers } from "next/headers";
 import { SetCsrfToken } from "../../setCsrfCookie";
@@ -35,7 +35,7 @@ const MagicLinkLoginPage = async(
 
 
   return (
-    <MultipleRowsWrapper>
+    <SimpleMultipleRowsWrapper>
       { !csrfCookie && <SetCsrfToken/>}
 
       <section className="flex flex-col justify-between">
@@ -69,7 +69,7 @@ const MagicLinkLoginPage = async(
           </div>
         </form>
       </section>
-    </MultipleRowsWrapper>
+    </SimpleMultipleRowsWrapper>
 
   )
 }

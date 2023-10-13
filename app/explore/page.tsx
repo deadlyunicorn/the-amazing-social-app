@@ -1,4 +1,4 @@
-import { MultipleRowsWrapper } from "../lib/components/FormWrapper";
+import { MultipleRowsWrapper, SimpleMultipleRowsWrapper } from "../lib/components/FormWrapper";
 import { ErrorSection } from "../lib/components/ErrorSection";
 import { CreatePostSection } from "./create/postCreationForm";
 import { Suspense } from "react";
@@ -18,7 +18,7 @@ const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } 
 
   return (
 
-    <MultipleRowsWrapper>
+    <SimpleMultipleRowsWrapper>
 
       {searchParams.error &&
         <ErrorSection path="/explore">
@@ -27,31 +27,32 @@ const ExplorePage = async ({ searchParams }: { searchParams: { error?: string } 
         </ErrorSection>
       }
 
+      <MultipleRowsWrapper>
+        <CreatePostSection userDetails={userDetails} />
 
-      <CreatePostSection userDetails={userDetails} />
+        <Suspense fallback={<PostsFallback/>}>
 
-      <Suspense fallback={<PostsFallback/>}>
+          { searchParams.error 
+            ? <ReloadPageComponent path="/explore"/>
+            : <section
+                className="animate-none
+                flex flex-col justify-center"
+                id="postSection">
+                <FeedServer userDetails={userDetails}/>
+                <FeedClientWithMonitor 
+                  userDetails={userDetails}
+                  maxPages={maxPages} />
+                
+              </section>
 
-        { searchParams.error 
-          ? <ReloadPageComponent path="/explore"/>
-          : <section
-              className="animate-none
-              flex flex-col justify-center"
-              id="postSection">
-              <FeedServer userDetails={userDetails}/>
-              <FeedClientWithMonitor 
-                userDetails={userDetails}
-                maxPages={maxPages} />
-              
-            </section>
-
+            
+          }
           
-        }
-        
-      </Suspense>
+        </Suspense>
+      </MultipleRowsWrapper>
 
 
-    </MultipleRowsWrapper>
+    </SimpleMultipleRowsWrapper>
 
   )
 }

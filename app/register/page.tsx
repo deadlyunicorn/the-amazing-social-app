@@ -1,7 +1,7 @@
 import { headers } from "next/headers";
 import { CredentialsForm } from "../lib/components/CredentialsForm";
 import { ErrorSection } from "../lib/components/ErrorSection";
-import { MultipleRowsWrapper } from "../lib/components/FormWrapper";
+import { MultipleRowsWrapper, SimpleMultipleRowsWrapper } from "../lib/components/FormWrapper";
 import { getAuthSession } from "../api/mongodb/user/user";
 import { redirect } from "next/navigation";
 import { OAuthOptions } from "../login/OauthComponent";
@@ -30,7 +30,7 @@ const RegisterPage = async ({ searchParams }: { searchParams: { error: string } 
   return (
 
     
-      <MultipleRowsWrapper>
+      <SimpleMultipleRowsWrapper>
 
           {searchParams.error &&
 
@@ -38,6 +38,8 @@ const RegisterPage = async ({ searchParams }: { searchParams: { error: string } 
             {searchParams.error}
           </ErrorSection>
           }
+
+          <MultipleRowsWrapper>
          
           <CredentialsForm
             action="register"
@@ -49,9 +51,11 @@ const RegisterPage = async ({ searchParams }: { searchParams: { error: string } 
             //to log the user in instantly
             csrfToken={csrfToken}/>
 
+        </MultipleRowsWrapper>
+
 
         
-      </MultipleRowsWrapper>
+      </SimpleMultipleRowsWrapper>
 
 
 

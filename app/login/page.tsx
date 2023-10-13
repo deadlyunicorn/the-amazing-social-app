@@ -1,6 +1,6 @@
 import "@/app/styles/styles.css"
 import { ErrorSection } from "@/app/lib/components/ErrorSection"
-import { MultipleRowsWrapper } from "@/app/lib/components/FormWrapper"
+import { MultipleRowsWrapper, SimpleMultipleRowsWrapper } from "@/app/lib/components/FormWrapper"
 import { redirect } from "next/navigation"
 import { CredentialsForm } from "../lib/components/CredentialsForm"
 import { getAuthSession } from "../api/mongodb/user/user"
@@ -45,7 +45,7 @@ const LoginPage = async(
     
 
   return (
-    <MultipleRowsWrapper>
+    <SimpleMultipleRowsWrapper>
 
       { !csrfCookie && <SetCsrfToken/>}
 
@@ -83,9 +83,11 @@ const LoginPage = async(
               and there is an account with the same email using Google)
             </ErrorSection>
         }
+      <MultipleRowsWrapper>
 
-      <OAuthOptions csrfToken={csrfToken}/>
-      <CredentialsForm action="login" csrfToken={csrfToken}/>
+        <CredentialsForm action="login" csrfToken={csrfToken}/>
+        <OAuthOptions csrfToken={csrfToken}/>
+      </MultipleRowsWrapper>
       <section className="text-center flex flex-col justify-between">
           <Link 
             tabIndex={0} href="/account/recovery">
@@ -95,7 +97,7 @@ const LoginPage = async(
       </section>
       
         
-      </MultipleRowsWrapper>
+      </SimpleMultipleRowsWrapper>
   )
 }
 

@@ -1,10 +1,9 @@
-import { MultipleRowsWrapper } from "@/app/lib/components/FormWrapper"
+import { MultipleRowsWrapper, SimpleMultipleRowsWrapper } from "@/app/lib/components/FormWrapper"
 import { UserInfoComponent } from "./UserInfo/UserInfoComponent"
 import { ProfileCreationForm } from "./CreateProfile/ProfileCreationForm"
 import { ErrorSection } from "@/app/lib/components/ErrorSection"
 import { withRetry } from "@/app/lib/retry"
 import { getAuthSession, getUserInfo } from "@/app/api/mongodb/user/user"
-import { ObjectId } from "mongodb"
 
 export const generateMetadata = ({params}:{params:{id:string}}) =>  {
 
@@ -34,19 +33,20 @@ const UserProfile = async (
   const ownsProfile = authSession && ( authSession.id == profileInfo?._id ) || ( authSession?.id == params.id );
 
   return (
-    <MultipleRowsWrapper>
+    <SimpleMultipleRowsWrapper>
+     {searchParams.error&&
 
-      {searchParams.error&&
-
-        <ErrorSection 
-          path={`/user/${params.id}`}>
-            
-            {/* {searchParams.error} */}
-            There was an error.
+      <ErrorSection 
+        path={`/user/${params.id}`}>
           
-        </ErrorSection>
+          {/* {searchParams.error} */}
+          There was an error.
         
+      </ErrorSection>
+
       }
+
+     
       {
         profileInfo?
 
@@ -79,9 +79,8 @@ const UserProfile = async (
             </section>
         }
 
-       
-        </MultipleRowsWrapper>
 
+    </SimpleMultipleRowsWrapper>
   )
 }
 

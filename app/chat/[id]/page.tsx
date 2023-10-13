@@ -1,4 +1,4 @@
-import { MultipleRowsWrapper } from "@/app/lib/components/FormWrapper";
+import { MultipleRowsWrapper, SimpleMultipleRowsWrapper } from "@/app/lib/components/FormWrapper";
 import { ChatSelectorComponent } from "../ChatSelectorComponent";
 import { mongoClient } from "@/app/api/mongodb/client";
 import { getUserDetails, getUserInfo, userObject } from "@/app/api/mongodb/user/user";
@@ -47,42 +47,46 @@ const ChatPage = async( {params, searchParams}: {params: { id: string }, searchP
   }
 
   return (
-    <MultipleRowsWrapper>
+    <SimpleMultipleRowsWrapper>
 
-    <ChatSelectorComponent availableUsers={availableUsers}/>
-    
-    <section className="animate-none">
-      <h1 className="text-center"> Conversation with
-        <br/> 
+      <MultipleRowsWrapper>
+
+        <ChatSelectorComponent availableUsers={availableUsers}/>
         
-          <div className="flex justify-center items-center gap-x-2 py-2 group">
-          <Link href={`/user/${receiver.username}`}>
-            <Image 
-              className="object-cover h-12 rounded-full"
-              height={48}
-              width={48}
-              alt={`${receiver.username}'s avatar`}
-              src={receiver.avatarSrc || "/favicon.svg"}/>
-          </Link>
-          <Link
-            className="group-hover:text-blue-400"
-            href={`/user/${receiver.username}`}>
-            { receiver.username }
-          </Link>
-          </div>
+        <section className="animate-none place-self-start">
+          <h1 className="text-center"> Conversation with
+            <br/> 
+            
+              <div className="flex justify-center items-center gap-x-2 py-2 group">
+              <Link href={`/user/${receiver.username}`}>
+                <Image 
+                  className="object-cover h-12 rounded-full"
+                  height={48}
+                  width={48}
+                  alt={`${receiver.username}'s avatar`}
+                  src={receiver.avatarSrc || "/favicon.svg"}/>
+              </Link>
+              <Link
+                className="group-hover:text-blue-400"
+                href={`/user/${receiver.username}`}>
+                { receiver.username }
+              </Link>
+              </div>
 
-      </h1>
-      <ConversationComponent sender={sender} receiver={receiver}/>
-      <SendMessageComponent sender={sender} receiver={receiver}/>
-      
-    </section>
+          </h1>
+          <ConversationComponent sender={sender} receiver={receiver}/>
+          <SendMessageComponent sender={sender} receiver={receiver}/>
+          
+        </section>
 
-    { searchParams.error &&
-      <ErrorSection path={`/chat/${params.id}`}>
-        { searchParams.error }
-      </ErrorSection> }
+      </MultipleRowsWrapper>
 
-    </MultipleRowsWrapper>
+      { searchParams.error &&
+        <ErrorSection path={`/chat/${params.id}`}>
+          { searchParams.error }
+        </ErrorSection> }
+
+    </SimpleMultipleRowsWrapper>
   )
 }
 

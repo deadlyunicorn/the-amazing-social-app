@@ -13,7 +13,8 @@ export const CreatePostSection = ({userDetails}:{userDetails:userDetailsClient|n
 
 
   return (
-    <section className="flex flex-col justify-between">
+    <div className="w-full lg:h-full relative lg:flex">
+    <section className="flex flex-col justify-between lg:sticky lg:w-full lg:top-[15vh]">
       <h2>Create a post!</h2>
       {/* add images as well !? */}
 
@@ -40,6 +41,7 @@ export const CreatePostSection = ({userDetails}:{userDetails:userDetailsClient|n
 
 
     </section>
+    </div>
   )
 }
 

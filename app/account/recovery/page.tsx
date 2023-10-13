@@ -1,15 +1,15 @@
 import { ErrorSection } from "@/app/lib/components/ErrorSection";
-import { MultipleRowsWrapper } from "@/app/lib/components/FormWrapper";
 import { SubmitButtonClient } from "@/app/lib/components/SubmitButtonClient";
 import { MessageTextarea } from "./MessageTextarea";
 import { RecoveryAction } from "./recoveryAction";
+import { SimpleMultipleRowsWrapper } from "@/app/lib/components/FormWrapper";
 
 const AccountRestore = ({searchParams}:{searchParams:{error:string}}) =>{
 
 
   return (
 
-    <MultipleRowsWrapper>
+    <SimpleMultipleRowsWrapper>
 
       <section className="flex flex-col items-center">
         <h1 className="text-center">Account Recovery</h1>
@@ -35,8 +35,7 @@ const AccountRestore = ({searchParams}:{searchParams:{error:string}}) =>{
         </ErrorSection>
       }
 
-    </MultipleRowsWrapper>
-
+      </SimpleMultipleRowsWrapper>
   )
 }
 

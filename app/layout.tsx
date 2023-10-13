@@ -34,10 +34,10 @@ export default function RootLayout({
           <main className="
             xs:max-w-[440px]
             sm:max-w-lg
-            md:max-w-2xl  
-            xl:max-w-4xl
+            md:max-w-2xl
+            lg:max-w-[100vw]
             flex justify-center 
-            mt-28 min-h-screen w-full
+            mt-[15vh] min-h-screen w-full
             sm:px-12
             pt-5 pb-32">
               {children}

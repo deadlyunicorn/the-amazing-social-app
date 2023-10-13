@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { mongoClient } from "../api/mongodb/client";
 import { getUserDetails, userObject } from "../api/mongodb/user/user";
-import { MultipleRowsWrapper } from "../lib/components/FormWrapper";
+import { MultipleRowsWrapper, SimpleMultipleRowsWrapper } from "../lib/components/FormWrapper";
 import { ChatSelectorComponent } from "./ChatSelectorComponent";
 import { ErrorSection } from "../lib/components/ErrorSection";
 
@@ -22,20 +22,22 @@ const ChatPage = async( {searchParams} : {searchParams: { error?: string }} )=>{
   }
 
   return (
-    <MultipleRowsWrapper>
+    <SimpleMultipleRowsWrapper>
 
+      <MultipleRowsWrapper>
       <ChatSelectorComponent availableUsers={availableUsers}/>
       { !authSession && 
         <section className="items-center flex flex-col justify-center">
           <h1><Link href="/login">Login</Link> to start chatting!</h1>    
         </section>
       }
+      </MultipleRowsWrapper>
       { searchParams.error &&
         <ErrorSection path="/chat">
           {searchParams.error}    
         </ErrorSection>
       }
-    </MultipleRowsWrapper>
+    </SimpleMultipleRowsWrapper>
   )
 }
 

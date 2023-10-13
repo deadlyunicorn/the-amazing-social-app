@@ -4,7 +4,7 @@ import { LoadingScreen } from "@/app/lib/components/Loading/LoadingAnimation"
 
 export default function Loader(){
   return(
-    <section className="
+    <div className="
     bg-transparent
     top-[30%]
     flex justify-center
@@ -12,7 +12,7 @@ export default function Loader(){
 
      <LoadingScreen height={200}/>
   
-    </section>
+    </div>
 
   )
 }

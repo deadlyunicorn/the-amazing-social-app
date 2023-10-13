@@ -6,21 +6,29 @@ import { getUserDetails, userObject } from "../api/mongodb/user/user";
 export const ChatSelectorComponent = async( {availableUsers}: {availableUsers: userObject[]}) => {
 
   const sender = await getUserDetails();
+  const currentYear = new Date().getFullYear();
   
   return (
-  <section className="flex flex-col animate-none">
+  <section className="
+    flex flex-col animate-none lg:top-[15vh] lg:sticky">
     <h1 
       className="border-0 text-center">Users</h1>
 
-    <ul className="flex gap-x-10 overflow-x-auto px-10 pb-8 my-4">
+    <ul className="
+      flex gap-x-10 overflow-x-auto px-10 pb-8 my-4
+      lg:flex-col lg:gap-y-4 lg:items-start lg:max-h-96 lg:py-4
+      ">
     { availableUsers.map( receiver=> 
       <li 
         className="
           group
           relative items-center
           flex flex-col
+          lg:flex-row lg:gap-x-2
           flex-shrink-0" key={receiver._id.toString()}>
+
         <div className="
+          lg:group-hover:hidden
           bg-neutral-700 px-2 rounded-md
           text-secondary
           absolute -bottom-8 
@@ -28,7 +36,13 @@ export const ChatSelectorComponent = async( {availableUsers}: {availableUsers: u
           text-center">
           {receiver.username}
         </div>
+        <div className="absolute -bottom-8 lg:hidden group-hover:hidden">
+          {currentYear - receiver.age} y.o.
+        </div>
+        
+
         <Link 
+          className="peer"
           href={ ( sender && sender._id )
               ?`/chat/${sender._id.toString() + receiver._id.toString() }`
               :"/login"
@@ -45,12 +59,31 @@ export const ChatSelectorComponent = async( {availableUsers}: {availableUsers: u
 
           </Image>
         </Link> 
+
+        <div className="
+          hidden
+          lg:flex flex-col 
+          peer peer-hover:group">
+          <div className="flex gap-x-2">
+            <Link
+              className="group-hover:text-blue-400" 
+              href={ ( sender && sender._id )
+                  ?`/chat/${sender._id.toString() + receiver._id.toString() }`
+                  :"/login"
+              }>
+              {receiver.username}
+            </Link>
+            <span className="text-xs place-self-end"> { currentYear - receiver.age } y.o.</span>
+          </div>
+          <p>{receiver.description || "Hello world!"}</p>
+        </div>
+        
       </li>
     )}
     </ul>
-    Change ui so that its vertical on desktop and on the left side of the screen.<br/>
-    Select one of the available users to select a chat!
-
+    <p className="text-center">
+      Select one of the available users to select a chat!
+    </p>
   </section>
   )
 }

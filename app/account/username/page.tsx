@@ -1,5 +1,5 @@
 import { ErrorSection } from "@/app/lib/components/ErrorSection";
-import { MultipleRowsWrapper } from "@/app/lib/components/FormWrapper";
+import { SimpleMultipleRowsWrapper } from "@/app/lib/components/FormWrapper";
 import { redirect } from "next/navigation";
 import { changeUsername } from "./usernameAction";
 import { SubmitButtonClient } from "@/app/lib/components/SubmitButtonClient";
@@ -14,7 +14,9 @@ const ChangeUsernamePage = async({searchParams}:{searchParams:{error:string}}) =
   
 
   return (
-  <MultipleRowsWrapper>
+  <SimpleMultipleRowsWrapper>
+  
+
   <section>
     <h3 className="text-center">Your current username is: 
       <br/>{user.username}
@@ -52,7 +54,7 @@ const ChangeUsernamePage = async({searchParams}:{searchParams:{error:string}}) =
     {searchParams.error}
   </ErrorSection>
   }
-  </MultipleRowsWrapper>
+  </SimpleMultipleRowsWrapper>
   )
 
 }

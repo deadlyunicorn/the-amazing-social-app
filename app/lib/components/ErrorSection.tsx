@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 export const ErrorSection = ({children, path}:{children:ReactNode,path:string}) => (
   <section
           className="
+          max-w-3xl place-self-center
           text-error-light text-center relative 
           justify-center
           flex flex-col">
