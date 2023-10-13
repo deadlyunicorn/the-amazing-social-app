@@ -9,6 +9,8 @@ import { ErrorSection } from "@/app/lib/components/ErrorSection";
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { MockConversationComponent } from "./MockConversationComponent";
+import { Suspense } from "react";
 
 
 const ChatPage = async( {params, searchParams}: {params: { id: string }, searchParams: { error?: string}})=>{
@@ -74,7 +76,10 @@ const ChatPage = async( {params, searchParams}: {params: { id: string }, searchP
               </div>
 
           </h1>
-          <ConversationComponent sender={sender} receiver={receiver}/>
+          <Suspense fallback={<MockConversationComponent/>}>
+            <ConversationComponent sender={sender} receiver={receiver}/>
+            {/* <MockConversationComponent/> */}
+          </Suspense>
           <SendMessageComponent sender={sender} receiver={receiver}/>
           
         </section>

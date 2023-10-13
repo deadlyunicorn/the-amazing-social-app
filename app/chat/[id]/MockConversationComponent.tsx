@@ -70,61 +70,62 @@ export const MockConversationComponent = ( ) => {
 
 
   return (
-    <div className="py-2">
-      { 
-        chatEntries.length == 0 && 
-        
-        <p className="text-center text-lg">
-          Your messages will appear here
-          <br/>This is the beginning of the conversation.  
-        </p>
-      }
+      <div className="py-2 select-none">
+        { 
+          chatEntries.length == 0 && 
+          
+          <p className="text-center text-lg">
+            Your messages will appear here
+            <br/>This is the beginning of the conversation.  
+          </p>
+        }
 
-      <ul className="flex flex-col gap-y-4">
-        {
-        chatEntries.length > 0 &&
-        chatEntries.map(
-          ( chatEntry, key) => {
+        <ul className="flex flex-col gap-y-4">
+          {
+          chatEntries.length > 0 &&
+          chatEntries.map(
+            ( chatEntry, key) => {
 
-          const messageDate = new Date(chatEntry.created_at);
-          const userIsSender = chatEntry.sender == "cool_user";
-          return (
-            <li 
-              key={key}
-              style={{
-                placeSelf: `${userIsSender? "end" :"start"}`,
-              }}
-              className="place-self-end flex flex-col
-              rounded-md gap-y-2
-                 bg-white px-4 py-2">
-
-              <div 
+            const messageDate = new Date(chatEntry.created_at);
+            const userIsSender = chatEntry.sender == "cool_user";
+            return (
+              <li 
+                key={key}
                 style={{
-                  flexDirection: `${userIsSender? "row-reverse" :"row"}`
+                  placeSelf: `${userIsSender? "end" :"start"}`,
                 }}
-                className="flex">
-                  <Image
-                    style={{
-                      placeSelf: `${userIsSender? "end" :"start"}`
-                    }}
-                    className="object-cover rounded-full h-full flex-shrink-0"
-                    width={24}
-                    height={24}
-                    alt={` ${userIsSender? chatEntry.sender : chatEntry.receiver}'s avatar`} 
-                    src={"favicon.svg"}/>
-                <p className="mx-2"> {chatEntry.textContent } </p>
-              </div>
-              <p 
-                 style={{
-                  placeSelf: `${userIsSender? "end" :"start"}`
-                }}
-                className="text-[10px]"> { formatDate( messageDate ) } {formatHours( messageDate ) } </p>
-            </li>
+                className="place-self-end flex flex-col
+                animate-pulseCustom
+                rounded-md gap-y-2 blur-sm
+                bg-white px-4 py-2">
+
+                <div 
+                  style={{
+                    flexDirection: `${userIsSender? "row-reverse" :"row"}`
+                  }}
+                  className="flex">
+                    <Image
+                      style={{
+                        placeSelf: `${userIsSender? "end" :"start"}`
+                      }}
+                      className="object-cover rounded-full h-full flex-shrink-0 blur-sm"
+                      width={24}
+                      height={24}
+                      alt={` ${userIsSender? chatEntry.sender : chatEntry.receiver}'s avatar`} 
+                      src={"/favicon.svg"}/>
+                  <p className="mx-2 blur-sm"> {chatEntry.textContent } </p>
+                </div>
+                <p 
+                  style={{
+                    placeSelf: `${userIsSender? "end" :"start"}`
+                  }}
+                  className="text-[10px] blur-sm"> { formatDate( messageDate ) } {formatHours( messageDate ) } </p>
+              </li>
+            )
+            }
           )
           }
-        )
-        }
-      </ul>
-    </div>
+        </ul>
+      </div>
   )
 }
