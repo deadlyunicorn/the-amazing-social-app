@@ -6,8 +6,6 @@ import { ObjectId } from "mongodb";
 import Image from "next/image";
 import { RefreshMessage } from "./RefreshMessages";
 
-export const revalidate = 1000;
-
 export const ConversationComponent = async({sender,receiver}:{
   sender: userObject,
   receiver: userObject

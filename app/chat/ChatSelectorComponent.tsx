@@ -1,32 +1,38 @@
 import Link from "next/link";
 import Image from "next/image";
-import { userObject } from "../api/mongodb/user/user";
+import { getUserDetails, userObject } from "../api/mongodb/user/user";
 
 
-export const ChatSelectorComponent = ( {availableUsers}: {availableUsers: userObject[]}) => (
+export const ChatSelectorComponent = async( {availableUsers}: {availableUsers: userObject[]}) => {
 
+  const sender = await getUserDetails();
+  
+  return (
   <section className="flex flex-col animate-none">
     <h1 
       className="border-0 text-center">Users</h1>
 
     <ul className="flex gap-x-10 overflow-x-auto px-10 pb-8 my-4">
-    { availableUsers.map( user=> 
+    { availableUsers.map( receiver=> 
       <li 
         className="
           group
           relative items-center
           flex flex-col
-          flex-shrink-0" key={user._id.toString()}>
+          flex-shrink-0" key={receiver._id.toString()}>
         <div className="
           bg-neutral-700 px-2 rounded-md
           text-secondary
           absolute -bottom-8 
           hidden group-hover:inline 
           text-center">
-          {user.username}
+          {receiver.username}
         </div>
         <Link 
-          href={`/chat/${user._id}`}>
+          href={ ( sender && sender._id )
+              ?`/chat/${sender._id.toString() + receiver._id.toString() }`
+              :"/login"
+          }>
           <Image
             className="
             hover:brightness-125
@@ -34,8 +40,8 @@ export const ChatSelectorComponent = ( {availableUsers}: {availableUsers: userOb
             object-contain bg-slate-400 bg-opacity-40"
             width={48}
             height={48}
-            alt={`${user.username}'s avatar`}
-            src={user.avatarSrc || '/favicon.svg'}>
+            alt={`${receiver.username}'s avatar`}
+            src={receiver.avatarSrc || '/favicon.svg'}>
 
           </Image>
         </Link> 
@@ -46,4 +52,5 @@ export const ChatSelectorComponent = ( {availableUsers}: {availableUsers: userOb
     Select one of the available users to select a chat!
 
   </section>
-)
+  )
+}

@@ -12,10 +12,24 @@ import { redirect } from "next/navigation";
 const ChatPage = async( {params, searchParams}: {params: { id: string }, searchParams: { error?: string}})=>{
   
   const sender = await getUserDetails();
-  
-  const receiver = await getUserInfo({ _id: new ObjectId(params.id) });
+  const paramsId = params.id;
 
-  if ( !sender || !receiver ){
+
+  if ( !sender || ! ( paramsId.length === 48 )  ){
+    redirect('/chat');
+  }
+
+  const indexOfSenderId = paramsId.indexOf( sender._id.toString() );
+
+  const receiverId = indexOfSenderId === -1
+    ? redirect( `/chat/${ sender._id.toString() + paramsId.slice( 24 ) }` )
+    : indexOfSenderId === 0
+      ? paramsId.slice( 24 )
+      : paramsId.slice( 0, 24 )
+
+  const receiver = await getUserInfo({ _id: new ObjectId( receiverId ) });
+
+  if ( !receiver  ){
     redirect('/chat');
   }
 
