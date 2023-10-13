@@ -5,6 +5,7 @@ import { formatDate, formatHours } from "@/app/lib/formatDate";
 import { ObjectId } from "mongodb";
 import Image from "next/image";
 import { RefreshMessage } from "./RefreshMessages";
+import Link from "next/link";
 
 export const ConversationComponent = async({sender,receiver}:{
   sender: userObject,
@@ -18,7 +19,15 @@ export const ConversationComponent = async({sender,receiver}:{
   return (
     <div className="py-2">
       <RefreshMessage/>
-      Your messages will appear here
+      { 
+        chatEntries.length == 0 && 
+        
+        <p className="text-center text-lg">
+          Your messages will appear here
+          <br/>This is the beginning of the conversation.  
+        </p>
+      }
+
       <ul className="flex flex-col gap-y-4">
         {
         chatEntries.length > 0 &&
@@ -31,19 +40,32 @@ export const ConversationComponent = async({sender,receiver}:{
             <li 
               key={chatEntry._id.toString()}
               style={{
-                placeSelf: `${userIsSender? "end" :"start"}`
+                placeSelf: `${userIsSender? "end" :"start"}`,
               }}
-              className="place-self-end flex flex-col">
-              <Image
+              className="place-self-end flex flex-col
+              rounded-md gap-y-2
+                 bg-white px-4 py-2">
+
+              <div 
                 style={{
-                  placeSelf: `${userIsSender? "end" :"start"}`
+                  flexDirection: `${userIsSender? "row-reverse" :"row"}`
                 }}
-                className="object-cover rounded-full h-6"
-                width={24}
-                height={24}
-                alt={` ${userIsSender? sender.username :receiver.username}'s avatar`} 
-                src={ userIsSender? ( sender.avatarSrc || "/favicon.svg" ) : receiver.avatarSrc || "favicon.svg" }/>
-              <p > {chatEntry.textContent } </p>
+                className="flex">
+                <Link
+                  className="h-6 flex-shrink-0"
+                  style={{
+                    placeSelf: `${userIsSender? "end" :"start"}`
+                  }}
+                  href={ `/user/${ userIsSender? sender.username :receiver.username}`}>
+                  <Image
+                    className="object-cover rounded-full h-full"
+                    width={24}
+                    height={24}
+                    alt={` ${userIsSender? sender.username :receiver.username}'s avatar`} 
+                    src={ userIsSender? ( sender.avatarSrc || "/favicon.svg" ) : receiver.avatarSrc || "favicon.svg" }/>
+                </Link>
+                <p className="mx-2"> {chatEntry.textContent } </p>
+              </div>
               <p 
                  style={{
                   placeSelf: `${userIsSender? "end" :"start"}`
@@ -55,7 +77,6 @@ export const ConversationComponent = async({sender,receiver}:{
         )
         }
       </ul>
-
     </div>
   )
 }

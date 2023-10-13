@@ -7,6 +7,8 @@ import { SendMessageComponent } from "./ComposeMessage/SendMessageComponent";
 import { ConversationComponent } from "./ConversationComponent";
 import { ErrorSection } from "@/app/lib/components/ErrorSection";
 import { redirect } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
 
 
 const ChatPage = async( {params, searchParams}: {params: { id: string }, searchParams: { error?: string}})=>{
@@ -51,7 +53,24 @@ const ChatPage = async( {params, searchParams}: {params: { id: string }, searchP
     
     <section className="animate-none">
       <h1 className="text-center"> Conversation with
-        <br/> { receiver?.username }
+        <br/> 
+        
+          <div className="flex justify-center items-center gap-x-2 py-2 group">
+          <Link href={`/user/${receiver.username}`}>
+            <Image 
+              className="object-cover h-12 rounded-full"
+              height={48}
+              width={48}
+              alt={`${receiver.username}'s avatar`}
+              src={receiver.avatarSrc || "/favicon.svg"}/>
+          </Link>
+          <Link
+            className="group-hover:text-blue-400"
+            href={`/user/${receiver.username}`}>
+            { receiver.username }
+          </Link>
+          </div>
+
       </h1>
       <ConversationComponent sender={sender} receiver={receiver}/>
       <SendMessageComponent sender={sender} receiver={receiver}/>

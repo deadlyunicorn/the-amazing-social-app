@@ -37,7 +37,7 @@ export const ChatSelectorComponent = async( {availableUsers}: {availableUsers: u
             className="
             hover:brightness-125
             rounded-full h-12 w-12 
-            object-contain bg-slate-400 bg-opacity-40"
+            object-cover bg-slate-400 bg-opacity-40"
             width={48}
             height={48}
             alt={`${receiver.username}'s avatar`}
