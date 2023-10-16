@@ -62,7 +62,7 @@ export const ConversationComponent = async({sender,receiver}:{
                     width={24}
                     height={24}
                     alt={` ${userIsSender? sender.username :receiver.username}'s avatar`} 
-                    src={ userIsSender? ( sender.avatarSrc || "/favicon.svg" ) : receiver.avatarSrc || "favicon.svg" }/>
+                    src={ userIsSender? ( sender.avatarSrc || "/favicon.svg" ) : receiver.avatarSrc || "/favicon.svg" }/>
                 </Link>
                 <p className="mx-2"> {chatEntry.textContent } </p>
               </div>
@@ -88,12 +88,16 @@ const getChatEntries = async ( sender: ObjectId, receiver: ObjectId) => {
   const messageGetPipeline = [
     { 
       $match:{
-        sender: {
-          $in: [ sender, receiver]
-        },
-        receiver:{
-          $in: [ sender, receiver]
-        }
+        $or: [
+          {
+            sender: sender,
+            receiver:  receiver
+          },
+          {
+            sender: receiver,
+            receiver:  sender
+          }
+        ]
       }
     },
     { $sort: {

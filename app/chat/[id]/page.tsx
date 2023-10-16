@@ -32,6 +32,12 @@ const ChatPage = async( {params, searchParams}: {params: { id: string }, searchP
       : paramsId.slice( 0, 24 )
 
 
+          
+  if ( sender._id.equals( new ObjectId( receiverId ) ) ){
+    redirect("/chat");
+  };
+
+
   const receiver = await getUserInfo({ _id: new ObjectId( receiverId ) });
 
   if ( !receiver  ){
