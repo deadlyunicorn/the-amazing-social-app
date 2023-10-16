@@ -1,38 +1,38 @@
-//use bun or deno
+// //use bun or deno
 
-import { mongoClient } from "@/app/api/mongodb/client";
-import { argv } from "process";
+// import { mongoClient } from "@/app/api/mongodb/client";
+// import { argv } from "process";
 
-const username = argv[2];
+// const username = argv[2];
 
-export const verifyPosts = async () : Promise<any> => {
+// export const verifyPosts = async () : Promise<any> => {
 
-  const client = mongoClient;
-
-
+//   const client = mongoClient;
 
 
-  try {
 
 
-    const users = client.db('the-amazing-social-app-v3').collection('users');
-    const poster = await users.findOne({username:username});
+//   try {
+
+
+//     const users = client.db('the-amazing-social-app-v3').collection('users');
+//     const poster = await users.findOne({username:username});
     
 
-    const posts = client.db('the-amazing-social-app-v3').collection('posts');
+//     const posts = client.db('the-amazing-social-app-v3').collection('posts');
 
-    const res = await posts.updateMany({created_by:poster?._id},{$set:{verified:true}});
+//     const res = await posts.updateMany({created_by:poster?._id},{$set:{verified:true}});
 
   
 
-    console.log(res);
+//     console.log(res);
 
-  }
-  finally {
+//   }
+//   finally {
 
-    await client.close();
+//     await client.close();
 
-  }
-}
+//   }
+// }
 
-verifyPosts();
+// verifyPosts();
