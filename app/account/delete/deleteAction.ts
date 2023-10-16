@@ -25,6 +25,7 @@ export const deleteAccountAction = async() => {
   const comments = database.collection('comments');
   const posts = database.collection('posts');
   const users = database.collection('users');
+  const messages = database.collection('messages');
   
   try{
 
@@ -69,7 +70,14 @@ export const deleteAccountAction = async() => {
           created_by: new ObjectId('000000000000000000000000')
         }
       }
-    )
+    );
+
+    await messages.deleteMany( { 
+      $or : [
+        { sender: userId },
+        { receiver: userId }
+      ]
+     })
 
     //Auth database
     const authDatabase = client.db('the-amazing-social-app-auth');
