@@ -9,8 +9,8 @@ export const CredentialsForm = async ( { action, csrfToken } : { action: string,
   return (
 
       <section className=" 
-        lg:place-self-end
-        bg-stone-800 max-w-md flex flex-col gap-y-2">
+        lg:justify-self-end
+        bg-stone-800 max-w-md flex flex-col gap-y-2 ">
         <h1 className="text-white">Credentials</h1>
         <h3 className="
         text-white 

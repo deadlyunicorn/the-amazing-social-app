@@ -88,13 +88,16 @@ const LoginPage = async(
         <CredentialsForm action="login" csrfToken={csrfToken}/>
         <OAuthOptions csrfToken={csrfToken}/>
       </MultipleRowsWrapper>
-      <section className="text-center flex flex-col justify-between">
-          <Link 
-            tabIndex={0} href="/account/recovery">
-            I forgot my password :&#40;
-          </Link>
-        <SignUpAside />
-      </section>
+      <div className="h-full w-full items-start flex justify-center">
+        <section className="text-center flex flex-col justify-between">
+            <Link 
+              tabIndex={0} href="/account/recovery">
+              I forgot my password :&#40;
+            </Link>
+          <SignUpAside />
+        </section>
+      </div>
+
       
         
       </SimpleMultipleRowsWrapper>

@@ -6,7 +6,7 @@ export const OAuthOptions = async( {csrfToken} : {csrfToken: string }) => {
   return (
     <section
       className=" 
-        lg:place-self-start
+        lg:justify-self-start
         bg-stone-800 max-w-md text-white 
         gap-y-2
         flex flex-col">
