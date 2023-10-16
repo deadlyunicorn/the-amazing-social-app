@@ -24,11 +24,11 @@ export const changeUsername = async( formData: FormData )=>{
 
   if ( user ){
 
-    if ( user?.username == newUsername){
+    if ( user.username == newUsername){
       redirect(`/account/username?error=${"This is already your username"}`);
     }
   
-    if ( user?.lastUsernameUpdate && user.lastUsernameUpdate.getTime() > new Date().getTime() - 2000000000){
+    if ( user.lastUsernameUpdate && user.lastUsernameUpdate.getTime() > new Date().getTime() - 2000000000){
       redirect(`/account/username?error=${"You have already updated your username in the past 20 days"}`);
     }
     try{
@@ -42,10 +42,11 @@ export const changeUsername = async( formData: FormData )=>{
       })
 
       const session = client.startSession();
+      session.startTransaction();
 
   
       await users.findOneAndUpdate(
-        {_id:user?._id},
+        {_id:user._id},
         { $set:{
           username:newUsername,
           lastUsernameUpdate: new Date()
@@ -54,7 +55,7 @@ export const changeUsername = async( formData: FormData )=>{
       
       const accounts = client.db('the-amazing-social-app-auth').collection('accounts');
       await accounts.findOneAndUpdate(
-        {_id:user?._id},
+        {_id:user._id},
         { $set:{
           username:newUsername
         }
