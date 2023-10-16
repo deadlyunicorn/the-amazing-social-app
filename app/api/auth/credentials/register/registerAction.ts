@@ -18,7 +18,7 @@ export const registerAction = async( formData: FormData)=> {
     .regex(/^[A-Za-z]([A-Za-z0-9\_])+$/g)
     .parseAsync( formData.get('username') )
     .catch( () => { throw "Invalid username"})
-    .then( res => res.toLowerCase() );
+    .then( res => res.toLowerCase().trim() );
   
     const password = await zod
     .string()

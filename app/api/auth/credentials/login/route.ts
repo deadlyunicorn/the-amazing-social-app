@@ -18,7 +18,7 @@ export const POST = async ( request: NextRequest ) => {
     .min(6)
     // .max(24)
     // .regex(/^[A-Za-z]([A-Za-z0-9\_])+$/g) login with magicLink
-    .parseAsync( credentials.username )
+    .parseAsync( credentials.username.trim() )
     .catch( err => { throw "Invalid username"});
   
     const password = await zod
