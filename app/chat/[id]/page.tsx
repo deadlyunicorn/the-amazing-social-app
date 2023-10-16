@@ -62,7 +62,7 @@ const ChatPage = async( {params, searchParams}: {params: { id: string }, searchP
               <div className="flex justify-center items-center gap-x-2 py-2 group">
               <Link href={`/user/${receiver.username}`}>
                 <Image 
-                  className="object-cover h-12 rounded-full"
+                  className="object-cover h-12 rounded-full hidden sm:inline"
                   height={48}
                   width={48}
                   alt={`${receiver.username}'s avatar`}
