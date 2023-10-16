@@ -4,22 +4,13 @@ import { getUserDetails, userObject } from "../api/mongodb/user/user";
 import { MultipleRowsWrapper, SimpleMultipleRowsWrapper } from "../lib/components/FormWrapper";
 import { ChatSelectorComponent } from "./ChatSelectorComponent";
 import { ErrorSection } from "../lib/components/ErrorSection";
+import { availableUsersArray } from "./availableUsersArrayPush";
 
 const ChatPage = async( {searchParams} : {searchParams: { error?: string }} )=>{
 
   const authSession = await getUserDetails();
 
-
-  const users = mongoClient.db('the-amazing-social-app-v3').collection('users');
-
-  const usersCursor = users.find({});
-  const availableUsers: userObject[] = [];
-
-  for await ( const user of usersCursor ){
-
-    const userObject = user as unknown as userObject;
-    availableUsers.push( userObject );
-  }
+  const availableUsers: userObject[] = await availableUsersArray( authSession );
 
   return (
     <SimpleMultipleRowsWrapper>

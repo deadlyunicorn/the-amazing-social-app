@@ -1,6 +1,5 @@
 import { MultipleRowsWrapper, SimpleMultipleRowsWrapper } from "@/app/lib/components/FormWrapper";
 import { ChatSelectorComponent } from "../ChatSelectorComponent";
-import { mongoClient } from "@/app/api/mongodb/client";
 import { getUserDetails, getUserInfo, userObject } from "@/app/api/mongodb/user/user";
 import { ObjectId } from "mongodb";
 import { SendMessageComponent } from "./ComposeMessage/SendMessageComponent";
@@ -11,6 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { MockConversationComponent } from "./MockConversationComponent";
 import { Suspense } from "react";
+import { availableUsersArray } from "../availableUsersArrayPush";
 
 
 const ChatPage = async( {params, searchParams}: {params: { id: string }, searchParams: { error?: string}})=>{
@@ -31,22 +31,16 @@ const ChatPage = async( {params, searchParams}: {params: { id: string }, searchP
       ? paramsId.slice( 24 )
       : paramsId.slice( 0, 24 )
 
+
   const receiver = await getUserInfo({ _id: new ObjectId( receiverId ) });
 
   if ( !receiver  ){
     redirect('/chat');
   }
 
-  const users = mongoClient.db('the-amazing-social-app-v3').collection('users');
 
-  const usersCursor = users.find({});
-  const availableUsers: userObject[] = [];
+  const availableUsers: userObject[] = await availableUsersArray( sender );
 
-  for await ( const user of usersCursor ){
-
-    const userObject = user as unknown as userObject;
-    availableUsers.push( userObject );
-  }
 
   return (
     <SimpleMultipleRowsWrapper>
