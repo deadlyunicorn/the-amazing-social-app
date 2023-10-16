@@ -12,7 +12,7 @@ export const availableUsersArray = async( session: userObject|null ) => {
   for await ( const user of usersCursor ){
 
     const userObject = user as unknown as userObject;
-    if ( session && ! session?._id.equals ( userObject._id ) ){
+    if ( !session || ! session?._id.equals ( userObject._id ) ){
       availableUsers.push( userObject )
     };
   }

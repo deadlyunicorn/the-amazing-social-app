@@ -24,7 +24,7 @@ export const MessageTextAreaClient = () => {
         e.target.style.height = `${e.target.scrollHeight}px`;
         setMessage(e.target.value);
       }}
-      minLength={6}
+      minLength={2}
       maxLength={300}/>
   )
 }
