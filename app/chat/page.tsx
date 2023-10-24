@@ -5,12 +5,14 @@ import { MultipleRowsWrapper, SimpleMultipleRowsWrapper } from "../lib/component
 import { ChatSelectorComponent } from "./ChatSelectorComponent";
 import { ErrorSection } from "../lib/components/ErrorSection";
 import { availableUsersArray } from "./availableUsersArrayPush";
+import { withRetry } from "../lib/retry";
 
 const ChatPage = async( {searchParams} : {searchParams: { error?: string }} )=>{
 
   const authSession = await getUserDetails();
 
-  const availableUsers: userObject[] = await availableUsersArray( authSession );
+  //@ts-ignore
+  const availableUsers: userObject[]|null = await withRetry(availableUsersArray, 2, authSession);
 
   return (
     <SimpleMultipleRowsWrapper>

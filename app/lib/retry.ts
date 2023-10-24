@@ -26,7 +26,8 @@ export const withRetry  =
 
   }
 
-  throw "Request failed";
+  // throw "Request failed";
+  return null;
 
 }
 

@@ -3,7 +3,7 @@ import Image from "next/image";
 import { getUserDetails, userObject } from "../api/mongodb/user/user";
 
 
-export const ChatSelectorComponent = async( {availableUsers}: {availableUsers: userObject[]}) => {
+export const ChatSelectorComponent = async( {availableUsers}: {availableUsers: userObject[]|null}) => {
 
   const sender = await getUserDetails();
   const currentYear = new Date().getFullYear();
@@ -18,7 +18,9 @@ export const ChatSelectorComponent = async( {availableUsers}: {availableUsers: u
       flex gap-x-10 overflow-x-auto px-10 pb-8 my-4
       lg:flex-col lg:gap-y-4 lg:items-start lg:max-h-96 lg:py-4
       ">
-    { availableUsers.map( receiver=> 
+    { availableUsers 
+    
+    ?availableUsers.map( receiver=> 
       <li 
         className="
           group
@@ -79,10 +81,11 @@ export const ChatSelectorComponent = async( {availableUsers}: {availableUsers: u
         </div>
         
       </li>
-    )}
+    )
+    :<p className="text-center w-full text-red-600">Failed getting the available users..</p>}
     </ul>
     <p className="text-center">
-      Select one of the available users to select a chat!
+      { availableUsers && availableUsers.length > 0 && "Select one of the available users to select a chat!" }
     </p>
   </section>
   )
