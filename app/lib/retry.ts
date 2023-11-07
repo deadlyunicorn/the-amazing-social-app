@@ -21,7 +21,7 @@ export const withRetry  =
     }
     catch(err){
       // console.log(err);
-      // console.log("Something happeded inside retry.ts");
+      console.log("Something happeded inside retry.ts: " + asyncFunc.name);
     }
 
   }
