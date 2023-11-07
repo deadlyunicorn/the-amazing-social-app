@@ -12,7 +12,7 @@ const ChatPage = async( {searchParams} : {searchParams: { error?: string }} )=>{
   const authSession = await getUserDetails();
 
   //@ts-ignore
-  const availableUsers: userObject[]|null = await withRetry(availableUsersArray, 2, authSession);
+  const availableUsers: userObject[]|null = await withRetry(availableUsersArray, 2, [authSession]);
 
   return (
     <SimpleMultipleRowsWrapper>
