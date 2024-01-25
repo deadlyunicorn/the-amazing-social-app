@@ -17,7 +17,7 @@ Register and Login with credentials.
 They can upload posts, comment, like, delete,
 They can edit their profiles ( Avatar & Description ),
 delete their profiles ( including all of their posts - comments etc.)
-and ( #soon ) chat with other people!
+and <s>( #soon )</s> chat with other people!
 
 Other tools used: Sendgrid, Bcrypt, TailwindCSS, Typescript, AWS S3, Framer Motion, Zod.
 
