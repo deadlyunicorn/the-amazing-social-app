@@ -59,6 +59,7 @@ const PostCreationForm = () => {
       if (file){
         const dataTransfer = new DataTransfer();
         dataTransfer.items.add(file);
+        alert("Due to the project being in an archive state - we have disabled POST requests to the S3 bucket. Images won't be uploaded");
         // @ts-ignore
         document.getElementById('image').files=dataTransfer.files;
         setTemp(URL.createObjectURL(file));

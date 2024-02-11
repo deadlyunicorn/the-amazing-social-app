@@ -74,6 +74,7 @@ export const ImageInputOptional = ({pixels,temp,setTemp}:{pixels:number,temp:str
     <>
       <input
         onChange={e => {
+          alert("Due to the project being in an archive state - we have disabled POST requests to the S3 bucket. Images won't be uploaded");
           const files = e.target.files;
           if (files) {
             const temporaryImage = files[0];
