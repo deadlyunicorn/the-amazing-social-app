@@ -13,7 +13,7 @@ export const handleCreatePost = async (formData: FormData) => {
   //validate 
 
   const client = mongoClient;
-  const textContent = formData.get('post');
+  const textContent = formData.get('post')?.valueOf().toString();
 
   //@ts-ignore
   const image: File | undefined = formData.get('image');
