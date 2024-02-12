@@ -1,12 +1,12 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { experimental_useFormStatus } from "react-dom";
+import { useFormStatus } from "react-dom";
 
 export const MessageTextAreaClient = () => {
 
   const [message,setMessage] = useState("");
-  const { pending } = experimental_useFormStatus();
+  const { pending } = useFormStatus();
 
   useEffect( ()=> {
     if( !pending ){
