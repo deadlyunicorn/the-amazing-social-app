@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { experimental_useFormStatus } from "react-dom";
 import { SubmitButtonClient } from "./SubmitButtonClient";
+import { useFormStatus } from 'react-dom'
 
 export const ImageInputStandalone = () => {
 
   const [temp, setTemp] = useState<undefined | string>(undefined);
-  const {pending} = experimental_useFormStatus();
+  const {pending} = useFormStatus();
  
   useEffect(()=>{
     if (!pending){
@@ -61,7 +61,7 @@ export const ImageInputStandalone = () => {
 
 export const ImageInputOptional = ({pixels,temp,setTemp}:{pixels:number,temp:string|undefined,setTemp:any}) => {
 
-  const {pending} = experimental_useFormStatus();
+  const {pending} = useFormStatus();
  
   useEffect(()=>{
     if (!pending){

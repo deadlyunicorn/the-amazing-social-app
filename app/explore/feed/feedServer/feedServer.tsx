@@ -11,12 +11,12 @@ export const FeedServer = async ({userDetails}:{userDetails:userDetailsClient|nu
   const firstPagePosts =  await withRetry(getPosts,5,[{page: 1,explore:true}])
     .catch( err =>{ redirect('/explore?error="Failed getting posts"')});
 
+    
   return (
     <ul>
         {firstPagePosts && firstPagePosts.map( //server loaded posts
           (post) =>
             <PostComponent
-             
               userDetails={userDetails}
               key={post._id}
               post={post} />

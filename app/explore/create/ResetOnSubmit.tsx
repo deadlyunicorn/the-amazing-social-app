@@ -1,11 +1,11 @@
 "use client"
 
 import { useEffect } from "react"
-import { experimental_useFormStatus } from "react-dom"
+import { useFormStatus } from "react-dom"
 
 export const ResetOnSubmit = ({formId}:{formId:string}) => {
 
-  const {pending} = experimental_useFormStatus();
+  const {pending} = useFormStatus();
 
   useEffect(()=>{
     if (!pending){
